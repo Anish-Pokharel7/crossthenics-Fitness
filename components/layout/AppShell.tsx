@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/navBar";
 import Footer from "@/components/layout/Footer";
 import CinematicBackground from "@/components/layout/CinematicBackground";
 import { SearchProvider } from "@/lib/searchContext";
+import { CartProvider } from "@/lib/cartContext";
 import { Toaster } from "@/components/ui/sonner";
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -14,13 +15,18 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <SearchProvider>
-      {/* Global cinematic atmosphere — fixed, behind all content */}
-      <CinematicBackground />
-      {!isAuthRoute && <Navbar />}
-      {children}
-      {!isAuthRoute && <Footer />}
-      <Toaster />
+      <CartProvider>
+        {/* Global cinematic atmosphere — fixed, behind all content */}
+        <CinematicBackground />
+        <div className="relative z-10 flex min-h-full flex-col">
+          {!isAuthRoute && <Navbar />}
+          {children}
+          {!isAuthRoute && <Footer />}
+        </div>
+        <Toaster />
+      </CartProvider>
     </SearchProvider>
   );
 }
+
 

@@ -1,10 +1,10 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Lock, Mail, ArrowRight, Sparkles } from "lucide-react";
+import { Lock, Mail, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth/AuthContext";
 
@@ -32,9 +32,9 @@ export default function LoginForm() {
       toast.success("Welcome back!", {
         description: "Signed into your Crossthenics account.",
         style: {
-          background: "#0a0a0e",
-          border: "1px solid rgba(255, 69, 0, 0.5)",
-          color: "#ffffff",
+          background: "#2A2A2A",
+          border: "1px solid #414141",
+          color: "#F5F5F5",
         },
       });
       
@@ -49,9 +49,9 @@ export default function LoginForm() {
       toast.error("Login failed", {
         description: error instanceof Error ? error.message : "Invalid credentials",
         style: {
-          background: "#0a0a0e",
-          border: "1px solid rgba(255, 69, 0, 0.5)",
-          color: "#ffffff",
+          background: "#2A2A2A",
+          border: "1px solid #414141",
+          color: "#F5F5F5",
         },
       });
     }
@@ -61,25 +61,25 @@ export default function LoginForm() {
     <div className="w-full max-w-md">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full rounded-3xl glass-dark p-8 sm:p-10 shadow-[0_30px_70px_rgba(0,0,0,0.95)] transition-all"
+        className="w-full rounded-3xl border border-[#414141] bg-[#2A2A2A] p-8 sm:p-10 shadow-[0_30px_70px_rgba(0,0,0,0.6)] transition-all"
       >
-        {/* Header with HUGE WHITE TYPOGRAPHY */}
+        {/* Header */}
         <div className="mb-8 text-center">
-          <div className="inline-flex items-center gap-1.5 rounded-full glass-pill-red px-3.5 py-1 text-[11px] font-black uppercase tracking-widest text-[#ffffff] mb-3">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-[#E10600]/30 bg-[#E10600]/10 px-3.5 py-1 text-[10px] font-black uppercase tracking-widest text-text-primary mb-3">
             <span>Athlete Portal</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-white leading-none">
-            ATHLETE <span className="text-electric-red">ACCESS</span>
+          <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-text-primary leading-none">
+            ATHLETE <span className="text-[#E10600]">ACCESS</span>
           </h1>
-          <p className="mt-2 text-xs sm:text-sm text-zinc-400 font-normal">
-            Sign in to access your orders, saved gear & VIP drops.
+          <p className="mt-2 text-xs sm:text-sm text-text-muted font-normal">
+            Sign in to access your orders, saved gear &amp; VIP drops.
           </p>
         </div>
 
         <div className="space-y-4 sm:space-y-5">
           {/* Email */}
           <div>
-            <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-zinc-300">
+            <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-text-muted">
               Email Address
             </label>
             <div className="relative">
@@ -95,11 +95,11 @@ export default function LoginForm() {
                 })}
                 aria-invalid={!!errors.email}
                 className={cn(
-                  "glass-input w-full rounded-xl px-4 py-3.5 text-sm placeholder:text-zinc-600",
-                  errors.email && "border-red-500 focus:ring-red-500/40"
+                  "w-full rounded-xl border border-[#414141] bg-[#1C1C1C] px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
+                  errors.email && "border-red-500"
                 )}
               />
-              <Mail size={16} className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500" />
+              <Mail size={16} className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-text-muted" />
             </div>
             {errors.email && (
               <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>
@@ -108,7 +108,7 @@ export default function LoginForm() {
 
           {/* Password */}
           <div>
-            <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-zinc-300">
+            <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-text-muted">
               Password
             </label>
             <div className="relative">
@@ -124,28 +124,28 @@ export default function LoginForm() {
                 })}
                 aria-invalid={!!errors.password}
                 className={cn(
-                  "glass-input w-full rounded-xl px-4 py-3.5 text-sm placeholder:text-zinc-600",
-                  errors.password && "border-red-500 focus:ring-red-500/40"
+                  "w-full rounded-xl border border-[#414141] bg-[#1C1C1C] px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
+                  errors.password && "border-red-500"
                 )}
               />
-              <Lock size={16} className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500" />
+              <Lock size={16} className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-text-muted" />
             </div>
             {errors.password && (
               <p className="mt-1 text-xs text-red-400">{errors.password.message}</p>
             )}
 
-            <div className="mt-3 flex items-center justify-between text-xs text-zinc-400">
+            <div className="mt-3 flex items-center justify-between text-xs text-text-muted">
               <label className="flex items-center gap-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
-                  className="rounded border-white/20 bg-white/10 text-[#FF4500] focus:ring-0"
+                  className="rounded border-[#414141] bg-[#1C1C1C] text-[#E10600] focus:ring-0"
                 />
                 <span>Remember me</span>
               </label>
 
               <Link
                 href="/forgot-password"
-                className="text-[#FF4500] hover:underline transition-colors"
+                className="text-[#E10600] hover:underline transition-colors"
               >
                 Forgot password?
               </Link>
@@ -156,7 +156,7 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-electric-red group/btn mt-2 flex w-full items-center justify-center gap-2 rounded-full py-4 text-xs font-bold uppercase tracking-wider"
+            className="group/btn mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#E10600] py-4 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-[#B80500]"
           >
             <span>{isSubmitting ? "Authenticating..." : "Sign In"}</span>
             <ArrowRight size={15} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
@@ -164,17 +164,17 @@ export default function LoginForm() {
         </div>
 
         {/* Footer Link Navigation */}
-        <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-xs text-zinc-400">
+        <div className="mt-8 pt-6 border-t border-[#414141] flex items-center justify-between text-xs text-text-muted">
           <p>
             New athlete?{" "}
             <Link
               href="/auth/signup"
-              className="font-bold text-[#FF4500] hover:underline transition-colors"
+              className="font-bold text-[#E10600] hover:underline transition-colors"
             >
               Create Account
             </Link>
           </p>
-          <Link href="/" className="text-zinc-500 hover:text-zinc-300 transition-colors">
+          <Link href="/" className="text-text-muted hover:text-text-primary transition-colors">
             Back to Home
           </Link>
         </div>

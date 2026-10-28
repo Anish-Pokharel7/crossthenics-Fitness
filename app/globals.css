@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -5,6 +6,19 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --color-charcoal: var(--color-charcoal);
+  --color-silver: var(--color-silver);
+  --color-signal-red: var(--color-signal-red);
+  --color-page: var(--bg-page);
+  --color-section-alt: var(--bg-section-alt);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border-subtle: var(--border-subtle);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-cta-hover: var(--cta-red-hover);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
@@ -13,10 +27,11 @@
   --color-accent-coral: var(--accent-coral);
   --color-muted-text: var(--muted-foreground);
   --color-white-glass: var(--white-glass);
-  --color-white-border: var(--white-border);
-  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-display);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -55,59 +70,106 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  max-width: 90rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility section-padding {
+  padding-block: 4rem;
+
+  @media (min-width: 768px) {
+    padding-block: 6rem;
+  }
+}
+
 /* ─────────────────────────────────────────────────────
-   FITZONE-INSPIRED DESIGN TOKENS
-   Dark charcoal base · Vivid orange-red · High contrast
-   Reference: FitZone / Fitnexx fitness website aesthetic
+   CROSSTHENICS DESIGN TOKENS
+   Charcoal Grey · Moonlit Silver · Signal Red
+   Palette: #2A2A2A · #C0C0C0 · #E10600
+   Supporting: #1C1C1C · #242424 · #353535 · #414141 · #F5F5F5 · #929292 · #B80500
    ───────────────────────────────────────────────────── */
 
 :root {
-  /* ── BACKGROUND & SURFACES ── */
-  --background: #080808;          /* Deep black — matches hero page */
-  --surface: #111214;             /* Card/panel surface */
-  --surface-light: #191B1E;       /* Raised / active surface */
+  /* ── TYPOGRAPHY TOKENS ── */
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Inter', sans-serif;
 
-  /* ── ACCENT / PRIMARY ── */
-  --primary: #FF4500;             /* Vivid orange-red — FitZone signature */
+  /* ── EXACT BRAND SPECIFICATION TOKENS ── */
+  --color-charcoal: #2A2A2A;
+  --color-silver: #C0C0C0;
+  --color-signal-red: #E10600;
+
+  /* ── EXACT SUPPORTING COLOR TOKENS ── */
+  --bg-page: #1C1C1C;
+  --bg-section-alt: #242424;
+  --surface-raised: #2A2A2A;
+  --surface-elevated: #353535;
+  --border-subtle: #414141;
+  --text-primary: #F5F5F5;
+  --text-secondary: #C0C0C0;
+  --text-muted: #A3A3A3;
+  --cta-red-hover: #B80500;
+
+  /* ── DESIGN SYSTEM & SHADCN ALIGNMENT ── */
+  --background: #1C1C1C;
+  --foreground: #F5F5F5;
+  --surface: #2A2A2A;
+  --surface-light: #353535;
+  --color-page: #1C1C1C;
+
+  --card: #2A2A2A;
+  --card-foreground: #F5F5F5;
+  --popover: #2A2A2A;
+  --popover-foreground: #F5F5F5;
+
+  /* Primary Accent: Signal Red */
+  --primary: #E10600;
   --primary-foreground: #FFFFFF;
-  --accent-coral: #FF6B35;        /* Warm coral highlight */
+  --accent-coral: #C0C0C0;
 
-  /* ── TEXT ── */
-  --foreground: #FFFFFF;
-  --muted-foreground: #9A9A9A;
+  /* Secondary & Muted */
+  --secondary: #242424;
+  --secondary-foreground: #C0C0C0;
+  --muted: #242424;
+  --muted-foreground: #A3A3A3;
+  --accent: rgba(225, 6, 0, 0.12);
+  --accent-foreground: #C0C0C0;
+  --destructive: #E10600;
+  --border: #414141;
+  --input: #242424;
+  --ring: #E10600;
 
-  /* ── GLASS TOKENS ── */
-  --white-glass: rgba(255, 255, 255, 0.05);
-  --white-border: rgba(255, 255, 255, 0.10);
-
-  /* ── SHADCN SYSTEM ALIGNMENT ── */
-  --card: #191B1E;
-  --card-foreground: #FFFFFF;
-  --popover: #191B1E;
-  --popover-foreground: #FFFFFF;
-  --secondary: rgba(255, 255, 255, 0.05);
-  --secondary-foreground: #FFFFFF;
-  --muted: #222428;
-  --accent: rgba(255, 69, 0, 0.15);
-  --accent-foreground: #FF6B35;
-  --destructive: #FF4500;
-  --border: rgba(255, 255, 255, 0.10);
-  --input: rgba(255, 255, 255, 0.05);
-  --ring: #FF4500;
-  --chart-1: #FF4500;
-  --chart-2: #FF6B35;
-  --chart-3: #FF8C5A;
-  --chart-4: #9A9A9A;
-  --chart-5: #222428;
+  /* Radius & Layout */
+  --radius-card: 16px;
+  --radius-control: 8px;
   --radius: 0.75rem;
-  --sidebar: #111214;
-  --sidebar-foreground: #FFFFFF;
-  --sidebar-primary: #FF4500;
+  --content-max-width: 1440px;
+
+  /* Glass / Subtle Tokens */
+  --white-glass: rgba(255, 255, 255, 0.03);
+  --white-border: #414141;
+
+  --chart-1: #E10600;
+  --chart-2: #C0C0C0;
+  --chart-3: #929292;
+  --chart-4: #414141;
+  --chart-5: #2A2A2A;
+
+  --sidebar: #242424;
+  --sidebar-foreground: #F5F5F5;
+  --sidebar-primary: #E10600;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: rgba(255, 69, 0, 0.12);
-  --sidebar-accent-foreground: #FF6B35;
-  --sidebar-border: rgba(255, 255, 255, 0.10);
-  --sidebar-ring: #FF4500;
+  --sidebar-accent: rgba(225, 6, 0, 0.10);
+  --sidebar-accent-foreground: #C0C0C0;
+  --sidebar-border: #414141;
+  --sidebar-ring: #E10600;
 }
 
 @layer base {
@@ -116,182 +178,113 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
     background-color: var(--background);
     color: var(--foreground);
-    /* ── Hero-style atmospheric background: noise + grid + red ambient ── */
-    background-image:
-      /* Subtle noise grain */
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.028'/%3E%3C/svg%3E"),
-      /* Fine grid overlay — matches hero */
-      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px),
-      /* Red ambient glow top-right — matches hero's orange panel atmosphere */
-      radial-gradient(ellipse 80% 60% at 80% -10%, rgba(255,69,0,0.13) 0%, transparent 65%),
-      /* Red ambient glow bottom-left — depth */
-      radial-gradient(ellipse 60% 40% at -10% 100%, rgba(255,69,0,0.07) 0%, transparent 60%);
-    background-size:
-      400px 400px,
-      60px 60px,
-      60px 60px,
-      100% 100%,
-      100% 100%;
-    selection-background: rgba(255, 69, 0, 0.45);
+    selection-background: rgba(225, 6, 0, 0.40);
   }
   ::selection {
-    background: rgba(255, 69, 0, 0.45);
-    color: #fff;
+    background: rgba(225, 6, 0, 0.40);
+    color: #FFFFFF;
   }
   html {
-    @apply font-sans;
+    font-family: var(--font-body);
     color-scheme: dark;
   }
+
+  h1, h2, h3,
+  .display-heading {
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-silver);
+  outline-offset: 3px;
 }
 
 /* ─────────────────────────────────────────────
-   PREMIUM ATHLETIC GLASS — Design System v4
-   FitZone-inspired: Charcoal · Orange-Red · High Contrast
+   DISCIPLINED ATHLETIC SURFACES & CARDS
+   Layered Charcoal Tones (#1C1C1C · #242424 · #2A2A2A · #353535)
    ───────────────────────────────────────────── */
 
-/*
-  TIER 1 — Glass Light
-  Badges, hover states, subtle overlays.
-*/
 .glass-light {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(12px) saturate(130%);
-  -webkit-backdrop-filter: blur(12px) saturate(130%);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.09),
-    0 4px 16px rgba(0, 0, 0, 0.35);
+  background-color: var(--bg-section-alt);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
 }
 
-/*
-  TIER 2 — Glass Medium
-  Default card surface, filter bars.
-*/
 .glass-medium {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.07),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.20),
-    0 8px 32px rgba(0, 0, 0, 0.55);
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
 }
 
-/*
-  TIER 3 — Glass Dark (SURFACE #191B1E)
-  Modals, feature panels, auth cards.
-*/
 .glass-dark {
-  background: rgba(25, 27, 30, 0.80);
-  backdrop-filter: blur(28px) saturate(170%);
-  -webkit-backdrop-filter: blur(28px) saturate(170%);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.35),
-    0 20px 60px rgba(0, 0, 0, 0.75);
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  color: var(--text-primary);
 }
 
-/*
-  TIER 4 — Glass Strong (SURFACE LIGHT #222428)
-  Hero photo frames, showcase containers.
-*/
 .glass-strong {
-  background: rgba(34, 36, 40, 0.88);
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.12),
-    0 12px 40px rgba(0, 0, 0, 0.60);
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+  color: var(--text-primary);
 }
 
-/* ─── COMPONENT-LEVEL GLASS TOKENS ─── */
-
-/*
-  Navbar — charcoal frosted capsule, FitZone style
-*/
+/* Navbar integrated charcoal surface */
 .glass-navbar {
-  background: rgba(17, 18, 20, 0.88);
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 16px 48px rgba(0, 0, 0, 0.85);
+  background-color: rgba(42, 42, 42, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.40);
 }
 
-/*
-  Interactive Card — dark surface, orange-red glow on hover
-*/
+/* Card Surface — clean, restrained borders, minimal shadows */
 .glass-card {
-  background: rgba(25, 27, 30, 0.75);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.07),
-    0 8px 24px rgba(0, 0, 0, 0.55);
-  transition: all 0.30s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  background: rgba(34, 36, 40, 0.85);
-  border-color: rgba(255, 69, 0, 0.50);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.10),
-    0 20px 50px rgba(0, 0, 0, 0.65),
-    0 0 35px -6px rgba(255, 69, 0, 0.35);
-  transform: translateY(-4px);
+  background-color: var(--surface-elevated);
+  border-color: #555555;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.50);
+  transform: translateY(-2px);
 }
 
-/*
-  Pill / Badge — compact glass chip
-*/
+/* Pill / Badge */
 .glass-pill {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  color: #FFFFFF;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  background-color: var(--bg-section-alt);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
 }
 
-/*
-  Orange-Red pill variant — accent badge
-*/
+/* Signal Red pill badge */
 .glass-pill-red {
-  background: rgba(255, 69, 0, 0.16);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 69, 0, 0.40);
-  color: #FF6B35;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 107, 53, 0.15),
-    0 0 14px rgba(255, 69, 0, 0.20);
+  background-color: rgba(225, 6, 0, 0.12);
+  border: 1px solid rgba(225, 6, 0, 0.35);
+  color: #E10600;
 }
 
-/*
-  Input field — dark glass form element
-*/
+/* Input field */
 .glass-input {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  color: #FFFFFF;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  background-color: var(--bg-section-alt);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .glass-input:focus {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 69, 0, 0.70);
-  box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.18);
+  background-color: var(--surface-raised);
+  border-color: var(--color-silver);
+  box-shadow: 0 0 0 2px rgba(225, 6, 0, 0.25);
   outline: none;
 }
 
@@ -301,205 +294,125 @@
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.92;
-  color: #FFFFFF;
+  color: var(--text-primary);
   text-transform: uppercase;
 }
 
-/* Primary accent — vivid orange-red with glow */
+/* Primary accent — Signal Red */
 .text-electric-red {
-  color: #FF4500;
-  text-shadow: 0 0 32px rgba(255, 69, 0, 0.42);
+  color: var(--color-signal-red);
 }
 
+/* Secondary accent — Moonlit Silver */
 .text-coral {
-  color: #FF6B35;
+  color: var(--color-silver);
 }
 
 .text-muted-custom {
-  color: #9A9A9A;
+  color: var(--text-muted);
 }
 
-/* ─── GLOW UTILITIES ─── */
+/* ─── RESTRAINED FOCUS & GLOW UTILITIES ─── */
 
 .glow-red {
-  box-shadow: 0 0 30px -4px rgba(255, 69, 0, 0.55);
+  box-shadow: 0 0 16px rgba(225, 6, 0, 0.30);
 }
 
 .glow-red-sm {
-  box-shadow: 0 0 14px rgba(255, 69, 0, 0.40);
+  box-shadow: 0 0 8px rgba(225, 6, 0, 0.25);
 }
 
-/* ─── PRODUCT SPOTLIGHT ─── */
+/* ─── PRODUCT SPOTLIGHT (SUBTLE & RESTRAINED) ─── */
 .product-spotlight {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(255, 69, 0, 0.24) 0%,
-    rgba(255, 107, 53, 0.10) 35%,
+    rgba(225, 6, 0, 0.08) 0%,
     transparent 65%
   );
-  opacity: 0.85;
-  transition: opacity 0.5s ease, background 0.5s ease;
+  opacity: 0.6;
+  transition: opacity 0.4s ease;
 }
 
 .group:hover .product-spotlight {
-  opacity: 1;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(255, 69, 0, 0.38) 0%,
-    rgba(255, 107, 53, 0.16) 40%,
-    transparent 70%
-  );
+  opacity: 0.9;
 }
 
 /* ─── BUTTON TOKENS ─── */
 
-/* Primary — vivid orange-red with shine sweep */
+/* Primary CTA — Signal Red with clean #B80500 hover */
 .btn-electric-red,
 .btn-primary-cta {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, #FF6B35 0%, #FF4500 50%, #D93A00 100%);
+  background-color: var(--color-signal-red);
   color: #FFFFFF;
   font-weight: 800;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.20);
-  box-shadow:
-    0 4px 20px rgba(255, 69, 0, 0.50),
-    0 0 18px rgba(255, 107, 53, 0.30),
-    inset 0 1px 0 rgba(255, 255, 255, 0.32),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.28);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, box-shadow;
-}
-
-.btn-electric-red::after,
-.btn-primary-cta::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -100%;
-  width: 60%;
-  height: 200%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.42),
-    transparent
-  );
-  transform: rotate(25deg);
-  pointer-events: none;
-  transition: none;
-}
-
-.btn-electric-red:hover::after,
-.btn-primary-cta:hover::after {
-  left: 140%;
-  transition: left 0.70s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: var(--radius-control);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.30);
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-electric-red:hover,
 .btn-primary-cta:hover {
-  background: linear-gradient(135deg, #FF7845 0%, #FF5515 50%, #E84000 100%);
-  box-shadow:
-    0 8px 32px rgba(255, 69, 0, 0.70),
-    0 0 32px rgba(255, 107, 53, 0.50),
-    inset 0 1px 0 rgba(255, 255, 255, 0.45);
-  transform: translateY(-2px) scale(1.025);
+  background-color: var(--cta-red-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.40);
 }
 
 .btn-electric-red:active,
 .btn-primary-cta:active {
-  transform: translateY(0) scale(0.98);
-  box-shadow:
-    0 2px 10px rgba(255, 69, 0, 0.40),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transform: translateY(0);
 }
 
-/* Secondary — transparent dark glass */
+/* Secondary CTA — Charcoal surface with Moonlit Silver border on hover */
 .btn-glass,
 .btn-secondary-cta {
-  position: relative;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(16px) saturate(170%);
-  -webkit-backdrop-filter: blur(16px) saturate(170%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #FFFFFF;
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
   font-weight: 700;
-  border-radius: 9999px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.10),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.22),
-    0 8px 24px rgba(0, 0, 0, 0.45);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.btn-glass::after,
-.btn-secondary-cta::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -100%;
-  width: 50%;
-  height: 200%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.18),
-    transparent
-  );
-  transform: rotate(25deg);
-  pointer-events: none;
-  transition: none;
-}
-
-.btn-glass:hover::after,
-.btn-secondary-cta:hover::after {
-  left: 140%;
-  transition: left 0.70s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: var(--radius-control);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .btn-glass:hover,
 .btn-secondary-cta:hover {
-  background: rgba(255, 255, 255, 0.10);
-  border-color: rgba(255, 255, 255, 0.30);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 12px 32px rgba(0, 0, 0, 0.60),
-    0 0 22px rgba(255, 69, 0, 0.22);
-  transform: translateY(-2px) scale(1.02);
+  background-color: var(--surface-elevated);
+  border-color: var(--color-silver);
+  color: #FFFFFF;
+  transform: translateY(-1px);
 }
 
 .btn-glass:active,
 .btn-secondary-cta:active {
-  transform: translateY(0) scale(0.98);
+  transform: translateY(0);
 }
 
-/* Dark scrollbar — charcoal + orange thumb */
+/* Scrollbar — Charcoal + Subtle Red */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #111214;
+  background: var(--bg-page);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--border-subtle);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF4500;
+  background: var(--color-signal-red);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   CINEMATIC GLOBAL BACKGROUND SYSTEM
-   FitZone-inspired: dark charcoal + vivid orange-red atmospheric glow
+   INTEGRATED CHARCOAL BACKGROUND SYSTEM
+   Layered Charcoal Tones without Prominent Grid
    ───────────────────────────────────────────────────────────────────────── */
 
 .cinematic-bg {
@@ -508,158 +421,67 @@
   z-index: 0;
   overflow: hidden;
   isolation: isolate;
-  background-color: #080808;       /* Deep black — matches Hero */
+  background-color: #1C1C1C;
   pointer-events: none;
 }
 
-/* ── Hero-style solid red right panel (desktop only) ── */
-.cinematic-red-panel {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 38%;
-  height: 100%;
-  background-color: #FF4500;
-  pointer-events: none;
-}
-
-/* ── Subtle vertical gradient sheen over the red panel ── */
-.cinematic-red-panel-sheen {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 38%;
-  height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.10) 0%,
-    transparent 45%,
-    rgba(0, 0, 0, 0.12) 100%
-  );
-  opacity: 0.30;
-  pointer-events: none;
-}
-
-/* ── Fine 60px grid overlay — matches Hero ── */
+/* Significantly reduced opacity architectural grid (almost imperceptible) */
 .cinematic-grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 60px 60px;
+    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: 80px 80px;
   pointer-events: none;
-  opacity: 1;
+  opacity: 0.15;
 }
 
-/* ── Red ambient glow at the black/red seam — matches Hero's edge glow ── */
+/* Restrained ambient glow — subtle atmospheric depth */
 .cinematic-seam-glow {
-  position: absolute;
-  top: 35%;
-  right: 24%;
-  width: 500px;
-  height: 500px;
-  transform: translate(50%, -50%);
-  background: radial-gradient(
-    circle,
-    rgba(255, 69, 0, 0.28) 0%,
-    transparent 65%
-  );
-  filter: blur(70px);
-  pointer-events: none;
+  display: none;
 }
 
-/* ── Bottom-left atmospheric red bleed ── */
 .cinematic-bottom-glow {
-  position: absolute;
-  bottom: -10vh;
-  left: -5vw;
-  width: 60vw;
-  height: 55vh;
-  background: radial-gradient(
-    ellipse at 30% 70%,
-    rgba(255, 69, 0, 0.07) 0%,
-    transparent 70%
-  );
-  filter: blur(120px);
-  pointer-events: none;
+  display: none;
 }
 
-/* ── SVG Film Grain Texture ── */
+/* Fine SVG Film Grain Texture */
 .cinematic-grain {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 1;
-}
-
-/* ── Mobile: hide red panel & seam glow, keep black bg ── */
-@media (max-width: 1023px) {
-  .cinematic-red-panel,
-  .cinematic-red-panel-sheen,
-  .cinematic-seam-glow {
-    display: none;
-  }
+  opacity: 0.02;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ATMOSPHERIC GLOW ORBS & ANIMATIONS
+   ORB UTILITIES (RESTRAINED)
    ───────────────────────────────────────────────────────────────────────── */
 
-@keyframes orb-pulse {
-  0%   { transform: scale(1);    opacity: 0.80; }
-  50%  { transform: scale(1.09); opacity: 1;    }
-  100% { transform: scale(1);    opacity: 0.80; }
-}
-
-@keyframes orb-float {
-  0%   { transform: translate3d(0, 0, 0);         }
-  33%  { transform: translate3d(22px, -28px, 0);  }
-  66%  { transform: translate3d(-18px, 16px, 0);  }
-  100% { transform: translate3d(0, 0, 0);         }
-}
-
-@keyframes orb-drift {
-  0%   { transform: translate3d(0, 0, 0) rotate(0deg);    }
-  50%  { transform: translate3d(-30px, 24px, 0) rotate(3deg); }
-  100% { transform: translate3d(0, 0, 0) rotate(0deg);    }
-}
-
-.animate-orb-pulse { animation: orb-pulse 16s ease-in-out infinite; }
-.animate-orb-float { animation: orb-float 22s ease-in-out infinite; }
-.animate-orb-drift { animation: orb-drift 28s ease-in-out infinite; }
-
-/* Base Orb */
 .glow-orb {
   position: absolute;
   border-radius: 9999px;
   pointer-events: none;
-  will-change: transform, opacity;
 }
 
-/* Orb Variants — updated to orange-red palette */
 .orb-red {
-  background: radial-gradient(circle, rgba(255, 69, 0, 0.26) 0%, rgba(200, 45, 0, 0.10) 50%, transparent 72%);
-  mix-blend-mode: screen;
+  background: radial-gradient(circle, rgba(225, 6, 0, 0.10) 0%, transparent 70%);
 }
 
 .orb-orange {
-  background: radial-gradient(circle, rgba(255, 107, 53, 0.20) 0%, rgba(255, 69, 0, 0.08) 50%, transparent 72%);
-  mix-blend-mode: screen;
+  background: radial-gradient(circle, rgba(192, 192, 192, 0.08) 0%, transparent 70%);
 }
 
 .orb-white {
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.07) 0%, rgba(210, 210, 230, 0.03) 50%, transparent 70%);
-  mix-blend-mode: screen;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
 }
 
 .orb-crimson {
-  background: radial-gradient(circle, rgba(220, 50, 0, 0.28) 0%, rgba(150, 30, 0, 0.10) 55%, transparent 75%);
-  mix-blend-mode: screen;
+  background: radial-gradient(circle, rgba(200, 4, 0, 0.12) 0%, transparent 70%);
 }
 
 .orb-dark {
-  background: radial-gradient(circle, rgba(17, 18, 20, 0.90) 0%, rgba(25, 27, 30, 0.55) 60%, transparent 80%);
+  background: radial-gradient(circle, rgba(42, 42, 42, 0.8) 0%, transparent 75%);
 }

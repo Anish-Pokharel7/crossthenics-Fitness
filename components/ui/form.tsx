@@ -86,7 +86,7 @@ const FormLabel = React.forwardRef<
   HTMLLabelElement,
   React.LabelHTMLAttributes<HTMLLabelElement>
 >(({ className, ...props }, ref) => {
-  const { error, formItemId } = useFormField();
+  const { formItemId } = useFormField();
 
   return (
     <label
@@ -176,3 +176,4 @@ export {
   FormMessage,
   FormField,
 };
+

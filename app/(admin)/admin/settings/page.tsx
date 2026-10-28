@@ -399,7 +399,7 @@ export default function AdminSettings() {
                 label="Primary Color"
                 description="Brand primary color used throughout the store"
               >
-                <Input type="color" defaultValue="#FF4500" className="w-12 h-12 rounded-lg border border-gray-300 cursor-pointer" />
+                <Input type="color" defaultValue="#E10600" className="w-12 h-12 rounded-lg border border-gray-300 cursor-pointer" />
               </SettingItem>
               <SettingItem
                 label="Logo"

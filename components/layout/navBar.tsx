@@ -26,9 +26,9 @@ import { useTheme } from "next-themes";
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "Products", href: "/allproducts" },
-  { name: "Build Setup", href: "/build-setup" },
   { name: "Our Story", href: "/our-story" },
+  { name: "Build Setup", href: "/build-setup" },
+  { name: "Products", href: "/allproducts" },
   { name: "Backpacks", href: "/backpacks" },
   { name: "Latest Drops", href: "/latestproducts" },
   { name: "Contact", href: "/contact" },

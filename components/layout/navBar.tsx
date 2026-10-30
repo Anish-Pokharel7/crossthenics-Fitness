@@ -455,17 +455,6 @@ export function Navbar() {
                   >
                     Contact
                   </Link>
-
-                  {mounted && isAdmin && (
-                    <Link
-                      href="/admin/dashboard"
-                      onClick={() => setIsOpen(false)}
-                      className="col-span-2 flex h-10 items-center justify-center gap-2 rounded-xl border border-border-subtle bg-page text-[10px] font-bold uppercase tracking-[0.10em] text-text-primary transition-colors hover:bg-surface-elevated"
-                    >
-                      <LayoutDashboard size={13} />
-                      Admin Dashboard
-                    </Link>
-                  )}
                 </div>
               </motion.div>
             )}

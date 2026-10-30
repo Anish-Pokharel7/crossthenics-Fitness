@@ -187,8 +187,8 @@ html.admin-theme,
 html.dark.admin-theme {
   color-scheme: light;
 
-  --background: #C0C0C0;
-  --foreground: #202020;
+  --background: #202020;
+  --foreground: #FFFFFF;
   --card: #2A2A2A;
   --card-foreground: #FFFFFF;
   --popover: #2A2A2A;
@@ -198,11 +198,11 @@ html.dark.admin-theme {
   --secondary: #414141;
   --secondary-foreground: #C0C0C0;
   --muted: #414141;
-  --muted-foreground: #555555;
+  --muted-foreground: #C0C0C0;
   --accent: #414141;
   --accent-foreground: #FFFFFF;
   --destructive: #E10600;
-  --border: #555555;
+  --border: #414141;
   --input: #414141;
   --ring: #E10600;
   --sidebar: #2A2A2A;
@@ -213,15 +213,60 @@ html.dark.admin-theme {
   --sidebar-accent-foreground: #FFFFFF;
   --sidebar-border: #414141;
   --sidebar-ring: #C0C0C0;
+  --admin-panel-muted: #C0C0C0;
+  --admin-panel-border: #414141;
+}
+
+html.admin-theme.admin-light {
+  color-scheme: light;
+
+  --background: #C0C0C0;
+  --foreground: #202020;
+  --card: #FFFFFF;
+  --card-foreground: #202020;
+  --popover: #FFFFFF;
+  --popover-foreground: #202020;
+  --secondary: #E5E5E5;
+  --secondary-foreground: #2A2A2A;
+  --muted: #E5E5E5;
+  --muted-foreground: #414141;
+  --accent: #E5E5E5;
+  --accent-foreground: #2A2A2A;
+  --border: #A3A3A3;
+  --input: #E5E5E5;
+  --sidebar: #2A2A2A;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-accent: #414141;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #414141;
+  --sidebar-ring: #C0C0C0;
+  --admin-panel-muted: #414141;
+  --admin-panel-border: #A3A3A3;
 }
 
 html.admin-theme [data-slot="card"],
 html.admin-theme [data-slot="dialog-content"],
 html.admin-theme [data-slot="dropdown-menu-content"],
 html.admin-theme [data-slot="select-content"] {
-  --foreground: #FFFFFF;
-  --muted-foreground: #C0C0C0;
-  --border: #414141;
+  --foreground: var(--card-foreground, #FFFFFF);
+  --muted-foreground: var(--admin-panel-muted, #C0C0C0);
+  --border: var(--admin-panel-border, #414141);
+}
+
+html.admin-theme [data-slot="card"] {
+  --foreground: var(--card-foreground);
+}
+
+html.admin-theme,
+html.admin-theme body,
+html.admin-theme [data-slot="card"],
+html.admin-theme [data-slot="dialog-content"],
+html.admin-theme [data-slot="dropdown-menu-content"],
+html.admin-theme [data-slot="select-content"] {
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
 }
 
 /* ==========================================
@@ -638,5 +683,14 @@ select:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   body {
     transition: none;
+  }
+
+  html.admin-theme *,
+  html.admin-theme *::before,
+  html.admin-theme *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

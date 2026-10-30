@@ -507,21 +507,16 @@ export default function AdminSettings() {
 
             {/* Appearance Settings */}
             <TabsContent value="appearance" className="p-6 space-y-0">
-              <SettingItem
-                label="Theme Mode"
-                description="Default theme for the admin panel"
-              >
-                <Select defaultValue="system">
-                  <SelectTrigger className="w-full sm:w-96">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
-                  </SelectContent>
-                </Select>
-              </SettingItem>
+              <div className="border-b border-border py-6">
+                <p className="text-base font-medium text-foreground">
+                  Admin theme
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Use the sun or moon control in the admin header to switch
+                  between Charcoal Black and Moonlit Silver. Your preference is
+                  saved in this browser.
+                </p>
+              </div>
               <SettingItem
                 label="Primary Color"
                 description="Brand primary color used throughout the store"

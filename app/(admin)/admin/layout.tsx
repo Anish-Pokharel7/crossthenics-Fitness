@@ -10,16 +10,48 @@ import {
   ExternalLink,
   LayoutDashboard,
   Menu,
+  Moon,
   Package,
   Search,
   Settings,
   ShoppingCart,
+  Sun,
   Users,
   X,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { toast } from "sonner";
 import Logo from "@/public/logo/ct-logo01.png";
+import { unifiedCatalog } from "@/lib/catalog";
+
+type AdminTheme = "charcoal" | "silver";
+const ADMIN_THEME_STORAGE_KEY = "crossthenics-admin-theme";
+const themeListeners = new Set<() => void>();
+
+function subscribeToAdminTheme(listener: () => void) {
+  themeListeners.add(listener);
+  return () => themeListeners.delete(listener);
+}
+
+function getAdminThemeSnapshot(): AdminTheme {
+  return document.documentElement.classList.contains("admin-light")
+    ? "silver"
+    : "charcoal";
+}
+
+function getServerAdminThemeSnapshot(): AdminTheme {
+  return "charcoal";
+}
+
+function notifyAdminThemeChange() {
+  themeListeners.forEach((listener) => listener());
+}
 
 const navigationGroups = [
   {
@@ -57,13 +89,62 @@ export default function AdminLayout({
   const router = useRouter();
   const [sidebarExpanded, setSidebarExpanded] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const sidebarRef = useRef<HTMLElement>(null);
+  const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
+  const wasMobileMenuOpen = useRef(false);
   const [navigationSearch, setNavigationSearch] = useState("");
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const adminTheme = useSyncExternalStore(
+    subscribeToAdminTheme,
+    getAdminThemeSnapshot,
+    getServerAdminThemeSnapshot,
+  );
+  const [globalSearch, setGlobalSearch] = useState("");
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   useEffect(() => {
-    document.documentElement.classList.add("admin-theme");
-    return () => document.documentElement.classList.remove("admin-theme");
+    const root = document.documentElement;
+    root.classList.add("admin-theme");
+    let savedTheme: AdminTheme = "charcoal";
+    try {
+      savedTheme =
+        window.localStorage.getItem(ADMIN_THEME_STORAGE_KEY) === "silver"
+          ? "silver"
+          : "charcoal";
+    } catch {
+      savedTheme = "charcoal";
+    }
+    root.classList.toggle("admin-light", savedTheme === "silver");
+    return () => {
+      root.classList.remove("admin-theme", "admin-light");
+    };
   }, []);
+
+  const changeAdminTheme = () => {
+    const nextTheme = adminTheme === "charcoal" ? "silver" : "charcoal";
+    document.documentElement.classList.toggle(
+      "admin-light",
+      nextTheme === "silver",
+    );
+    notifyAdminThemeChange();
+    try {
+      window.localStorage.setItem(ADMIN_THEME_STORAGE_KEY, nextTheme);
+    } catch {
+      toast.error("Theme changed for this visit but could not be saved.");
+    }
+  };
+
+  const matchingProducts = useMemo(() => {
+    const query = globalSearch.trim().toLowerCase();
+    if (!query) return [];
+    return unifiedCatalog
+      .filter(
+        (product) =>
+          product.name.toLowerCase().includes(query) ||
+          product.category.toLowerCase().includes(query),
+      )
+      .slice(0, 5);
+  }, [globalSearch]);
 
   const filteredGroups = useMemo(() => {
     const query = navigationSearch.trim().toLowerCase();
@@ -80,9 +161,42 @@ export default function AdminLayout({
   }, [navigationSearch]);
 
   useEffect(() => {
-    if (!mobileMenuOpen) return;
+    if (!mobileMenuOpen) {
+      if (wasMobileMenuOpen.current) mobileMenuTriggerRef.current?.focus();
+      wasMobileMenuOpen.current = false;
+      return;
+    }
+
+    wasMobileMenuOpen.current = true;
+    const sidebar = sidebarRef.current;
+    const getFocusableElements = () =>
+      sidebar?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+    getFocusableElements()?.[0]?.focus();
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMobileMenuOpen(false);
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+      const focusableElements = getFocusableElements();
+      if (!focusableElements?.length) {
+        event.preventDefault();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -110,7 +224,7 @@ export default function AdminLayout({
     )?.[1] ?? "Admin";
 
   return (
-    <div className="min-h-screen bg-[#C0C0C0] text-[#202020]">
+    <div className="min-h-screen bg-background text-foreground">
       {mobileMenuOpen && (
         <button
           type="button"
@@ -121,6 +235,9 @@ export default function AdminLayout({
       )}
 
       <aside
+        ref={sidebarRef}
+        role={mobileMenuOpen ? "dialog" : undefined}
+        aria-modal={mobileMenuOpen ? true : undefined}
         className={`fixed inset-y-0 left-0 z-50 flex w-[min(84vw,280px)] flex-col border-r border-[#414141] bg-[#2A2A2A] text-white transition-transform duration-200 lg:w-64 ${
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         } ${!sidebarExpanded ? "lg:w-[76px]" : ""}`}
@@ -160,7 +277,11 @@ export default function AdminLayout({
           </button>
         </div>
 
-        <div className="border-b border-white/10 px-3 py-3">
+        <div
+          className={`border-b border-white/10 px-3 py-3 ${
+            !sidebarExpanded ? "lg:hidden" : ""
+          }`}
+        >
           <label className="flex h-10 items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 focus-within:border-white/30">
             <Search size={15} className="shrink-0 text-[#C0C0C0]" />
             <input
@@ -190,6 +311,7 @@ export default function AdminLayout({
                       <Link
                         href={href}
                         aria-current={active ? "page" : undefined}
+                        aria-label={!sidebarExpanded ? label : undefined}
                         title={!sidebarExpanded ? label : undefined}
                         onClick={() => setMobileMenuOpen(false)}
                         className={`relative flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C0C0C0] ${
@@ -221,6 +343,8 @@ export default function AdminLayout({
             href="/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={!sidebarExpanded ? "View storefront" : undefined}
+            title={!sidebarExpanded ? "View storefront" : undefined}
             className={`flex min-h-11 items-center gap-3 rounded-lg px-3 text-xs font-semibold text-white/70 transition-colors hover:bg-white/5 hover:text-white ${
               !sidebarExpanded ? "lg:justify-center lg:px-0" : ""
             }`}
@@ -249,6 +373,8 @@ export default function AdminLayout({
             type="button"
             disabled={isSigningOut}
             onClick={handleSignOut}
+            aria-label={!sidebarExpanded ? "Sign out" : undefined}
+            title={!sidebarExpanded ? "Sign out" : undefined}
             className={`flex min-h-11 w-full items-center gap-3 rounded-lg px-3 text-xs font-bold text-white/75 transition-colors hover:bg-white/5 hover:text-white disabled:opacity-50 ${
               !sidebarExpanded ? "lg:justify-center lg:px-0" : ""
             }`}
@@ -268,8 +394,9 @@ export default function AdminLayout({
           sidebarExpanded ? "lg:ml-64" : "lg:ml-[76px]"
         }`}
       >
-        <header className="sticky top-0 z-30 flex h-[72px] items-center gap-3 border-b border-[#414141] bg-[#2A2A2A] px-4 text-white sm:px-6 lg:px-8">
+        <header className="sticky top-0 z-30 flex h-[68px] items-center gap-3 border-b border-[#414141] bg-[#2A2A2A] px-4 text-white sm:px-6 lg:px-8">
           <button
+            ref={mobileMenuTriggerRef}
             type="button"
             onClick={() => setMobileMenuOpen(true)}
             className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-white/20 text-white hover:bg-white/10 lg:hidden"
@@ -287,10 +414,105 @@ export default function AdminLayout({
               {currentTitle}
             </h1>
           </div>
-          <div className="hidden items-center gap-2 rounded-full border border-white/20 px-3 py-1.5 sm:flex">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#E10600]" />
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#C0C0C0]">
-              Admin workspace
+          <div
+            className={`relative w-full md:max-w-xs ${
+              mobileSearchOpen
+                ? "absolute inset-x-2 top-[calc(100%+8px)] z-40 w-auto rounded-lg bg-[#2A2A2A] p-2 md:static md:w-full md:bg-transparent md:p-0"
+                : "hidden md:block"
+            }`}
+          >
+            <Search
+              size={15}
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#C0C0C0]"
+              aria-hidden="true"
+            />
+            <input
+              type="search"
+              value={globalSearch}
+              onChange={(event) => setGlobalSearch(event.target.value)}
+              placeholder="Search store catalog"
+              aria-label="Search store catalog"
+              onKeyDown={(event) => {
+                if (event.key === "Escape") {
+                  setGlobalSearch("");
+                  setMobileSearchOpen(false);
+                }
+              }}
+              className="h-10 w-full rounded-lg border border-white/15 bg-white/5 pl-9 pr-3 text-xs text-white outline-none placeholder:text-white/50 focus:border-[#C0C0C0] focus:ring-2 focus:ring-[#C0C0C0]/30"
+            />
+            {globalSearch.trim() && (
+              <div className="absolute right-0 top-full z-40 mt-2 w-full overflow-hidden rounded-lg border border-[#414141] bg-[#2A2A2A] py-1 text-white shadow-xl">
+                {matchingProducts.length ? (
+                  matchingProducts.map((product) => (
+                    <Link
+                      key={product.id}
+                      href={`/products/${product.id}`}
+                      onClick={() => setGlobalSearch("")}
+                      className="block border-b border-white/10 px-3 py-2.5 last:border-0 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-[#C0C0C0]"
+                    >
+                      <span className="block truncate text-xs font-semibold">
+                        {product.name}
+                      </span>
+                      <span className="mt-0.5 block text-[10px] text-[#C0C0C0]">
+                        {product.category} · View product
+                      </span>
+                    </Link>
+                  ))
+                ) : (
+                  <p className="px-3 py-3 text-xs text-[#C0C0C0]">
+                    No matching products in the store catalog.
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={() => setMobileSearchOpen((open) => !open)}
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-white/20 text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C0C0C0] md:hidden"
+            aria-label={
+              mobileSearchOpen ? "Close catalog search" : "Open catalog search"
+            }
+            aria-expanded={mobileSearchOpen}
+          >
+            {mobileSearchOpen ? (
+              <X size={17} aria-hidden="true" />
+            ) : (
+              <Search size={17} aria-hidden="true" />
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={changeAdminTheme}
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-white/20 text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C0C0C0]"
+            aria-label={
+              adminTheme === "charcoal"
+                ? "Switch to Moonlit Silver theme"
+                : "Switch to Charcoal Black theme"
+            }
+            title={
+              adminTheme === "charcoal"
+                ? "Switch to Moonlit Silver theme"
+                : "Switch to Charcoal Black theme"
+            }
+          >
+            {adminTheme === "charcoal" ? (
+              <Moon size={17} aria-hidden="true" />
+            ) : (
+              <Sun size={17} aria-hidden="true" />
+            )}
+          </button>
+          <div className="hidden items-center gap-2 sm:flex">
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-[#E10600] text-xs font-bold text-white">
+              A
+            </span>
+            <span className="hidden min-w-0 lg:block">
+              <span className="block text-xs font-semibold text-white">
+                Admin account
+              </span>
+              <span className="block text-[10px] text-[#C0C0C0]">
+                Store administrator
+              </span>
             </span>
           </div>
         </header>

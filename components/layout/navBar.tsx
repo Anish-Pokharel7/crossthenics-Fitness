@@ -31,7 +31,6 @@ const navLinks = [
   { name: "Products", href: "/allproducts" },
   { name: "Backpacks", href: "/backpacks" },
   { name: "Latest Drops", href: "/latestproducts" },
-  { name: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {

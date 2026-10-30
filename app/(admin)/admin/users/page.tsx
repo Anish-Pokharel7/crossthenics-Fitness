@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/currency";
 import {
   Activity,
   Edit,
@@ -139,8 +140,8 @@ const mockUsers = [
 
 function RoleBadge({ role }: { role: string }) {
   const variants: Record<string, string> = {
-    admin: "bg-purple-100 text-purple-800",
-    staff: "bg-blue-100 text-blue-800",
+    admin: "bg-[#414141] text-[#C0C0C0] border border-[#555]",
+    staff: "bg-[#414141] text-[#C0C0C0] border border-[#555]",
     customer: "bg-muted text-foreground",
   };
   return (
@@ -153,9 +154,9 @@ function RoleBadge({ role }: { role: string }) {
 
 function StatusBadge({ status }: { status: string }) {
   const variants: Record<string, string> = {
-    active: "bg-green-100 text-green-800",
+    active: "bg-[#414141] text-[#C0C0C0] border border-[#555]",
     inactive: "bg-muted text-foreground",
-    banned: "bg-red-100 text-red-800",
+    banned: "bg-[#E10600] text-white",
   };
   return (
     <Badge variant="secondary" className={cn("gap-1", variants[status])}>
@@ -323,7 +324,7 @@ export default function AdminUsers() {
                         {user.ordersCount}
                       </TableCell>
                       <TableCell className="text-right font-medium text-foreground">
-                        ${user.totalSpent.toFixed(2)}
+                        {formatCurrency(user.totalSpent)}
                       </TableCell>
                       <TableCell className="text-right">
                         <DropdownMenu>
@@ -374,8 +375,8 @@ export default function AdminUsers() {
                               }}
                               className={
                                 user.status !== "active"
-                                  ? "text-green-600"
-                                  : "text-red-600"
+                                  ? "text-[#C0C0C0]"
+                                  : "text-[#E10600]"
                               }
                             >
                               {user.status === "active" ? (
@@ -391,7 +392,7 @@ export default function AdminUsers() {
                               )}
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                              className="text-red-600"
+                              className="text-[#E10600]"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleStatusChange(user.id, "banned");
@@ -536,20 +537,19 @@ export default function AdminUsers() {
                           </p>
                         </div>
                         <div className="p-4 bg-muted rounded-lg text-center">
-                          <p className="text-3xl font-bold text-green-600">
-                            ${selectedUser.totalSpent.toFixed(2)}
+                          <p className="text-3xl font-bold text-primary">
+                            {formatCurrency(selectedUser.totalSpent)}
                           </p>
                           <p className="text-sm text-muted-foreground">
                             Total Spent
                           </p>
                         </div>
                         <div className="p-4 bg-muted rounded-lg text-center">
-                          <p className="text-3xl font-bold text-blue-600">
-                            $
-                            {(
+                          <p className="text-3xl font-bold text-primary">
+                            {formatCurrency(
                               selectedUser.totalSpent /
-                              Math.max(selectedUser.ordersCount, 1)
-                            ).toFixed(2)}
+                                Math.max(selectedUser.ordersCount, 1),
+                            )}
                           </p>
                           <p className="text-sm text-muted-foreground">
                             Avg. Order Value

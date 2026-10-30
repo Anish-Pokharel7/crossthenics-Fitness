@@ -39,6 +39,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/currency";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Edit,
@@ -227,8 +228,8 @@ export default function AdminProducts() {
 
   const getStatusBadge = (status: string) => {
     const variants: Record<string, string> = {
-      active: "bg-green-100 text-green-800",
-      draft: "bg-yellow-100 text-yellow-800",
+      active: "bg-[#414141] text-[#C0C0C0] border border-[#555]",
+      draft: "bg-[#414141] text-[#C0C0C0] border border-[#555]",
       archived: "bg-muted text-foreground",
     };
     return (
@@ -352,17 +353,17 @@ export default function AdminProducts() {
                         </span>
                       </TableCell>
                       <TableCell className="text-right font-medium text-foreground">
-                        ${product.price.toFixed(2)}
+                        {formatCurrency(product.price)}
                       </TableCell>
                       <TableCell className="text-center">
                         <span
                           className={cn(
                             "inline-flex items-center px-2 py-1 rounded-full text-xs font-medium",
                             product.stock === 0
-                              ? "bg-red-100 text-red-800"
+                              ? "bg-[#E10600] text-white"
                               : product.stock < 10
-                                ? "bg-yellow-100 text-yellow-800"
-                                : "bg-green-100 text-green-800",
+                                ? "bg-[#414141] text-[#C0C0C0]"
+                                : "bg-[#414141] text-[#C0C0C0]",
                           )}
                         >
                           {product.stock}
@@ -393,7 +394,7 @@ export default function AdminProducts() {
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={() => handleDelete(product.id)}
-                              className="text-red-600"
+                              className="text-[#E10600]"
                             >
                               <Trash2 className="h-4 w-4 mr-2" />
                               Delete
@@ -507,7 +508,7 @@ export default function AdminProducts() {
                   name="price"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Price ($)</FormLabel>
+                      <FormLabel>Price (NPR / Rs.)</FormLabel>
                       <FormControl>
                         <Input
                           type="number"

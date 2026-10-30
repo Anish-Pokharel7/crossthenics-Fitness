@@ -1,4 +1,3 @@
-import { AppShell } from "@/components/layout/AppShell";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { AuthProvider } from "@/lib/auth/AuthContext";
 import type { Metadata } from "next";
@@ -39,7 +38,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ThemeProvider>
           <AuthProvider>
-            <AppShell>{children}</AppShell>
+            {children}
           </AuthProvider>
         </ThemeProvider>
       </body>

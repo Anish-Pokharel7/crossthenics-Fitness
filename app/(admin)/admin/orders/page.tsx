@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/currency";
 import {
   CheckCircle,
   Clock,
@@ -174,22 +175,22 @@ function StatusBadge({ status }: { status: string }) {
     },
     processing: {
       label: "Processing",
-      className: "bg-blue-100 text-blue-800",
+      className: "bg-[#414141] text-[#C0C0C0] border border-[#555]",
       icon: Package,
     },
     shipped: {
       label: "Shipped",
-      className: "bg-yellow-100 text-yellow-800",
+      className: "bg-[#414141] text-[#C0C0C0] border border-[#555]",
       icon: Truck,
     },
     delivered: {
       label: "Delivered",
-      className: "bg-green-100 text-green-800",
+      className: "bg-[#414141] text-[#C0C0C0] border border-[#555]",
       icon: CheckCircle,
     },
     cancelled: {
       label: "Cancelled",
-      className: "bg-red-100 text-red-800",
+      className: "bg-[#E10600] text-white",
       icon: XCircle,
     },
   };
@@ -210,10 +211,10 @@ function StatusBadge({ status }: { status: string }) {
 
 function PaymentStatusBadge({ status }: { status: string }) {
   const variants: Record<string, string> = {
-    paid: "bg-green-100 text-green-800",
-    pending: "bg-yellow-100 text-yellow-800",
-    refunded: "bg-blue-100 text-blue-800",
-    failed: "bg-red-100 text-red-800",
+    paid: "bg-[#414141] text-[#C0C0C0] border border-[#555]",
+    pending: "bg-[#414141] text-[#C0C0C0] border border-[#555]",
+    refunded: "bg-[#414141] text-[#C0C0C0] border border-[#555]",
+    failed: "bg-[#E10600] text-white",
   };
   return (
     <span
@@ -366,7 +367,7 @@ export default function AdminOrders() {
                         {order.date}
                       </TableCell>
                       <TableCell className="text-right font-medium text-foreground">
-                        ${order.total.toFixed(2)}
+                        {formatCurrency(order.total)}
                       </TableCell>
                       <TableCell>
                         <StatusBadge status={order.status} />
@@ -409,7 +410,7 @@ export default function AdminOrders() {
                                 }
                               >
                                 {order.status === opt.value && (
-                                  <CheckCircle className="h-4 w-4 mr-2 text-green-500" />
+                                  <CheckCircle className="h-4 w-4 mr-2 text-[#E10600]" />
                                 )}
                                 <opt.icon className="h-4 w-4 mr-2" />
                                 {opt.label}
@@ -466,12 +467,12 @@ export default function AdminOrders() {
                             <div>
                               <p className="font-medium">{item.name}</p>
                               <p className="text-sm text-muted-foreground">
-                                Qty: {item.qty} × ${item.price.toFixed(2)}
+                                Qty: {item.qty} × {formatCurrency(item.price)}
                               </p>
                             </div>
                           </div>
                           <span className="font-medium">
-                            ${(item.qty * item.price).toFixed(2)}
+                            {formatCurrency(item.qty * item.price)}
                           </span>
                         </div>
                       ))}
@@ -486,19 +487,19 @@ export default function AdminOrders() {
                     <div className="max-w-md space-y-2">
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">Subtotal</span>
-                        <span>${selectedOrder.subtotal.toFixed(2)}</span>
+                        <span>{formatCurrency(selectedOrder.subtotal)}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">Shipping</span>
-                        <span>${selectedOrder.shipping.toFixed(2)}</span>
+                        <span>{formatCurrency(selectedOrder.shipping)}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">Tax</span>
-                        <span>${selectedOrder.tax.toFixed(2)}</span>
+                        <span>{formatCurrency(selectedOrder.tax)}</span>
                       </div>
                       <div className="flex justify-between text-lg font-semibold border-t pt-2">
                         <span>Total</span>
-                        <span>${selectedOrder.total.toFixed(2)}</span>
+                        <span>{formatCurrency(selectedOrder.total)}</span>
                       </div>
                     </div>
                   </div>

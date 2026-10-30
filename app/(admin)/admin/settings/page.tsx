@@ -209,16 +209,12 @@ export default function AdminSettings() {
                 label="Currency"
                 description="Default currency for product prices"
               >
-                <Select defaultValue="USD">
+                <Select defaultValue="NPR">
                   <SelectTrigger className="w-full sm:w-96">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="USD">USD ($)</SelectItem>
-                    <SelectItem value="EUR">EUR (€)</SelectItem>
-                    <SelectItem value="GBP">GBP (£)</SelectItem>
-                    <SelectItem value="CAD">CAD ($)</SelectItem>
-                    <SelectItem value="AUD">AUD ($)</SelectItem>
+                    <SelectItem value="NPR">NPR (Rs.)</SelectItem>
                   </SelectContent>
                 </Select>
               </SettingItem>

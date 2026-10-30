@@ -1,30 +1,52 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
+  BarChart3,
   ChevronLeft,
   ChevronRight,
+  ExternalLink,
   LayoutDashboard,
-  LogOut,
   Menu,
   Package,
+  Search,
   Settings,
   ShoppingCart,
   Users,
   X,
 } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
+import Logo from "@/public/logo/ct-logo01.png";
 
-const adminNavItems = [
-  { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-  { name: "Products", href: "/admin/products", icon: Package },
-  { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
-  { name: "Users", href: "/admin/users", icon: Users },
-  { name: "Settings", href: "/admin/settings", icon: Settings },
+const navigationGroups = [
+  {
+    label: "Overview",
+    items: [{ label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard }],
+  },
+  {
+    label: "Store management",
+    items: [
+      { label: "Products", href: "/admin/products", icon: Package },
+      { label: "Orders", href: "/admin/orders", icon: ShoppingCart },
+      { label: "Customers", href: "/admin/users", icon: Users },
+    ],
+  },
+  {
+    label: "System",
+    items: [{ label: "Settings", href: "/admin/settings", icon: Settings }],
+  },
 ];
+
+const pageTitles: Record<string, string> = {
+  "/admin/dashboard": "Store overview",
+  "/admin/products": "Products",
+  "/admin/orders": "Orders",
+  "/admin/users": "Customers",
+  "/admin/settings": "Settings",
+};
 
 export default function AdminLayout({
   children,
@@ -32,159 +54,261 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const router = useRouter();
+  const [sidebarExpanded, setSidebarExpanded] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [navigationSearch, setNavigationSearch] = useState("");
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.classList.add("admin-theme");
+    return () => document.documentElement.classList.remove("admin-theme");
+  }, []);
+
+  const filteredGroups = useMemo(() => {
+    const query = navigationSearch.trim().toLowerCase();
+    if (!query) return navigationGroups;
+
+    return navigationGroups
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((item) =>
+          item.label.toLowerCase().includes(query),
+        ),
+      }))
+      .filter((group) => group.items.length > 0);
+  }, [navigationSearch]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileMenuOpen]);
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    try {
+      const response = await fetch("/api/admin/session", { method: "DELETE" });
+      if (!response.ok) throw new Error("Could not sign out.");
+      router.replace("/admin-login");
+      router.refresh();
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Could not sign out.",
+      );
+    } finally {
+      setIsSigningOut(false);
+    }
+  };
+
+  const currentTitle =
+    Object.entries(pageTitles).find(
+      ([href]) => pathname === href || pathname.startsWith(`${href}/`),
+    )?.[1] ?? "Admin";
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Mobile sidebar overlay */}
+    <div className="min-h-screen bg-[#C0C0C0] text-[#202020]">
       {mobileMenuOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+        <button
+          type="button"
+          className="fixed inset-0 z-40 cursor-default bg-black/50 lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
-          aria-hidden="true"
+          aria-label="Close admin navigation"
         />
       )}
 
-      {/* Sidebar */}
       <aside
-        className={cn(
-          "fixed left-0 top-0 z-50 h-screen bg-card text-card-foreground border-r border-border transition-all duration-300 lg:translate-x-0",
-          sidebarOpen ? "w-64" : "w-20",
-          !sidebarOpen && "lg:w-20",
-          mobileMenuOpen && "lg:hidden",
-        )}
+        className={`fixed inset-y-0 left-0 z-50 flex w-[min(84vw,280px)] flex-col border-r border-[#414141] bg-[#2A2A2A] text-white transition-transform duration-200 lg:w-64 ${
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        } ${!sidebarExpanded ? "lg:w-[76px]" : ""}`}
         aria-label="Admin navigation"
       >
-        {/* Sidebar header */}
-        <div className="flex h-16 items-center justify-between px-4 border-b border-border">
-          <Link href="/admin/dashboard" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <span className="text-lg font-bold">CF</span>
-            </div>
-            {sidebarOpen && (
-              <span className="text-xl font-bold text-foreground">Admin</span>
-            )}
-          </Link>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden"
-            onClick={() => setMobileMenuOpen(false)}
-            aria-label="Close sidebar"
+        <div className="flex h-[72px] shrink-0 items-center justify-between border-b border-white/10 px-4">
+          <Link
+            href="/admin/dashboard"
+            className="min-w-0"
+            aria-label="Crossthenics admin dashboard"
           >
-            <X size={20} />
-          </Button>
+            <Image
+              src={Logo}
+              alt="Crossthenics Fitness"
+              width={160}
+              height={56}
+              priority
+              className={`h-9 w-auto object-contain ${
+                !sidebarExpanded ? "lg:hidden" : ""
+              }`}
+            />
+            <span
+              className={`hidden text-xs font-black uppercase tracking-[0.16em] ${
+                !sidebarExpanded ? "lg:block" : ""
+              }`}
+            >
+              CT<span className="text-[#E10600]"> / Admin</span>
+            </span>
+          </Link>
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(false)}
+            className="grid h-10 w-10 place-items-center rounded-lg text-white/70 hover:bg-white/10 hover:text-white lg:hidden"
+            aria-label="Close admin menu"
+          >
+            <X size={18} />
+          </button>
         </div>
 
-        {/* Navigation */}
-        <nav
-          className="flex-1 space-y-1 p-4 overflow-y-auto"
-          aria-label="Main navigation"
-        >
-          {adminNavItems.map((item) => {
-            const isActive =
-              pathname === item.href || pathname.startsWith(`${item.href}/`);
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                  "focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2",
-                  isActive
-                    ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
-                  !sidebarOpen && "justify-center px-2",
-                )}
-                title={sidebarOpen ? undefined : item.name}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <item.icon className="h-5 w-5 shrink-0" aria-hidden="true" />
-                {sidebarOpen && <span>{item.name}</span>}
-              </Link>
-            );
-          })}
+        <div className="border-b border-white/10 px-3 py-3">
+          <label className="flex h-10 items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 focus-within:border-white/30">
+            <Search size={15} className="shrink-0 text-[#C0C0C0]" />
+            <input
+              value={navigationSearch}
+              onChange={(event) => setNavigationSearch(event.target.value)}
+              placeholder="Find a section"
+              aria-label="Filter admin navigation"
+              className="min-w-0 flex-1 bg-transparent text-xs text-white outline-none placeholder:text-white/45"
+            />
+          </label>
+        </div>
+
+        <nav className="min-h-0 flex-1 space-y-6 overflow-y-auto px-3 py-5">
+          {filteredGroups.map((group) => (
+            <div key={group.label}>
+              {sidebarExpanded && (
+                <h2 className="mb-2 px-3 text-[9px] font-black uppercase tracking-[0.18em] text-[#C0C0C0]/70">
+                  {group.label}
+                </h2>
+              )}
+              <ul className="space-y-1">
+                {group.items.map(({ label, href, icon: Icon }) => {
+                  const active =
+                    pathname === href || pathname.startsWith(`${href}/`);
+                  return (
+                    <li key={href}>
+                      <Link
+                        href={href}
+                        aria-current={active ? "page" : undefined}
+                        title={!sidebarExpanded ? label : undefined}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`relative flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C0C0C0] ${
+                          active
+                            ? "bg-white/10 font-semibold text-white before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:bg-[#E10600]"
+                            : "text-white/70 hover:bg-white/5 hover:text-white"
+                        } ${!sidebarExpanded ? "lg:justify-center lg:px-0" : ""}`}
+                      >
+                        <Icon size={17} className="shrink-0" aria-hidden="true" />
+                        <span className={!sidebarExpanded ? "lg:hidden" : ""}>
+                          {label}
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+          {filteredGroups.length === 0 && (
+            <p className="px-3 py-2 text-xs text-white/60">
+              No matching sections.
+            </p>
+          )}
         </nav>
 
-        {/* Sidebar footer - Collapse button & Logout */}
-        <div className="border-t border-border p-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "w-full justify-start gap-3",
-              !sidebarOpen && "justify-center px-2",
-            )}
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            aria-label={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
-            title={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
+        <div className="space-y-2 border-t border-white/10 p-3">
+          <a
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`flex min-h-11 items-center gap-3 rounded-lg px-3 text-xs font-semibold text-white/70 transition-colors hover:bg-white/5 hover:text-white ${
+              !sidebarExpanded ? "lg:justify-center lg:px-0" : ""
+            }`}
           >
-            {sidebarOpen ? (
-              <>
-                <ChevronLeft size={20} />
-                <span>Collapse</span>
-              </>
+            <ExternalLink size={16} aria-hidden="true" />
+            <span className={!sidebarExpanded ? "lg:hidden" : ""}>
+              View storefront
+            </span>
+          </a>
+          <button
+            type="button"
+            onClick={() => setSidebarExpanded((expanded) => !expanded)}
+            className="hidden min-h-10 w-full items-center gap-3 rounded-lg px-3 text-xs font-semibold text-white/65 transition-colors hover:bg-white/5 hover:text-white lg:flex"
+            aria-label={sidebarExpanded ? "Collapse sidebar" : "Expand sidebar"}
+          >
+            {sidebarExpanded ? (
+              <ChevronLeft size={17} />
             ) : (
-              <>
-                <ChevronRight size={20} />
-                <span className="hidden lg:inline">Expand</span>
-              </>
+              <ChevronRight size={17} />
             )}
-          </Button>
-
-          {sidebarOpen && (
-            <div className="mt-4 pt-4 border-t border-border">
-              <Button
-                variant="ghost"
-                className="w-full justify-start gap-3 text-red-600 hover:text-red-700 hover:bg-red-50"
-                onClick={() => {
-                  // Handle logout
-                }}
-              >
-                <LogOut size={20} />
-                <span>Logout</span>
-              </Button>
-            </div>
-          )}
+            <span className={!sidebarExpanded ? "lg:hidden" : ""}>
+              {sidebarExpanded ? "Collapse" : "Expand"}
+            </span>
+          </button>
+          <button
+            type="button"
+            disabled={isSigningOut}
+            onClick={handleSignOut}
+            className={`flex min-h-11 w-full items-center gap-3 rounded-lg px-3 text-xs font-bold text-white/75 transition-colors hover:bg-white/5 hover:text-white disabled:opacity-50 ${
+              !sidebarExpanded ? "lg:justify-center lg:px-0" : ""
+            }`}
+          >
+            <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#E10600] text-[9px] font-black">
+              A
+            </span>
+            <span className={!sidebarExpanded ? "lg:hidden" : ""}>
+              {isSigningOut ? "Signing out..." : "Sign out"}
+            </span>
+          </button>
         </div>
       </aside>
 
-      {/* Main content */}
-      <main
-        className={cn(
-          "min-h-screen transition-all duration-300 lg:ml-64",
-          sidebarOpen ? "lg:ml-64" : "lg:ml-20",
-        )}
+      <div
+        className={`min-h-screen transition-[margin] duration-200 ${
+          sidebarExpanded ? "lg:ml-64" : "lg:ml-[76px]"
+        }`}
       >
-        {/* Top bar */}
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-border bg-card text-card-foreground px-4 lg:px-8">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden"
+        <header className="sticky top-0 z-30 flex h-[72px] items-center gap-3 border-b border-[#414141] bg-[#2A2A2A] px-4 text-white sm:px-6 lg:px-8">
+          <button
+            type="button"
             onClick={() => setMobileMenuOpen(true)}
-            aria-label="Open menu"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-white/20 text-white hover:bg-white/10 lg:hidden"
+            aria-label="Open admin navigation"
+            aria-expanded={mobileMenuOpen}
           >
-            <Menu size={24} />
-          </Button>
-
-          <div className="flex-1" />
-
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="font-medium">Admin Panel</span>
-            </div>
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary font-medium text-sm">
-              A
-            </div>
+            <Menu size={18} />
+          </button>
+          <div className="min-w-0 flex-1">
+            <p className="hidden text-[9px] font-bold uppercase tracking-[0.16em] text-[#C0C0C0] sm:block">
+              Store management <span className="px-1 text-[#E10600]">/</span>{" "}
+              {currentTitle}
+            </p>
+            <h1 className="truncate text-base font-bold text-white sm:mt-0.5 sm:text-lg">
+              {currentTitle}
+            </h1>
+          </div>
+          <div className="hidden items-center gap-2 rounded-full border border-white/20 px-3 py-1.5 sm:flex">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#E10600]" />
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#C0C0C0]">
+              Admin workspace
+            </span>
           </div>
         </header>
 
-        {/* Page content */}
-        <div className="p-4 lg:p-8">{children}</div>
-      </main>
+        <main className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 lg:p-8">
+          <div className="mb-6 flex items-start gap-3 rounded-lg border border-[#414141] bg-[#2A2A2A] px-4 py-3 text-xs leading-relaxed text-[#C0C0C0]">
+            <BarChart3 size={16} className="mt-0.5 shrink-0" />
+            <p>
+              <strong className="text-white">Data connection unavailable.</strong>{" "}
+              Products, Orders, Customers, and Settings use local/demo data;
+              edits do not update the public store. Any amounts shown in NPR
+              are display examples only: the demo values have not been converted
+              or verified as business records.
+            </p>
+          </div>
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

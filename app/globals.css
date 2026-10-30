@@ -183,6 +183,47 @@
   --sidebar-ring: #E10600;
 }
 
+html.admin-theme,
+html.dark.admin-theme {
+  color-scheme: light;
+
+  --background: #C0C0C0;
+  --foreground: #202020;
+  --card: #2A2A2A;
+  --card-foreground: #FFFFFF;
+  --popover: #2A2A2A;
+  --popover-foreground: #FFFFFF;
+  --primary: #E10600;
+  --primary-foreground: #FFFFFF;
+  --secondary: #414141;
+  --secondary-foreground: #C0C0C0;
+  --muted: #414141;
+  --muted-foreground: #555555;
+  --accent: #414141;
+  --accent-foreground: #FFFFFF;
+  --destructive: #E10600;
+  --border: #555555;
+  --input: #414141;
+  --ring: #E10600;
+  --sidebar: #2A2A2A;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #E10600;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #414141;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #414141;
+  --sidebar-ring: #C0C0C0;
+}
+
+html.admin-theme [data-slot="card"],
+html.admin-theme [data-slot="dialog-content"],
+html.admin-theme [data-slot="dropdown-menu-content"],
+html.admin-theme [data-slot="select-content"] {
+  --foreground: #FFFFFF;
+  --muted-foreground: #C0C0C0;
+  --border: #414141;
+}
+
 /* ==========================================
    DARK THEME
    ========================================== */

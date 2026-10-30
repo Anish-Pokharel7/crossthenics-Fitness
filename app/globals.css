@@ -1,4 +1,6 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -27,11 +29,13 @@
   --color-accent-coral: var(--accent-coral);
   --color-muted-text: var(--muted-foreground);
   --color-white-glass: var(--white-glass);
+
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-sans: var(--font-body);
   --font-heading: var(--font-display);
   --font-mono: var(--font-geist-mono);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -89,81 +93,86 @@
   }
 }
 
-/* ─────────────────────────────────────────────────────
+/* ==========================================
    CROSSTHENICS DESIGN TOKENS
    Charcoal Grey · Moonlit Silver · Signal Red
-   Palette: #2A2A2A · #C0C0C0 · #E10600
-   Supporting: #1C1C1C · #242424 · #353535 · #414141 · #F5F5F5 · #929292 · #B80500
-   ───────────────────────────────────────────────────── */
+   ========================================== */
 
 :root {
   color-scheme: light;
 
-  /* ── TYPOGRAPHY TOKENS ── */
+  /* Typography */
   --font-display: 'Barlow Condensed', sans-serif;
   --font-body: 'Inter', sans-serif;
 
-  /* ── EXACT BRAND SPECIFICATION TOKENS ── */
+  /* Brand colors */
   --color-charcoal: #2A2A2A;
   --color-silver: #C0C0C0;
   --color-signal-red: #E10600;
 
-  /* ── EXACT SUPPORTING COLOR TOKENS ── */
+  /* Light theme */
   --bg-page: #C0C0C0;
   --bg-section-alt: #D6D6D6;
   --surface-raised: #E5E5E5;
   --surface-elevated: #FFFFFF;
   --border-subtle: #A3A3A3;
+
   --text-primary: #1C1C1C;
   --text-secondary: #414141;
   --text-muted: #666666;
+
   --cta-red-hover: #B80500;
 
-  /* ── DESIGN SYSTEM & SHADCN ALIGNMENT ── */
+  /* Shadcn alignment */
   --background: var(--bg-page);
   --foreground: var(--text-primary);
   --surface: var(--surface-raised);
   --surface-light: var(--surface-elevated);
-  --color-page: var(--bg-page);
 
   --card: var(--surface-raised);
   --card-foreground: var(--text-primary);
   --popover: var(--surface-elevated);
   --popover-foreground: var(--text-primary);
 
-  /* Primary Accent: Signal Red */
   --primary: #E10600;
   --primary-foreground: #FFFFFF;
   --accent-coral: #414141;
 
-  /* Secondary & Muted */
   --secondary: var(--bg-section-alt);
   --secondary-foreground: var(--text-secondary);
+
   --muted: var(--bg-section-alt);
   --muted-foreground: var(--text-muted);
+
   --accent: rgba(225, 6, 0, 0.12);
   --accent-foreground: var(--text-secondary);
+
   --destructive: #E10600;
   --border: var(--border-subtle);
   --input: var(--bg-section-alt);
+
+  /* Keep the brand ring token for components that intentionally use it.
+     Global keyboard focus no longer uses this red color. */
   --ring: #E10600;
 
-  /* Radius & Layout */
+  /* Layout */
   --radius-card: 16px;
   --radius-control: 8px;
   --radius: 0.75rem;
   --content-max-width: 1440px;
 
-  /* Glass / Subtle Tokens */
+  /* Glass */
   --white-glass: rgba(255, 255, 255, 0.35);
   --white-border: #A3A3A3;
 
+  /* Charts */
   --chart-1: #E10600;
   --chart-2: #C0C0C0;
   --chart-3: #929292;
   --chart-4: #414141;
   --chart-5: #2A2A2A;
 
+  /* Sidebar */
   --sidebar: #D6D6D6;
   --sidebar-foreground: #1C1C1C;
   --sidebar-primary: #E10600;
@@ -174,6 +183,10 @@
   --sidebar-ring: #E10600;
 }
 
+/* ==========================================
+   DARK THEME
+   ========================================== */
+
 html.dark {
   color-scheme: dark;
 
@@ -182,6 +195,7 @@ html.dark {
   --surface-raised: #2A2A2A;
   --surface-elevated: #353535;
   --border-subtle: #414141;
+
   --text-primary: #F5F5F5;
   --text-secondary: #C0C0C0;
   --text-muted: #A3A3A3;
@@ -190,44 +204,57 @@ html.dark {
   --foreground: var(--text-primary);
   --surface: var(--surface-raised);
   --surface-light: var(--surface-elevated);
-  --color-page: var(--bg-page);
+
   --card: var(--surface-raised);
   --card-foreground: var(--text-primary);
   --popover: var(--surface-raised);
   --popover-foreground: var(--text-primary);
+
   --accent-coral: #C0C0C0;
+
   --secondary: #242424;
   --secondary-foreground: #C0C0C0;
+
   --muted: #242424;
   --muted-foreground: #A3A3A3;
+
   --accent: rgba(225, 6, 0, 0.12);
   --accent-foreground: #C0C0C0;
+
   --border: #414141;
   --input: #242424;
+
   --white-glass: rgba(255, 255, 255, 0.03);
   --white-border: #414141;
+
   --sidebar: #242424;
   --sidebar-foreground: #F5F5F5;
   --sidebar-accent-foreground: #C0C0C0;
   --sidebar-border: #414141;
 }
 
+/* ==========================================
+   BASE STYLES
+   ========================================== */
+
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
     background-color: var(--background);
     color: var(--foreground);
     transition: background-color 180ms ease, color 180ms ease;
-    selection-background: rgba(225, 6, 0, 0.40);
   }
+
   ::selection {
     background: rgba(225, 6, 0, 0.40);
     color: #FFFFFF;
   }
+
   html {
     font-family: var(--font-body);
     color-scheme: light;
@@ -237,22 +264,47 @@ html.dark {
     color-scheme: dark;
   }
 
-  h1, h2, h3,
+  h1,
+  h2,
+  h3,
   .display-heading {
     font-family: var(--font-display);
     font-weight: 700;
   }
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-signal-red);
+/* ==========================================
+   FOCUS STYLES
+   Neutral silver focus instead of red
+   ========================================== */
+
+/* Remove browser and global red focus styling from text inputs */
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Keyboard focus for buttons, links and other controls */
+:focus-visible:not(input):not(textarea):not(select) {
+  outline: 2px solid var(--color-silver);
   outline-offset: 3px;
 }
 
-/* ─────────────────────────────────────────────
+/* Search containers: subtle silver border, no red glow */
+.search-container:focus-within {
+  border-color: var(--color-silver) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================
    DISCIPLINED ATHLETIC SURFACES & CARDS
-   Layered Charcoal Tones (#1C1C1C · #242424 · #2A2A2A · #353535)
-   ───────────────────────────────────────────── */
+   ========================================== */
 
 .glass-light {
   background-color: var(--bg-section-alt);
@@ -280,7 +332,7 @@ html.dark {
   color: var(--text-primary);
 }
 
-/* Navbar integrated charcoal surface */
+/* Navbar */
 .glass-navbar {
   background-color: color-mix(in srgb, var(--surface-raised) 95%, transparent);
   backdrop-filter: blur(12px);
@@ -289,7 +341,7 @@ html.dark {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
 
-/* Card Surface — clean, restrained borders, minimal shadows */
+/* Cards */
 .glass-card {
   background-color: var(--surface-raised);
   border: 1px solid var(--border-subtle);
@@ -304,21 +356,20 @@ html.dark {
   transform: translateY(-2px);
 }
 
-/* Pill / Badge */
+/* Pills */
 .glass-pill {
   background-color: var(--bg-section-alt);
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
 }
 
-/* Signal Red pill badge */
 .glass-pill-red {
   background-color: rgba(225, 6, 0, 0.12);
   border: 1px solid rgba(225, 6, 0, 0.35);
   color: #E10600;
 }
 
-/* Input field */
+/* Input fields */
 .glass-input {
   background-color: var(--bg-section-alt);
   border: 1px solid var(--border-subtle);
@@ -326,14 +377,17 @@ html.dark {
   transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.glass-input:focus {
+.glass-input:focus,
+.glass-input:focus-visible {
   background-color: var(--surface-raised);
   border-color: var(--color-silver);
-  box-shadow: 0 0 0 2px rgba(225, 6, 0, 0.25);
-  outline: none;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
-/* ─── TYPOGRAPHY TOKENS ─── */
+/* ==========================================
+   TYPOGRAPHY
+   ========================================== */
 
 .text-huge-white {
   font-weight: 900;
@@ -343,12 +397,10 @@ html.dark {
   text-transform: uppercase;
 }
 
-/* Primary accent — Signal Red */
 .text-electric-red {
   color: var(--color-signal-red);
 }
 
-/* Secondary accent — Moonlit Silver */
 .text-coral {
   color: var(--text-secondary);
 }
@@ -357,7 +409,9 @@ html.dark {
   color: var(--text-muted);
 }
 
-/* ─── RESTRAINED FOCUS & GLOW UTILITIES ─── */
+/* ==========================================
+   GLOW UTILITIES
+   ========================================== */
 
 .glow-red {
   box-shadow: 0 0 16px rgba(225, 6, 0, 0.30);
@@ -367,7 +421,10 @@ html.dark {
   box-shadow: 0 0 8px rgba(225, 6, 0, 0.25);
 }
 
-/* ─── PRODUCT SPOTLIGHT (SUBTLE & RESTRAINED) ─── */
+/* ==========================================
+   PRODUCT SPOTLIGHT
+   ========================================== */
+
 .product-spotlight {
   position: absolute;
   inset: 0;
@@ -385,9 +442,10 @@ html.dark {
   opacity: 0.9;
 }
 
-/* ─── BUTTON TOKENS ─── */
+/* ==========================================
+   BUTTONS
+   ========================================== */
 
-/* Primary CTA — Signal Red with clean #B80500 hover */
 .btn-electric-red,
 .btn-primary-cta {
   background-color: var(--color-signal-red);
@@ -411,7 +469,6 @@ html.dark {
   transform: translateY(0);
 }
 
-/* Secondary CTA — Charcoal surface with Moonlit Silver border on hover */
 .btn-glass,
 .btn-secondary-cta {
   background-color: var(--surface-raised);
@@ -436,7 +493,10 @@ html.dark {
   transform: translateY(0);
 }
 
-/* Scrollbar — Charcoal + Subtle Red */
+/* ==========================================
+   SCROLLBAR
+   ========================================== */
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -455,10 +515,9 @@ html.dark {
   background: var(--color-signal-red);
 }
 
-/* ─────────────────────────────────────────────────────────────────────────
-   INTEGRATED CHARCOAL BACKGROUND SYSTEM
-   Layered Charcoal Tones without Prominent Grid
-   ───────────────────────────────────────────────────────────────────────── */
+/* ==========================================
+   CINEMATIC BACKGROUND
+   ========================================== */
 
 .cinematic-bg {
   position: fixed;
@@ -470,7 +529,6 @@ html.dark {
   pointer-events: none;
 }
 
-/* Significantly reduced opacity architectural grid (almost imperceptible) */
 .cinematic-grid {
   position: absolute;
   inset: 0;
@@ -482,16 +540,11 @@ html.dark {
   opacity: 0.15;
 }
 
-/* Restrained ambient glow — subtle atmospheric depth */
-.cinematic-seam-glow {
-  display: none;
-}
-
+.cinematic-seam-glow,
 .cinematic-bottom-glow {
   display: none;
 }
 
-/* Fine SVG Film Grain Texture */
 .cinematic-grain {
   position: absolute;
   inset: 0;
@@ -501,9 +554,9 @@ html.dark {
   opacity: 0.02;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────
-   ORB UTILITIES (RESTRAINED)
-   ───────────────────────────────────────────────────────────────────────── */
+/* ==========================================
+   ORB UTILITIES
+   ========================================== */
 
 .glow-orb {
   position: absolute;
@@ -536,6 +589,10 @@ html.dark {
     linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
 }
+
+/* ==========================================
+   REDUCED MOTION
+   ========================================== */
 
 @media (prefers-reduced-motion: reduce) {
   body {

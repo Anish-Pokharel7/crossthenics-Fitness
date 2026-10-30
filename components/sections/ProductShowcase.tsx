@@ -147,7 +147,7 @@ export default function ProductShowcase() {
             transition={{ duration: 0.5, delay: 0.08 }}
             className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter text-text-primary leading-[0.95] mb-4"
           >
-            <span className="text-[#E10600]">TRAIN</span> WITH THE BEST.
+            <span className="text-primary">TRAIN</span> WITH THE BEST
           </motion.h2>
 
           <motion.p

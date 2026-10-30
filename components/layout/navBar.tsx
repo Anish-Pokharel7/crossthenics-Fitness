@@ -220,7 +220,7 @@ export function Navbar() {
               </button>
 
               {/* SEARCH */}
-              <div className="flex h-9 w-9 shrink-0 items-center overflow-hidden rounded-xl border border-border-subtle bg-page transition-all duration-200 hover:border-[#929292]/60 focus-within:border-[#C0C0C0] xl:w-[145px] 2xl:w-[165px]">
+              <div className="flex h-9 w-9 shrink-0 items-center overflow-hidden rounded-xl border border-border-subtle bg-page transition-all duration-200 hover:border-[#929292]/60 focus-within:border-[#929292] focus-within:ring-0 focus-within:outline-none xl:w-[145px] 2xl:w-[165px]">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center">
                   <Search
                     size={14}
@@ -234,7 +234,7 @@ export function Navbar() {
                   placeholder="Search gear..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="hidden min-w-0 flex-1 bg-transparent pr-3 text-[11px] font-medium text-text-primary outline-none placeholder:text-text-muted xl:block"
+                  className="hidden min-w-0 flex-1 border-0 bg-transparent pr-3 text-[11px] font-medium text-text-primary outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 focus-visible:outline-none placeholder:text-text-muted xl:block"
                 />
               </div>
 

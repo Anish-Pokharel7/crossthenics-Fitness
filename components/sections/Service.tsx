@@ -44,8 +44,8 @@ export default function Service() {
             transition={{ duration: 0.5, delay: 0.08 }}
             className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter text-text-primary leading-[0.95] mb-4"
           >
-            <span className="text-[#E10600]">EVERYTHING </span>YOU NEED TO
-            DOMINATE.
+            EVERYTHING YOU NEED TO
+          <span className="text-[#E10600]"> DOMINATE</span>
           </motion.h2>
 
           <motion.p

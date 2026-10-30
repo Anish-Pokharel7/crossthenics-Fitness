@@ -106,9 +106,9 @@ export default function Hero() {
               </Link>
 
               {/* Secondary CTA */}
-              <Link href="/backpacks" className="w-full sm:w-auto">
+              <Link href="/gear-finder" className="w-full sm:w-auto">
                 <button className="flex w-full items-center justify-center gap-2 rounded-xl border border-border-subtle bg-surface-raised px-7 py-4 text-xs font-bold uppercase tracking-wider text-text-primary transition-all duration-200 hover:border-[#C0C0C0] hover:bg-surface-elevated sm:w-auto">
-                  <span>Discover Crossthenics</span>
+                  <span>Find My Gear</span>
                 </button>
               </Link>
             </motion.div>

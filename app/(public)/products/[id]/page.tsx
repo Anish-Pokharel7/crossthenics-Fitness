@@ -356,6 +356,13 @@ export default function ProductDetailPage({ params }: PageProps) {
                   <ArrowRight size={15} aria-hidden="true" />
                 </button>
               </div>
+              <Link
+                href="/build-setup"
+                className={`inline-flex min-h-11 items-center gap-2 text-xs font-bold uppercase tracking-wider text-text-secondary transition-colors hover:text-[#E10600] ${focusStyle}`}
+              >
+                Add this to a complete setup
+                <ArrowRight size={14} aria-hidden="true" />
+              </Link>
             </div>
 
             {/* Trust strip */}

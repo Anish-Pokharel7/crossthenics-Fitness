@@ -1,25 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Settings,
-  Store,
-  CreditCard,
-  Truck,
-  Bell,
-  Shield,
-  Palette,
-  Globe,
-  Mail,
-  Save,
-  Loader2,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -28,14 +12,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Bell,
+  CreditCard,
+  Globe,
+  Loader2,
+  Mail,
+  Palette,
+  Save,
+  Settings,
+  Shield,
+  Store,
+  Truck,
+} from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const settingsTabs = [
@@ -50,12 +42,22 @@ const settingsTabs = [
   { id: "email", label: "Email", icon: Mail },
 ];
 
-function SettingItem({ label, description, children }: { label: string; description?: string; children: React.ReactNode }) {
+function SettingItem({
+  label,
+  description,
+  children,
+}: {
+  label: string;
+  description?: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-6 border-b border-gray-100 last:border-0">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-6 border-b border-border last:border-0">
       <div className="flex-1">
-        <Label className="text-base font-medium text-gray-900">{label}</Label>
-        {description && <p className="text-sm text-gray-500 mt-1">{description}</p>}
+        <Label className="text-base font-medium text-foreground">{label}</Label>
+        {description && (
+          <p className="text-sm text-muted-foreground mt-1">{description}</p>
+        )}
       </div>
       <div className="flex items-center gap-4 w-full sm:w-auto">{children}</div>
     </div>
@@ -70,7 +72,9 @@ export default function AdminSettings() {
     setSaving(tab);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setSaving(null);
-    toast.success(`${settingsTabs.find(t => t.id === tab)?.label} settings saved`);
+    toast.success(
+      `${settingsTabs.find((t) => t.id === tab)?.label} settings saved`,
+    );
   };
 
   return (
@@ -78,20 +82,30 @@ export default function AdminSettings() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
-          <p className="text-gray-500 mt-1">Manage your store configuration</p>
+          <h1 className="text-3xl font-bold text-foreground">Settings</h1>
+          <p className="text-muted-foreground mt-1">
+            Manage your store configuration
+          </p>
         </div>
       </div>
 
       {/* Settings Tabs */}
       <Card>
         <CardContent className="pt-0">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-1 p-1 bg-gray-50 rounded-lg">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full"
+          >
+            <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-1 p-1 bg-muted rounded-lg">
               {settingsTabs.map((tab) => {
                 const Icon = tab.icon;
                 return (
-                  <TabsTrigger key={tab.id} value={tab.id} className="flex items-center justify-center gap-2 px-3 py-2 text-sm data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                  <TabsTrigger
+                    key={tab.id}
+                    value={tab.id}
+                    className="flex items-center justify-center gap-2 px-3 py-2 text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm"
+                  >
                     <Icon className="h-4 w-4" />
                     <span className="hidden sm:inline">{tab.label}</span>
                   </TabsTrigger>
@@ -105,7 +119,10 @@ export default function AdminSettings() {
                 label="Store Name"
                 description="The name of your store displayed to customers"
               >
-                <Input defaultValue="Crossthenics Fitness" className="w-full sm:w-96" />
+                <Input
+                  defaultValue="Crossthenics Fitness"
+                  className="w-full sm:w-96"
+                />
               </SettingItem>
               <SettingItem
                 label="Store Description"
@@ -121,13 +138,20 @@ export default function AdminSettings() {
                 label="Store Email"
                 description="Primary contact email for the store"
               >
-                <Input type="email" defaultValue="hello@crossthenics.com" className="w-full sm:w-96" />
+                <Input
+                  type="email"
+                  defaultValue="hello@crossthenics.com"
+                  className="w-full sm:w-96"
+                />
               </SettingItem>
               <SettingItem
                 label="Store Phone"
                 description="Customer support phone number"
               >
-                <Input defaultValue="+1 (555) 123-4567" className="w-full sm:w-96" />
+                <Input
+                  defaultValue="+1 (555) 123-4567"
+                  className="w-full sm:w-96"
+                />
               </SettingItem>
               <SettingItem
                 label="Store Address"
@@ -148,17 +172,32 @@ export default function AdminSettings() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="America/New_York">Eastern Time (ET)</SelectItem>
-                    <SelectItem value="America/Chicago">Central Time (CT)</SelectItem>
-                    <SelectItem value="America/Denver">Mountain Time (MT)</SelectItem>
-                    <SelectItem value="America/Los_Angeles">Pacific Time (PT)</SelectItem>
+                    <SelectItem value="America/New_York">
+                      Eastern Time (ET)
+                    </SelectItem>
+                    <SelectItem value="America/Chicago">
+                      Central Time (CT)
+                    </SelectItem>
+                    <SelectItem value="America/Denver">
+                      Mountain Time (MT)
+                    </SelectItem>
+                    <SelectItem value="America/Los_Angeles">
+                      Pacific Time (PT)
+                    </SelectItem>
                     <SelectItem value="UTC">UTC</SelectItem>
                   </SelectContent>
                 </Select>
               </SettingItem>
-              <div className="p-6 border-t border-gray-100 flex justify-end">
-                <Button onClick={() => handleSave("general")} disabled={saving === "general"}>
-                  {saving === "general" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+              <div className="p-6 border-t border-border flex justify-end">
+                <Button
+                  onClick={() => handleSave("general")}
+                  disabled={saving === "general"}
+                >
+                  {saving === "general" ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Save className="h-4 w-4 mr-2" />
+                  )}
                   Save Changes
                 </Button>
               </div>
@@ -192,8 +231,12 @@ export default function AdminSettings() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="inclusive">Tax Included in Price</SelectItem>
-                    <SelectItem value="exclusive">Tax Added at Checkout</SelectItem>
+                    <SelectItem value="inclusive">
+                      Tax Included in Price
+                    </SelectItem>
+                    <SelectItem value="exclusive">
+                      Tax Added at Checkout
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </SettingItem>
@@ -201,7 +244,12 @@ export default function AdminSettings() {
                 label="Default Tax Rate (%)"
                 description="Default tax rate applied to orders"
               >
-                <Input type="number" step="0.1" defaultValue="8.5" className="w-full sm:w-96" />
+                <Input
+                  type="number"
+                  step="0.1"
+                  defaultValue="8.5"
+                  className="w-full sm:w-96"
+                />
               </SettingItem>
               <SettingItem
                 label="Allow Guest Checkout"
@@ -219,11 +267,24 @@ export default function AdminSettings() {
                 label="Minimum Order Amount"
                 description="Minimum order value required for checkout"
               >
-                <Input type="number" step="0.01" defaultValue="0" className="w-full sm:w-96" placeholder="0.00" />
+                <Input
+                  type="number"
+                  step="0.01"
+                  defaultValue="0"
+                  className="w-full sm:w-96"
+                  placeholder="0.00"
+                />
               </SettingItem>
-              <div className="p-6 border-t border-gray-100 flex justify-end">
-                <Button onClick={() => handleSave("store")} disabled={saving === "store"}>
-                  {saving === "store" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+              <div className="p-6 border-t border-border flex justify-end">
+                <Button
+                  onClick={() => handleSave("store")}
+                  disabled={saving === "store"}
+                >
+                  {saving === "store" ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Save className="h-4 w-4 mr-2" />
+                  )}
                   Save Changes
                 </Button>
               </div>
@@ -232,21 +293,46 @@ export default function AdminSettings() {
             {/* Payments Settings */}
             <TabsContent value="payments" className="p-6 space-y-0">
               <div className="space-y-6">
-                <h3 className="text-lg font-semibold text-gray-900">Payment Providers</h3>
+                <h3 className="text-lg font-semibold text-foreground">
+                  Payment Providers
+                </h3>
                 <div className="space-y-4">
-                  {["Stripe", "PayPal", "Square", "Apple Pay", "Google Pay"].map((provider) => (
-                    <SettingItem key={provider} label={provider} description={`Configure ${provider} payment integration`}>
+                  {[
+                    "Stripe",
+                    "PayPal",
+                    "Square",
+                    "Apple Pay",
+                    "Google Pay",
+                  ].map((provider) => (
+                    <SettingItem
+                      key={provider}
+                      label={provider}
+                      description={`Configure ${provider} payment integration`}
+                    >
                       <div className="flex items-center gap-4">
-                        <Switch defaultChecked={["Stripe", "PayPal"].includes(provider)} />
-                        <Button variant="outline" size="sm">Configure</Button>
+                        <Switch
+                          defaultChecked={["Stripe", "PayPal"].includes(
+                            provider,
+                          )}
+                        />
+                        <Button variant="outline" size="sm">
+                          Configure
+                        </Button>
                       </div>
                     </SettingItem>
                   ))}
                 </div>
               </div>
-              <div className="p-6 border-t border-gray-100 flex justify-end">
-                <Button onClick={() => handleSave("payments")} disabled={saving === "payments"}>
-                  {saving === "payments" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+              <div className="p-6 border-t border-border flex justify-end">
+                <Button
+                  onClick={() => handleSave("payments")}
+                  disabled={saving === "payments"}
+                >
+                  {saving === "payments" ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Save className="h-4 w-4 mr-2" />
+                  )}
                   Save Changes
                 </Button>
               </div>
@@ -258,13 +344,25 @@ export default function AdminSettings() {
                 label="Free Shipping Threshold"
                 description="Minimum order amount for free shipping"
               >
-                <Input type="number" step="0.01" defaultValue="100" className="w-full sm:w-96" placeholder="100.00" />
+                <Input
+                  type="number"
+                  step="0.01"
+                  defaultValue="100"
+                  className="w-full sm:w-96"
+                  placeholder="100.00"
+                />
               </SettingItem>
               <SettingItem
                 label="Default Shipping Rate"
                 description="Flat rate shipping cost"
               >
-                <Input type="number" step="0.01" defaultValue="9.99" className="w-full sm:w-96" placeholder="9.99" />
+                <Input
+                  type="number"
+                  step="0.01"
+                  defaultValue="9.99"
+                  className="w-full sm:w-96"
+                  placeholder="9.99"
+                />
               </SettingItem>
               <SettingItem
                 label="International Shipping"
@@ -284,9 +382,16 @@ export default function AdminSettings() {
               >
                 <Button variant="outline">Configure Packaging</Button>
               </SettingItem>
-              <div className="p-6 border-t border-gray-100 flex justify-end">
-                <Button onClick={() => handleSave("shipping")} disabled={saving === "shipping"}>
-                  {saving === "shipping" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+              <div className="p-6 border-t border-border flex justify-end">
+                <Button
+                  onClick={() => handleSave("shipping")}
+                  disabled={saving === "shipping"}
+                >
+                  {saving === "shipping" ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Save className="h-4 w-4 mr-2" />
+                  )}
                   Save Changes
                 </Button>
               </div>
@@ -330,9 +435,16 @@ export default function AdminSettings() {
               >
                 <Switch defaultChecked />
               </SettingItem>
-              <div className="p-6 border-t border-gray-100 flex justify-end">
-                <Button onClick={() => handleSave("notifications")} disabled={saving === "notifications"}>
-                  {saving === "notifications" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+              <div className="p-6 border-t border-border flex justify-end">
+                <Button
+                  onClick={() => handleSave("notifications")}
+                  disabled={saving === "notifications"}
+                >
+                  {saving === "notifications" ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Save className="h-4 w-4 mr-2" />
+                  )}
                   Save Changes
                 </Button>
               </div>
@@ -350,19 +462,31 @@ export default function AdminSettings() {
                 label="Session Timeout (minutes)"
                 description="Auto-logout after inactivity"
               >
-                <Input type="number" defaultValue="60" className="w-full sm:w-96" />
+                <Input
+                  type="number"
+                  defaultValue="60"
+                  className="w-full sm:w-96"
+                />
               </SettingItem>
               <SettingItem
                 label="Password Expiry (days)"
                 description="Force password change after specified days"
               >
-                <Input type="number" defaultValue="90" className="w-full sm:w-96" />
+                <Input
+                  type="number"
+                  defaultValue="90"
+                  className="w-full sm:w-96"
+                />
               </SettingItem>
               <SettingItem
                 label="Login Attempts Before Lockout"
                 description="Number of failed attempts before temporary lockout"
               >
-                <Input type="number" defaultValue="5" className="w-full sm:w-96" />
+                <Input
+                  type="number"
+                  defaultValue="5"
+                  className="w-full sm:w-96"
+                />
               </SettingItem>
               <SettingItem
                 label="API Access"
@@ -370,9 +494,16 @@ export default function AdminSettings() {
               >
                 <Switch />
               </SettingItem>
-              <div className="p-6 border-t border-gray-100 flex justify-end">
-                <Button onClick={() => handleSave("security")} disabled={saving === "security"}>
-                  {saving === "security" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+              <div className="p-6 border-t border-border flex justify-end">
+                <Button
+                  onClick={() => handleSave("security")}
+                  disabled={saving === "security"}
+                >
+                  {saving === "security" ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Save className="h-4 w-4 mr-2" />
+                  )}
                   Save Changes
                 </Button>
               </div>
@@ -399,7 +530,11 @@ export default function AdminSettings() {
                 label="Primary Color"
                 description="Brand primary color used throughout the store"
               >
-                <Input type="color" defaultValue="#E10600" className="w-12 h-12 rounded-lg border border-gray-300 cursor-pointer" />
+                <Input
+                  type="color"
+                  defaultValue="#E10600"
+                  className="w-12 h-12 rounded-lg border border-border cursor-pointer"
+                />
               </SettingItem>
               <SettingItem
                 label="Logo"
@@ -407,10 +542,7 @@ export default function AdminSettings() {
               >
                 <Button variant="outline">Upload Logo</Button>
               </SettingItem>
-              <SettingItem
-                label="Favicon"
-                description="Browser tab icon"
-              >
+              <SettingItem label="Favicon" description="Browser tab icon">
                 <Button variant="outline">Upload Favicon</Button>
               </SettingItem>
               <SettingItem
@@ -419,9 +551,16 @@ export default function AdminSettings() {
               >
                 <Switch />
               </SettingItem>
-              <div className="p-6 border-t border-gray-100 flex justify-end">
-                <Button onClick={() => handleSave("appearance")} disabled={saving === "appearance"}>
-                  {saving === "appearance" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+              <div className="p-6 border-t border-border flex justify-end">
+                <Button
+                  onClick={() => handleSave("appearance")}
+                  disabled={saving === "appearance"}
+                >
+                  {saving === "appearance" ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Save className="h-4 w-4 mr-2" />
+                  )}
                   Save Changes
                 </Button>
               </div>
@@ -483,9 +622,16 @@ export default function AdminSettings() {
                   </SelectContent>
                 </Select>
               </SettingItem>
-              <div className="p-6 border-t border-gray-100 flex justify-end">
-                <Button onClick={() => handleSave("localization")} disabled={saving === "localization"}>
-                  {saving === "localization" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+              <div className="p-6 border-t border-border flex justify-end">
+                <Button
+                  onClick={() => handleSave("localization")}
+                  disabled={saving === "localization"}
+                >
+                  {saving === "localization" ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Save className="h-4 w-4 mr-2" />
+                  )}
                   Save Changes
                 </Button>
               </div>
@@ -513,19 +659,30 @@ export default function AdminSettings() {
                 label="From Name"
                 description="Name displayed in sender field"
               >
-                <Input defaultValue="Crossthenics Fitness" className="w-full sm:w-96" />
+                <Input
+                  defaultValue="Crossthenics Fitness"
+                  className="w-full sm:w-96"
+                />
               </SettingItem>
               <SettingItem
                 label="From Email"
                 description="Email address used as sender"
               >
-                <Input type="email" defaultValue="noreply@crossthenics.com" className="w-full sm:w-96" />
+                <Input
+                  type="email"
+                  defaultValue="noreply@crossthenics.com"
+                  className="w-full sm:w-96"
+                />
               </SettingItem>
               <SettingItem
                 label="Reply-To Email"
                 description="Email address for customer replies"
               >
-                <Input type="email" defaultValue="support@crossthenics.com" className="w-full sm:w-96" />
+                <Input
+                  type="email"
+                  defaultValue="support@crossthenics.com"
+                  className="w-full sm:w-96"
+                />
               </SettingItem>
               <SettingItem
                 label="Email Templates"
@@ -537,11 +694,23 @@ export default function AdminSettings() {
                 label="Test Email"
                 description="Send a test email to verify configuration"
               >
-                <Button variant="outline" onClick={() => toast.info("Test email sent!")}>Send Test</Button>
+                <Button
+                  variant="outline"
+                  onClick={() => toast.info("Test email sent!")}
+                >
+                  Send Test
+                </Button>
               </SettingItem>
-              <div className="p-6 border-t border-gray-100 flex justify-end">
-                <Button onClick={() => handleSave("email")} disabled={saving === "email"}>
-                  {saving === "email" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+              <div className="p-6 border-t border-border flex justify-end">
+                <Button
+                  onClick={() => handleSave("email")}
+                  disabled={saving === "email"}
+                >
+                  {saving === "email" ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Save className="h-4 w-4 mr-2" />
+                  )}
                   Save Changes
                 </Button>
               </div>

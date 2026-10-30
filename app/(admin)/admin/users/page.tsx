@@ -1,34 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Search,
-  MoreVertical,
-  Eye,
-  Edit,
-  Trash2,
-  Mail,
-  Phone,
-  MapPin,
-  Shield,
-  UserPlus,
-  Activity,
-} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -37,28 +26,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import {
+  Activity,
+  Edit,
+  Eye,
+  Mail,
+  MapPin,
+  MoreVertical,
+  Phone,
+  Search,
+  Shield,
+  Trash2,
+  UserPlus,
+} from "lucide-react";
+import { useState } from "react";
 
 const mockUsers = [
   {
@@ -72,7 +62,7 @@ const mockUsers = [
     joined: "Jan 15, 2025",
     lastActive: "2 hours ago",
     ordersCount: 12,
-    totalSpent: 1245.50,
+    totalSpent: 1245.5,
     address: "123 Main St, New York, NY 10001",
   },
   {
@@ -86,7 +76,7 @@ const mockUsers = [
     joined: "Mar 22, 2025",
     lastActive: "1 day ago",
     ordersCount: 8,
-    totalSpent: 892.00,
+    totalSpent: 892.0,
     address: "456 Oak Ave, Los Angeles, CA 90001",
   },
   {
@@ -151,7 +141,7 @@ function RoleBadge({ role }: { role: string }) {
   const variants: Record<string, string> = {
     admin: "bg-purple-100 text-purple-800",
     staff: "bg-blue-100 text-blue-800",
-    customer: "bg-gray-100 text-gray-800",
+    customer: "bg-muted text-foreground",
   };
   return (
     <Badge variant="secondary" className={cn("gap-1", variants[role])}>
@@ -164,7 +154,7 @@ function RoleBadge({ role }: { role: string }) {
 function StatusBadge({ status }: { status: string }) {
   const variants: Record<string, string> = {
     active: "bg-green-100 text-green-800",
-    inactive: "bg-gray-100 text-gray-800",
+    inactive: "bg-muted text-foreground",
     banned: "bg-red-100 text-red-800",
   };
   return (
@@ -188,7 +178,9 @@ export default function AdminUsers() {
   const [searchQuery, setSearchQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [selectedUser, setSelectedUser] = useState<typeof mockUsers[0] | null>(null);
+  const [selectedUser, setSelectedUser] = useState<
+    (typeof mockUsers)[0] | null
+  >(null);
   const [detailDialogOpen, setDetailDialogOpen] = useState(false);
 
   const filteredUsers = mockUsers.filter((user) => {
@@ -197,7 +189,8 @@ export default function AdminUsers() {
       user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.id.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesRole = roleFilter === "all" || user.role === roleFilter;
-    const matchesStatus = statusFilter === "all" || user.status === statusFilter;
+    const matchesStatus =
+      statusFilter === "all" || user.status === statusFilter;
     return matchesSearch && matchesRole && matchesStatus;
   });
 
@@ -210,8 +203,10 @@ export default function AdminUsers() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Users</h1>
-          <p className="text-gray-500 mt-1">Manage customer accounts and staff</p>
+          <h1 className="text-3xl font-bold text-foreground">Users</h1>
+          <p className="text-muted-foreground mt-1">
+            Manage customer accounts and staff
+          </p>
         </div>
         <Button>
           <UserPlus className="h-4 w-4 mr-2" />
@@ -224,7 +219,7 @@ export default function AdminUsers() {
         <CardContent className="pt-6">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search users..."
                 value={searchQuery}
@@ -282,52 +277,106 @@ export default function AdminUsers() {
               <TableBody>
                 {filteredUsers.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={9} className="text-center py-12 text-gray-500">
+                    <TableCell
+                      colSpan={9}
+                      className="text-center py-12 text-muted-foreground"
+                    >
                       No users found
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredUsers.map((user) => (
-                    <TableRow key={user.id} className="hover:bg-gray-50 cursor-pointer" onClick={() => { setSelectedUser(user); setDetailDialogOpen(true); }}>
+                    <TableRow
+                      key={user.id}
+                      className="hover:bg-muted cursor-pointer"
+                      onClick={() => {
+                        setSelectedUser(user);
+                        setDetailDialogOpen(true);
+                      }}
+                    >
                       <TableCell>
-                        <div className="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-700 font-semibold">
+                        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
                           {getInitials(user.name)}
                         </div>
                       </TableCell>
                       <TableCell>
-                        <div className="font-medium text-gray-900">{user.name}</div>
-                        <div className="text-sm text-gray-500">{user.email}</div>
+                        <div className="font-medium text-foreground">
+                          {user.name}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          {user.email}
+                        </div>
                       </TableCell>
-                      <TableCell><RoleBadge role={user.role} /></TableCell>
-                      <TableCell><StatusBadge status={user.status} /></TableCell>
-                      <TableCell className="text-sm text-gray-500">{user.joined}</TableCell>
-                      <TableCell className="text-sm text-gray-500">{user.lastActive}</TableCell>
-                      <TableCell className="text-right text-sm text-gray-900">{user.ordersCount}</TableCell>
-                      <TableCell className="text-right font-medium text-gray-900">${user.totalSpent.toFixed(2)}</TableCell>
+                      <TableCell>
+                        <RoleBadge role={user.role} />
+                      </TableCell>
+                      <TableCell>
+                        <StatusBadge status={user.status} />
+                      </TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        {user.joined}
+                      </TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        {user.lastActive}
+                      </TableCell>
+                      <TableCell className="text-right text-sm text-foreground">
+                        {user.ordersCount}
+                      </TableCell>
+                      <TableCell className="text-right font-medium text-foreground">
+                        ${user.totalSpent.toFixed(2)}
+                      </TableCell>
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                            >
                               <MoreVertical className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="w-52">
-                            <DropdownMenuItem onClick={(e) => { e.stopPropagation(); setSelectedUser(user); setDetailDialogOpen(true); }}>
+                            <DropdownMenuItem
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedUser(user);
+                                setDetailDialogOpen(true);
+                              }}
+                            >
                               <Eye className="h-4 w-4 mr-2" />
                               View Details
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={(e) => { e.stopPropagation(); }}>
+                            <DropdownMenuItem
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                            >
                               <Edit className="h-4 w-4 mr-2" />
                               Edit User
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>
                               <Shield className="h-4 w-4 mr-2" />
-                              {user.role === "admin" ? "Remove Admin" : "Make Admin"}
+                              {user.role === "admin"
+                                ? "Remove Admin"
+                                : "Make Admin"}
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                              onClick={(e) => { e.stopPropagation(); handleStatusChange(user.id, user.status === "active" ? "inactive" : "active"); }}
-                              className={user.status !== "active" ? "text-green-600" : "text-red-600"}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleStatusChange(
+                                  user.id,
+                                  user.status === "active"
+                                    ? "inactive"
+                                    : "active",
+                                );
+                              }}
+                              className={
+                                user.status !== "active"
+                                  ? "text-green-600"
+                                  : "text-red-600"
+                              }
                             >
                               {user.status === "active" ? (
                                 <>
@@ -341,7 +390,13 @@ export default function AdminUsers() {
                                 </>
                               )}
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="text-red-600" onClick={(e) => { e.stopPropagation(); handleStatusChange(user.id, "banned"); }}>
+                            <DropdownMenuItem
+                              className="text-red-600"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleStatusChange(user.id, "banned");
+                              }}
+                            >
                               <Trash2 className="h-4 w-4 mr-2" />
                               Ban User
                             </DropdownMenuItem>
@@ -365,12 +420,16 @@ export default function AdminUsers() {
               <DialogHeader>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="h-16 w-16 rounded-full bg-orange-100 flex items-center justify-center text-orange-700 text-2xl font-bold">
+                    <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold">
                       {getInitials(selectedUser.name)}
                     </div>
                     <div>
-                      <DialogTitle className="text-2xl">{selectedUser.name}</DialogTitle>
-                      <p className="text-gray-500">{selectedUser.email}</p>
+                      <DialogTitle className="text-2xl">
+                        {selectedUser.name}
+                      </DialogTitle>
+                      <p className="text-muted-foreground">
+                        {selectedUser.email}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -391,70 +450,110 @@ export default function AdminUsers() {
                 <TabsContent value="profile" className="p-6 space-y-6">
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div>
-                      <h3 className="text-lg font-semibold mb-4">Contact Information</h3>
+                      <h3 className="text-lg font-semibold mb-4">
+                        Contact Information
+                      </h3>
                       <div className="space-y-4">
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                          <Mail className="h-5 w-5 text-gray-400" />
+                        <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
+                          <Mail className="h-5 w-5 text-muted-foreground" />
                           <div>
-                            <p className="text-sm text-gray-500">Email</p>
+                            <p className="text-sm text-muted-foreground">
+                              Email
+                            </p>
                             <p className="font-medium">{selectedUser.email}</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                          <Phone className="h-5 w-5 text-gray-400" />
+                        <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
+                          <Phone className="h-5 w-5 text-muted-foreground" />
                           <div>
-                            <p className="text-sm text-gray-500">Phone</p>
+                            <p className="text-sm text-muted-foreground">
+                              Phone
+                            </p>
                             <p className="font-medium">{selectedUser.phone}</p>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold mb-4">Account Details</h3>
+                      <h3 className="text-lg font-semibold mb-4">
+                        Account Details
+                      </h3>
                       <div className="space-y-4">
-                        <div className="p-3 bg-gray-50 rounded-lg">
-                          <p className="text-sm text-gray-500">User ID</p>
-                          <p className="font-medium font-mono">{selectedUser.id}</p>
+                        <div className="p-3 bg-muted rounded-lg">
+                          <p className="text-sm text-muted-foreground">
+                            User ID
+                          </p>
+                          <p className="font-medium font-mono">
+                            {selectedUser.id}
+                          </p>
                         </div>
-                        <div className="p-3 bg-gray-50 rounded-lg">
-                          <p className="text-sm text-gray-500">Member Since</p>
+                        <div className="p-3 bg-muted rounded-lg">
+                          <p className="text-sm text-muted-foreground">
+                            Member Since
+                          </p>
                           <p className="font-medium">{selectedUser.joined}</p>
                         </div>
-                        <div className="p-3 bg-gray-50 rounded-lg">
-                          <p className="text-sm text-gray-500">Last Active</p>
-                          <p className="font-medium">{selectedUser.lastActive}</p>
+                        <div className="p-3 bg-muted rounded-lg">
+                          <p className="text-sm text-muted-foreground">
+                            Last Active
+                          </p>
+                          <p className="font-medium">
+                            {selectedUser.lastActive}
+                          </p>
                         </div>
-                        <div className="p-3 bg-gray-50 rounded-lg">
-                          <p className="text-sm text-gray-500">Role</p>
+                        <div className="p-3 bg-muted rounded-lg">
+                          <p className="text-sm text-muted-foreground">Role</p>
                           <RoleBadge role={selectedUser.role} />
                         </div>
-                        <div className="p-3 bg-gray-50 rounded-lg">
-                          <p className="text-sm text-gray-500">Status</p>
+                        <div className="p-3 bg-muted rounded-lg">
+                          <p className="text-sm text-muted-foreground">
+                            Status
+                          </p>
                           <StatusBadge status={selectedUser.status} />
                         </div>
                       </div>
                     </div>
                     <div className="sm:col-span-2">
-                      <h3 className="text-lg font-semibold mb-4">Shipping Address</h3>
-                      <div className="p-4 bg-gray-50 rounded-lg">
-                        <MapPin className="h-5 w-5 text-gray-400 mb-2" />
+                      <h3 className="text-lg font-semibold mb-4">
+                        Shipping Address
+                      </h3>
+                      <div className="p-4 bg-muted rounded-lg">
+                        <MapPin className="h-5 w-5 text-muted-foreground mb-2" />
                         <p className="font-medium">{selectedUser.address}</p>
                       </div>
                     </div>
                     <div className="sm:col-span-2">
-                      <h3 className="text-lg font-semibold mb-4">Order Statistics</h3>
+                      <h3 className="text-lg font-semibold mb-4">
+                        Order Statistics
+                      </h3>
                       <div className="grid gap-4 sm:grid-cols-3">
-                        <div className="p-4 bg-gray-50 rounded-lg text-center">
-                          <p className="text-3xl font-bold text-orange-600">{selectedUser.ordersCount}</p>
-                          <p className="text-sm text-gray-500">Total Orders</p>
+                        <div className="p-4 bg-muted rounded-lg text-center">
+                          <p className="text-3xl font-bold text-primary">
+                            {selectedUser.ordersCount}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Total Orders
+                          </p>
                         </div>
-                        <div className="p-4 bg-gray-50 rounded-lg text-center">
-                          <p className="text-3xl font-bold text-green-600">${selectedUser.totalSpent.toFixed(2)}</p>
-                          <p className="text-sm text-gray-500">Total Spent</p>
+                        <div className="p-4 bg-muted rounded-lg text-center">
+                          <p className="text-3xl font-bold text-green-600">
+                            ${selectedUser.totalSpent.toFixed(2)}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Total Spent
+                          </p>
                         </div>
-                        <div className="p-4 bg-gray-50 rounded-lg text-center">
-                          <p className="text-3xl font-bold text-blue-600">${(selectedUser.totalSpent / Math.max(selectedUser.ordersCount, 1)).toFixed(2)}</p>
-                          <p className="text-sm text-gray-500">Avg. Order Value</p>
+                        <div className="p-4 bg-muted rounded-lg text-center">
+                          <p className="text-3xl font-bold text-blue-600">
+                            $
+                            {(
+                              selectedUser.totalSpent /
+                              Math.max(selectedUser.ordersCount, 1)
+                            ).toFixed(2)}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Avg. Order Value
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -462,31 +561,44 @@ export default function AdminUsers() {
                 </TabsContent>
 
                 <TabsContent value="orders" className="p-6">
-                  <div className="text-center py-12 text-gray-500">
-                    <Activity className="h-12 w-12 mx-auto text-gray-300 mb-4" />
+                  <div className="text-center py-12 text-muted-foreground">
+                    <Activity className="h-12 w-12 mx-auto text-border mb-4" />
                     <p>Order history would be displayed here</p>
-                    <p className="text-sm">Connected to order management system</p>
+                    <p className="text-sm">
+                      Connected to order management system
+                    </p>
                   </div>
                 </TabsContent>
 
                 <TabsContent value="addresses" className="p-6">
-                  <div className="text-center py-12 text-gray-500">
-                    <MapPin className="h-12 w-12 mx-auto text-gray-300 mb-4" />
+                  <div className="text-center py-12 text-muted-foreground">
+                    <MapPin className="h-12 w-12 mx-auto text-border mb-4" />
                     <p>Saved addresses would be displayed here</p>
                   </div>
                 </TabsContent>
 
                 <TabsContent value="activity" className="p-6">
-                  <div className="text-center py-12 text-gray-500">
-                    <Activity className="h-12 w-12 mx-auto text-gray-300 mb-4" />
+                  <div className="text-center py-12 text-muted-foreground">
+                    <Activity className="h-12 w-12 mx-auto text-border mb-4" />
                     <p>Recent activity log would be displayed here</p>
                   </div>
                 </TabsContent>
               </Tabs>
 
               <DialogFooter>
-                <Button variant="outline" onClick={() => setDetailDialogOpen(false)}>Close</Button>
-                <Button onClick={() => { /* Edit user */ }}>Edit User</Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setDetailDialogOpen(false)}
+                >
+                  Close
+                </Button>
+                <Button
+                  onClick={() => {
+                    /* Edit user */
+                  }}
+                >
+                  Edit User
+                </Button>
               </DialogFooter>
             </>
           )}

@@ -24,19 +24,19 @@ interface PageProps {
 }
 
 const C = {
-  primary: "#F5F5F5",
-  secondary: "#C0C0C0",
-  muted: "#A3A3A3",
-  background: "#1C1C1C",
-  surface: "#2A2A2A",
-  elevated: "#353535",
-  border: "#414141",
+  primary: "var(--text-primary)",
+  secondary: "var(--text-secondary)",
+  muted: "var(--text-muted)",
+  background: "var(--bg-page)",
+  surface: "var(--surface-raised)",
+  elevated: "var(--surface-elevated)",
+  border: "var(--border-subtle)",
   red: "#E10600",
   redHover: "#B80500",
 };
 
 const focusStyle =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1C1C]";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600] focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 export default function ProductDetailPage({ params }: PageProps) {
   const resolvedParams = use(params);
@@ -54,9 +54,9 @@ export default function ProductDetailPage({ params }: PageProps) {
     "specs",
   );
 
-  const textPrimary = "text-[#F5F5F5]";
-  const textSecondary = "text-[#C0C0C0]";
-  const textMuted = "text-[#A3A3A3]";
+  const textPrimary = "text-text-primary";
+  const textSecondary = "text-text-secondary";
+  const textMuted = "text-text-muted";
 
   if (!product) {
     return (
@@ -65,7 +65,7 @@ export default function ProductDetailPage({ params }: PageProps) {
         style={{ backgroundColor: C.background }}
       >
         <div className="mx-auto flex w-full max-w-md items-center justify-center">
-          <div className="w-full rounded-3xl border border-[#414141] bg-[#2A2A2A] p-8 text-center">
+          <div className="w-full rounded-3xl border border-border-subtle bg-surface-raised p-8 text-center">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#E10600]/30 bg-[#E10600]/15 text-[#E10600]">
               <Info size={28} />
             </div>
@@ -157,7 +157,7 @@ export default function ProductDetailPage({ params }: PageProps) {
         >
           <Link
             href="/"
-            className={`transition-colors hover:text-[#F5F5F5] ${focusStyle}`}
+            className={`transition-colors hover:text-text-primary ${focusStyle}`}
           >
             Home
           </Link>
@@ -166,7 +166,7 @@ export default function ProductDetailPage({ params }: PageProps) {
 
           <Link
             href="/allproducts"
-            className={`transition-colors hover:text-[#F5F5F5] ${focusStyle}`}
+            className={`transition-colors hover:text-text-primary ${focusStyle}`}
           >
             Catalog
           </Link>
@@ -185,7 +185,7 @@ export default function ProductDetailPage({ params }: PageProps) {
             className="space-y-4 lg:col-span-6"
             aria-label="Product image"
           >
-            <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-3xl border border-[#414141] bg-[#242424] p-8 shadow-[0_25px_60px_rgba(0,0,0,0.35)]">
+            <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-3xl border border-border-subtle bg-section-alt p-8 shadow-[0_25px_60px_rgba(0,0,0,0.18)]">
               <Image
                 src={product.image}
                 alt={product.name}
@@ -196,12 +196,12 @@ export default function ProductDetailPage({ params }: PageProps) {
               />
 
               {product.badge && (
-                <div className="absolute left-4 top-4 z-10 rounded-md border border-[#E10600]/50 bg-[#2A2A2A] px-3 py-1 text-[10px] font-black uppercase tracking-widest text-[#F5F5F5]">
+                <div className="absolute left-4 top-4 z-10 rounded-md border border-[#E10600]/50 bg-surface-raised px-3 py-1 text-[10px] font-black uppercase tracking-widest text-text-primary">
                   {product.badge}
                 </div>
               )}
 
-              <div className="absolute bottom-4 left-4 z-10 flex items-center gap-1.5 rounded-md border border-[#414141] bg-[#2A2A2A] px-2.5 py-1 text-[10px] font-bold text-[#F5F5F5]">
+              <div className="absolute bottom-4 left-4 z-10 flex items-center gap-1.5 rounded-md border border-border-subtle bg-surface-raised px-2.5 py-1 text-[10px] font-bold text-text-primary">
                 <CheckCircle2
                   size={12}
                   className="text-emerald-400"
@@ -212,7 +212,7 @@ export default function ProductDetailPage({ params }: PageProps) {
             </div>
 
             <div
-              className={`flex items-center gap-3 rounded-2xl border border-[#414141] bg-[#2A2A2A] p-4 text-xs leading-relaxed ${textSecondary}`}
+              className={`flex items-center gap-3 rounded-2xl border border-border-subtle bg-surface-raised p-4 text-xs leading-relaxed ${textSecondary}`}
             >
               <Shield
                 size={18}
@@ -246,7 +246,7 @@ export default function ProductDetailPage({ params }: PageProps) {
             </div>
 
             {/* Price and stock */}
-            <div className="flex flex-wrap items-baseline gap-4 border-b border-[#414141] pb-6">
+            <div className="flex flex-wrap items-baseline gap-4 border-b border-border-subtle pb-6">
               <span
                 className={`text-3xl font-black sm:text-4xl ${textPrimary}`}
               >
@@ -290,8 +290,8 @@ export default function ProductDetailPage({ params }: PageProps) {
                         onClick={() => setSelectedSize(size)}
                         className={`min-h-11 rounded-xl border px-3 py-2.5 text-center text-xs font-bold transition-colors ${focusStyle} ${
                           isSelected
-                            ? "border-[#E10600] bg-[#E10600]/15 text-[#F5F5F5]"
-                            : "border-[#414141] bg-[#242424] text-[#C0C0C0] hover:border-[#C0C0C0]/70 hover:text-[#F5F5F5]"
+                            ? "border-[#E10600] bg-[#E10600]/15 text-text-primary"
+                            : "border-border-subtle bg-section-alt text-text-secondary hover:border-[#C0C0C0]/70 hover:text-text-primary"
                         }`}
                       >
                         {size}
@@ -311,25 +311,25 @@ export default function ProductDetailPage({ params }: PageProps) {
                   Quantity:
                 </span>
 
-                <div className="flex items-center rounded-xl border border-[#414141] bg-[#242424]">
+                <div className="flex items-center rounded-xl border border-border-subtle bg-section-alt">
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                     disabled={quantity <= 1}
-                    className={`rounded-l-xl p-2.5 text-[#C0C0C0] transition-colors hover:text-[#F5F5F5] disabled:cursor-not-allowed disabled:opacity-50 ${focusStyle}`}
+                    className={`rounded-l-xl p-2.5 text-text-secondary transition-colors hover:text-text-primary disabled:cursor-not-allowed disabled:opacity-50 ${focusStyle}`}
                     aria-label="Decrease quantity"
                   >
                     <Minus size={14} />
                   </button>
 
-                  <span className="w-10 text-center text-sm font-bold text-[#F5F5F5]">
+                  <span className="w-10 text-center text-sm font-bold text-text-primary">
                     {quantity}
                   </span>
 
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => q + 1)}
-                    className={`rounded-r-xl p-2.5 text-[#C0C0C0] transition-colors hover:text-[#F5F5F5] ${focusStyle}`}
+                    className={`rounded-r-xl p-2.5 text-text-secondary transition-colors hover:text-text-primary ${focusStyle}`}
                     aria-label="Increase quantity"
                   >
                     <Plus size={14} />
@@ -350,7 +350,7 @@ export default function ProductDetailPage({ params }: PageProps) {
                 <button
                   type="button"
                   onClick={handleBuyNow}
-                  className={`flex items-center justify-center gap-2 rounded-2xl border border-[#414141] bg-[#2A2A2A] px-6 py-4 text-xs font-black uppercase tracking-wider text-[#F5F5F5] transition-colors hover:border-[#C0C0C0]/70 hover:bg-[#353535] ${focusStyle}`}
+                  className={`flex items-center justify-center gap-2 rounded-2xl border border-border-subtle bg-surface-raised px-6 py-4 text-xs font-black uppercase tracking-wider text-text-primary transition-colors hover:border-[#C0C0C0]/70 hover:bg-surface-elevated ${focusStyle}`}
                 >
                   <span>Instant Checkout</span>
                   <ArrowRight size={15} aria-hidden="true" />
@@ -359,7 +359,7 @@ export default function ProductDetailPage({ params }: PageProps) {
             </div>
 
             {/* Trust strip */}
-            <div className="grid grid-cols-3 gap-3 border-t border-[#414141] pt-4 text-center">
+            <div className="grid grid-cols-3 gap-3 border-t border-border-subtle pt-4 text-center">
               {[
                 {
                   Icon: Truck,
@@ -379,17 +379,19 @@ export default function ProductDetailPage({ params }: PageProps) {
               ].map(({ Icon, title, subtitle }) => (
                 <div
                   key={title}
-                  className="rounded-xl border border-[#414141] bg-[#242424] p-3"
+                  className="rounded-xl border border-border-subtle bg-section-alt p-3"
                 >
                   <Icon
                     size={18}
                     className="mx-auto mb-1.5 text-[#E10600]"
                     aria-hidden="true"
                   />
-                  <span className="block text-[11px] font-bold text-[#F5F5F5]">
+                  <span className="block text-[11px] font-bold text-text-primary">
                     {title}
                   </span>
-                  <span className="text-[10px] text-[#A3A3A3]">{subtitle}</span>
+                  <span className="text-[10px] text-text-muted">
+                    {subtitle}
+                  </span>
                 </div>
               ))}
             </div>
@@ -400,7 +402,7 @@ export default function ProductDetailPage({ params }: PageProps) {
                 role="tablist"
                 aria-label="Product information"
                 onKeyDown={handleTabKeyDown}
-                className="flex overflow-x-auto border-b border-[#414141] text-xs font-bold uppercase tracking-wider"
+                className="flex overflow-x-auto border-b border-border-subtle text-xs font-bold uppercase tracking-wider"
               >
                 {tabs.map((tab) => {
                   const isActive = activeTab === tab.id;
@@ -417,8 +419,8 @@ export default function ProductDetailPage({ params }: PageProps) {
                       onClick={() => setActiveTab(tab.id)}
                       className={`relative min-h-11 shrink-0 px-3 transition-colors sm:px-4 ${focusStyle} ${
                         isActive
-                          ? "text-[#F5F5F5]"
-                          : "text-[#A3A3A3] hover:text-[#F5F5F5]"
+                          ? "text-text-primary"
+                          : "text-text-muted hover:text-text-primary"
                       }`}
                     >
                       {tab.label}
@@ -446,10 +448,10 @@ export default function ProductDetailPage({ params }: PageProps) {
                     {product.specs.map((spec, index) => (
                       <div
                         key={`${spec.label}-${index}`}
-                        className="flex justify-between gap-4 border-b border-[#414141] py-1.5"
+                        className="flex justify-between gap-4 border-b border-border-subtle py-1.5"
                       >
                         <span className={textSecondary}>{spec.label}</span>
-                        <span className="text-right font-bold text-[#F5F5F5]">
+                        <span className="text-right font-bold text-text-primary">
                           {spec.value}
                         </span>
                       </div>
@@ -480,7 +482,7 @@ export default function ProductDetailPage({ params }: PageProps) {
                     <p>
                       All equipment dispatches directly from our central
                       fulfillment station in{" "}
-                      <strong className="font-bold text-[#F5F5F5]">
+                      <strong className="font-bold text-text-primary">
                         Pokhara
                       </strong>
                       .
@@ -488,7 +490,7 @@ export default function ProductDetailPage({ params }: PageProps) {
 
                     <p>
                       •{" "}
-                      <strong className="text-[#F5F5F5]">
+                      <strong className="text-text-primary">
                         Pokhara Local Delivery:
                       </strong>{" "}
                       24 hours (Free on eligible orders).
@@ -496,7 +498,7 @@ export default function ProductDetailPage({ params }: PageProps) {
 
                     <p>
                       •{" "}
-                      <strong className="text-[#F5F5F5]">
+                      <strong className="text-text-primary">
                         Kathmandu Valley:
                       </strong>{" "}
                       24 to 48 hours via express overland courier.
@@ -504,7 +506,9 @@ export default function ProductDetailPage({ params }: PageProps) {
 
                     <p>
                       •{" "}
-                      <strong className="text-[#F5F5F5]">Rest of Nepal:</strong>{" "}
+                      <strong className="text-text-primary">
+                        Rest of Nepal:
+                      </strong>{" "}
                       2 to 4 business days.
                     </p>
 
@@ -524,7 +528,7 @@ export default function ProductDetailPage({ params }: PageProps) {
                     <p>
                       If your belt size does not fit your waist, contact our
                       support team within{" "}
-                      <strong className="text-[#F5F5F5]">
+                      <strong className="text-text-primary">
                         7 days of receiving your package
                       </strong>{" "}
                       to request a size exchange.
@@ -544,7 +548,7 @@ export default function ProductDetailPage({ params }: PageProps) {
 
         {/* Related products */}
         {relatedProducts.length > 0 && (
-          <section className="mt-24 border-t border-[#414141] pt-12">
+          <section className="mt-24 border-t border-border-subtle pt-12">
             <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
               <div>
                 <span
@@ -562,7 +566,7 @@ export default function ProductDetailPage({ params }: PageProps) {
 
               <Link
                 href="/allproducts"
-                className={`flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#C0C0C0] transition-colors hover:text-[#F5F5F5] ${focusStyle}`}
+                className={`flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-text-secondary transition-colors hover:text-text-primary ${focusStyle}`}
               >
                 View Full Inventory
                 <ArrowRight size={13} aria-hidden="true" />
@@ -574,10 +578,10 @@ export default function ProductDetailPage({ params }: PageProps) {
                 <Link
                   key={related.id}
                   href={`/products/${related.id}`}
-                  className={`group flex flex-col justify-between rounded-2xl border border-[#414141] bg-[#2A2A2A] p-4 transition-colors hover:border-[#C0C0C0]/60 hover:bg-[#303030] ${focusStyle}`}
+                  className={`group flex flex-col justify-between rounded-2xl border border-border-subtle bg-surface-raised p-4 transition-colors hover:border-[#C0C0C0]/60 hover:bg-surface-elevated ${focusStyle}`}
                 >
                   <div>
-                    <div className="relative mb-3 aspect-square w-full overflow-hidden rounded-xl border border-[#414141] bg-[#242424] p-4">
+                    <div className="relative mb-3 aspect-square w-full overflow-hidden rounded-xl border border-border-subtle bg-section-alt p-4">
                       <Image
                         src={related.image}
                         alt={related.name}
@@ -594,18 +598,18 @@ export default function ProductDetailPage({ params }: PageProps) {
                     </span>
 
                     <h3
-                      className={`line-clamp-2 text-sm font-black uppercase tracking-tight transition-colors group-hover:text-[#C0C0C0] ${textPrimary}`}
+                      className={`line-clamp-2 text-sm font-black uppercase tracking-tight transition-colors group-hover:text-text-secondary ${textPrimary}`}
                     >
                       {related.name}
                     </h3>
                   </div>
 
-                  <div className="mt-4 flex items-center justify-between gap-2 border-t border-[#414141] pt-3">
-                    <span className="text-sm font-black text-[#F5F5F5]">
+                  <div className="mt-4 flex items-center justify-between gap-2 border-t border-border-subtle pt-3">
+                    <span className="text-sm font-black text-text-primary">
                       Rs. {related.price.toLocaleString()}
                     </span>
 
-                    <span className="flex items-center gap-1 text-[11px] font-bold text-[#F5F5F5] transition-transform group-hover:translate-x-0.5">
+                    <span className="flex items-center gap-1 text-[11px] font-bold text-text-primary transition-transform group-hover:translate-x-0.5">
                       View <ArrowRight size={12} aria-hidden="true" />
                     </span>
                   </div>

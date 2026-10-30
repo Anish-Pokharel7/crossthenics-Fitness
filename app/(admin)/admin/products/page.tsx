@@ -1,30 +1,28 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Plus,
-  Search,
-  MoreVertical,
-  Edit,
-  Trash2,
-  Eye,
-  Package,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -33,30 +31,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Edit,
+  Eye,
+  MoreVertical,
+  Package,
+  Plus,
+  Search,
+  Trash2,
+} from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { cn } from "@/lib/utils";
 
 const productSchema = z.object({
   name: z.string().min(1, "Product name is required"),
@@ -133,7 +128,14 @@ const mockProducts = [
   },
 ];
 
-const categories = ["Belts", "Chalk", "Accessories", "Sleeves", "Backpacks", "Ropes"];
+const categories = [
+  "Belts",
+  "Chalk",
+  "Accessories",
+  "Sleeves",
+  "Backpacks",
+  "Ropes",
+];
 
 export default function AdminProducts() {
   const [products, setProducts] = useState(mockProducts);
@@ -141,7 +143,9 @@ export default function AdminProducts() {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<typeof mockProducts[0] | null>(null);
+  const [editingProduct, setEditingProduct] = useState<
+    (typeof mockProducts)[0] | null
+  >(null);
 
   const form = useForm<ProductForm>({
     resolver: zodResolver(productSchema),
@@ -160,14 +164,20 @@ export default function AdminProducts() {
     const matchesSearch =
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.sku.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = categoryFilter === "all" || product.category === categoryFilter;
-    const matchesStatus = statusFilter === "all" || product.status === statusFilter;
+    const matchesCategory =
+      categoryFilter === "all" || product.category === categoryFilter;
+    const matchesStatus =
+      statusFilter === "all" || product.status === statusFilter;
     return matchesSearch && matchesCategory && matchesStatus;
   });
 
   const handleSubmit = (data: ProductForm) => {
     if (editingProduct) {
-      setProducts(products.map((p) => (p.id === editingProduct.id ? { ...p, ...data } : p)));
+      setProducts(
+        products.map((p) =>
+          p.id === editingProduct.id ? { ...p, ...data } : p,
+        ),
+      );
     } else {
       const newProduct = {
         ...data,
@@ -181,7 +191,7 @@ export default function AdminProducts() {
     setEditingProduct(null);
   };
 
-  const handleEdit = (product: typeof mockProducts[0]) => {
+  const handleEdit = (product: (typeof mockProducts)[0]) => {
     setEditingProduct(product);
     form.reset({
       name: product.name,
@@ -219,10 +229,15 @@ export default function AdminProducts() {
     const variants: Record<string, string> = {
       active: "bg-green-100 text-green-800",
       draft: "bg-yellow-100 text-yellow-800",
-      archived: "bg-gray-100 text-gray-800",
+      archived: "bg-muted text-foreground",
     };
     return (
-      <span className={cn("inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium", variants[status])}>
+      <span
+        className={cn(
+          "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
+          variants[status],
+        )}
+      >
         {status.charAt(0).toUpperCase() + status.slice(1)}
       </span>
     );
@@ -233,8 +248,10 @@ export default function AdminProducts() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Products</h1>
-          <p className="text-gray-500 mt-1">Manage your product catalog</p>
+          <h1 className="text-3xl font-bold text-foreground">Products</h1>
+          <p className="text-muted-foreground mt-1">
+            Manage your product catalog
+          </p>
         </div>
         <Button onClick={handleNewProduct}>
           <Plus className="h-4 w-4 mr-2" />
@@ -247,7 +264,7 @@ export default function AdminProducts() {
         <CardContent className="pt-6">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search products..."
                 value={searchQuery}
@@ -306,28 +323,35 @@ export default function AdminProducts() {
               <TableBody>
                 {filteredProducts.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={8} className="text-center py-12 text-gray-500">
+                    <TableCell
+                      colSpan={8}
+                      className="text-center py-12 text-muted-foreground"
+                    >
                       No products found
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredProducts.map((product) => (
-                    <TableRow key={product.id} className="hover:bg-gray-50">
+                    <TableRow key={product.id} className="hover:bg-muted">
                       <TableCell>
-                        <div className="h-12 w-12 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
-                          <Package className="h-6 w-6 text-gray-400" />
+                        <div className="h-12 w-12 rounded-lg bg-muted flex items-center justify-center overflow-hidden">
+                          <Package className="h-6 w-6 text-muted-foreground" />
                         </div>
                       </TableCell>
                       <TableCell>
-                        <div className="font-medium text-gray-900">{product.name}</div>
+                        <div className="font-medium text-foreground">
+                          {product.name}
+                        </div>
                       </TableCell>
-                      <TableCell className="text-sm text-gray-500 font-mono">{product.sku}</TableCell>
+                      <TableCell className="text-sm text-muted-foreground font-mono">
+                        {product.sku}
+                      </TableCell>
                       <TableCell>
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-muted text-secondary-foreground">
                           {product.category}
                         </span>
                       </TableCell>
-                      <TableCell className="text-right font-medium text-gray-900">
+                      <TableCell className="text-right font-medium text-foreground">
                         ${product.price.toFixed(2)}
                       </TableCell>
                       <TableCell className="text-center">
@@ -337,8 +361,8 @@ export default function AdminProducts() {
                             product.stock === 0
                               ? "bg-red-100 text-red-800"
                               : product.stock < 10
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-green-100 text-green-800"
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-green-100 text-green-800",
                           )}
                         >
                           {product.stock}
@@ -348,12 +372,18 @@ export default function AdminProducts() {
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                            >
                               <MoreVertical className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="w-48">
-                            <DropdownMenuItem onClick={() => handleEdit(product)}>
+                            <DropdownMenuItem
+                              onClick={() => handleEdit(product)}
+                            >
                               <Edit className="h-4 w-4 mr-2" />
                               Edit
                             </DropdownMenuItem>
@@ -384,10 +414,15 @@ export default function AdminProducts() {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{editingProduct ? "Edit Product" : "Add New Product"}</DialogTitle>
+            <DialogTitle>
+              {editingProduct ? "Edit Product" : "Add New Product"}
+            </DialogTitle>
           </DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 p-6">
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="space-y-4 p-6"
+            >
               <div className="grid gap-4 sm:grid-cols-2">
                 <FormField
                   control={form.control}
@@ -421,7 +456,10 @@ export default function AdminProducts() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Category</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select category" />
@@ -445,7 +483,10 @@ export default function AdminProducts() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Status</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select status" />
@@ -474,7 +515,9 @@ export default function AdminProducts() {
                           min="0"
                           placeholder="0.00"
                           value={field.value ?? ""}
-                          onChange={(e) => field.onChange(e.target.valueAsNumber ?? 0)}
+                          onChange={(e) =>
+                            field.onChange(e.target.valueAsNumber ?? 0)
+                          }
                         />
                       </FormControl>
                       <FormMessage />
@@ -493,7 +536,9 @@ export default function AdminProducts() {
                           min="0"
                           placeholder="0"
                           value={field.value ?? ""}
-                          onChange={(e) => field.onChange(e.target.valueAsNumber ?? 0)}
+                          onChange={(e) =>
+                            field.onChange(e.target.valueAsNumber ?? 0)
+                          }
                         />
                       </FormControl>
                       <FormMessage />
@@ -509,7 +554,7 @@ export default function AdminProducts() {
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <textarea
-                        className="w-full rounded-lg border border-gray-300 p-3 text-sm focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none min-h-[100px] resize-y"
+                        className="w-full rounded-lg border border-input bg-background text-foreground p-3 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none min-h-[100px] resize-y"
                         placeholder="Enter product description"
                         {...field}
                       />
@@ -519,7 +564,11 @@ export default function AdminProducts() {
                 )}
               />
               <div className="flex justify-end gap-3 pt-4 border-t">
-                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsDialogOpen(false)}
+                >
                   Cancel
                 </Button>
                 <Button type="submit">

@@ -1,22 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
-  LayoutDashboard,
-  Package,
-  ShoppingCart,
-  Users,
-  Settings,
-  LogOut,
-  Menu,
-  X,
   ChevronLeft,
   ChevronRight,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Package,
+  Settings,
+  ShoppingCart,
+  Users,
+  X,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const adminNavItems = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
@@ -36,7 +36,7 @@ export default function AdminLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Mobile sidebar overlay */}
       {mobileMenuOpen && (
         <div
@@ -49,7 +49,7 @@ export default function AdminLayout({
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed left-0 top-0 z-50 h-screen bg-white border-r border-gray-200 transition-all duration-300 lg:translate-x-0",
+          "fixed left-0 top-0 z-50 h-screen bg-card text-card-foreground border-r border-border transition-all duration-300 lg:translate-x-0",
           sidebarOpen ? "w-64" : "w-20",
           !sidebarOpen && "lg:w-20",
           mobileMenuOpen && "lg:hidden",
@@ -57,13 +57,13 @@ export default function AdminLayout({
         aria-label="Admin navigation"
       >
         {/* Sidebar header */}
-        <div className="flex h-16 items-center justify-between px-4 border-b border-gray-200">
+        <div className="flex h-16 items-center justify-between px-4 border-b border-border">
           <Link href="/admin/dashboard" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-600 text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <span className="text-lg font-bold">CF</span>
             </div>
             {sidebarOpen && (
-              <span className="text-xl font-bold text-gray-900">Admin</span>
+              <span className="text-xl font-bold text-foreground">Admin</span>
             )}
           </Link>
 
@@ -79,9 +79,13 @@ export default function AdminLayout({
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 space-y-1 p-4 overflow-y-auto" aria-label="Main navigation">
+        <nav
+          className="flex-1 space-y-1 p-4 overflow-y-auto"
+          aria-label="Main navigation"
+        >
           {adminNavItems.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            const isActive =
+              pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link
                 key={item.name}
@@ -90,8 +94,8 @@ export default function AdminLayout({
                   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                   "focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2",
                   isActive
-                    ? "bg-orange-50 text-orange-700"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
                   !sidebarOpen && "justify-center px-2",
                 )}
                 title={sidebarOpen ? undefined : item.name}
@@ -105,11 +109,14 @@ export default function AdminLayout({
         </nav>
 
         {/* Sidebar footer - Collapse button & Logout */}
-        <div className="border-t border-gray-200 p-4">
+        <div className="border-t border-border p-4">
           <Button
             variant="ghost"
             size="icon"
-            className={cn("w-full justify-start gap-3", !sidebarOpen && "justify-center px-2")}
+            className={cn(
+              "w-full justify-start gap-3",
+              !sidebarOpen && "justify-center px-2",
+            )}
             onClick={() => setSidebarOpen(!sidebarOpen)}
             aria-label={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
             title={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
@@ -128,7 +135,7 @@ export default function AdminLayout({
           </Button>
 
           {sidebarOpen && (
-            <div className="mt-4 pt-4 border-t border-gray-200">
+            <div className="mt-4 pt-4 border-t border-border">
               <Button
                 variant="ghost"
                 className="w-full justify-start gap-3 text-red-600 hover:text-red-700 hover:bg-red-50"
@@ -152,7 +159,7 @@ export default function AdminLayout({
         )}
       >
         {/* Top bar */}
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-gray-200 bg-white px-4 lg:px-8">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-border bg-card text-card-foreground px-4 lg:px-8">
           <Button
             variant="ghost"
             size="icon"
@@ -166,10 +173,10 @@ export default function AdminLayout({
           <div className="flex-1" />
 
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 text-sm text-gray-600">
+            <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
               <span className="font-medium">Admin Panel</span>
             </div>
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-100 text-orange-700 font-medium text-sm">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary font-medium text-sm">
               A
             </div>
           </div>

@@ -1,10 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import logo from "@/public/logo/ct-logo01.png";
-import { ShieldCheck, Truck, RotateCcw, ArrowRight, Mail, Phone, MapPin, CheckCircle2, Camera } from "lucide-react";
+import {
+  ArrowRight,
+  Camera,
+  CheckCircle2,
+  Mail,
+  MapPin,
+  Phone,
+  RotateCcw,
+  ShieldCheck,
+  Truck,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export default function Footer() {
@@ -27,12 +37,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden border-t border-[#414141] bg-[#242424] text-text-muted">
+    <footer className="relative overflow-hidden border-t border-border-subtle bg-section-alt text-text-muted">
       {/* Trust Highlights Bar */}
-      <div className="border-b border-[#414141] bg-[#1C1C1C]/40">
+      <div className="border-b border-border-subtle bg-page/40">
         <div className="container-page grid grid-cols-1 gap-6 py-6 sm:py-8 md:grid-cols-3">
           <div className="flex items-center gap-4">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#414141] bg-[#2A2A2A] text-[#E10600]">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-surface-raised text-[#E10600]">
               <Truck size={20} />
             </div>
             <div>
@@ -46,7 +56,7 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#414141] bg-[#2A2A2A] text-[#E10600]">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-surface-raised text-[#E10600]">
               <ShieldCheck size={20} />
             </div>
             <div>
@@ -60,7 +70,7 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#414141] bg-[#2A2A2A] text-[#E10600]">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-surface-raised text-[#E10600]">
               <RotateCcw size={20} />
             </div>
             <div>
@@ -92,7 +102,8 @@ export default function Footer() {
               </div>
             </Link>
             <p className="mt-4 text-xs sm:text-sm leading-relaxed text-text-muted max-w-sm">
-              Dedicated athletic training equipment designed for strength athletes, calisthenics purists, and lifters across Nepal.
+              Dedicated athletic training equipment designed for strength
+              athletes, calisthenics purists, and lifters across Nepal.
             </p>
 
             {/* Direct Contact Summary */}
@@ -103,13 +114,19 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Phone size={14} className="text-[#E10600] shrink-0" />
-                <a href="tel:+9779804165664" className="hover:text-text-primary transition-colors">
+                <a
+                  href="tel:+9779804165664"
+                  className="hover:text-text-primary transition-colors"
+                >
                   +977 9804165664
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail size={14} className="text-[#E10600] shrink-0" />
-                <a href="mailto:crossthenicfitness522@gmail.com" className="hover:text-text-primary transition-colors break-all">
+                <a
+                  href="mailto:crossthenicfitness522@gmail.com"
+                  className="hover:text-text-primary transition-colors break-all"
+                >
                   crossthenicfitness522@gmail.com
                 </a>
               </div>
@@ -121,7 +138,7 @@ export default function Footer() {
                 href="https://www.facebook.com/crossthenicsfitness"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#414141] bg-[#1C1C1C] text-text-muted transition-colors duration-200 hover:border-[#C0C0C0] hover:bg-[#353535] hover:text-text-primary"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-border-subtle bg-page text-text-muted transition-colors duration-200 hover:border-[#C0C0C0] hover:bg-surface-elevated hover:text-text-primary"
                 aria-label="Facebook"
               >
                 <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
@@ -132,7 +149,7 @@ export default function Footer() {
                 href="https://www.instagram.com/crossthenicsfitness"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#414141] bg-[#1C1C1C] text-text-muted transition-colors duration-200 hover:border-[#C0C0C0] hover:bg-[#353535] hover:text-text-primary"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-border-subtle bg-page text-text-muted transition-colors duration-200 hover:border-[#C0C0C0] hover:bg-surface-elevated hover:text-text-primary"
                 aria-label="Instagram"
               >
                 <Camera size={16} aria-hidden="true" />
@@ -141,7 +158,7 @@ export default function Footer() {
                 href="https://wa.me/9779804165664"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#414141] bg-[#1C1C1C] text-text-muted transition-colors duration-200 hover:border-[#C0C0C0] hover:bg-[#353535] hover:text-text-primary"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-border-subtle bg-page text-text-muted transition-colors duration-200 hover:border-[#C0C0C0] hover:bg-surface-elevated hover:text-text-primary"
                 aria-label="WhatsApp"
               >
                 <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
@@ -158,22 +175,34 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/allproducts" className="transition-colors hover:text-text-primary">
+                <Link
+                  href="/allproducts"
+                  className="transition-colors hover:text-text-primary"
+                >
                   All Products
                 </Link>
               </li>
               <li>
-                <Link href="/backpacks" className="transition-colors hover:text-text-primary">
+                <Link
+                  href="/backpacks"
+                  className="transition-colors hover:text-text-primary"
+                >
                   Tactical 45L Packs
                 </Link>
               </li>
               <li>
-                <Link href="/latestproducts" className="transition-colors hover:text-text-primary">
+                <Link
+                  href="/latestproducts"
+                  className="transition-colors hover:text-text-primary"
+                >
                   Latest Drops
                 </Link>
               </li>
               <li>
-                <Link href="/cart" className="transition-colors hover:text-text-primary">
+                <Link
+                  href="/cart"
+                  className="transition-colors hover:text-text-primary"
+                >
                   My Gear Bag
                 </Link>
               </li>
@@ -187,17 +216,26 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/shipping" className="transition-colors hover:text-text-primary">
+                <Link
+                  href="/shipping"
+                  className="transition-colors hover:text-text-primary"
+                >
                   Shipping & Delivery
                 </Link>
               </li>
               <li>
-                <Link href="/refund" className="transition-colors hover:text-text-primary">
+                <Link
+                  href="/refund"
+                  className="transition-colors hover:text-text-primary"
+                >
                   7-Day Return & Exchange
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="transition-colors hover:text-text-primary">
+                <Link
+                  href="/terms"
+                  className="transition-colors hover:text-text-primary"
+                >
                   Terms of Service
                 </Link>
               </li>
@@ -210,11 +248,12 @@ export default function Footer() {
               Drop Alerts
             </h3>
             <p className="text-xs text-text-muted mb-3 leading-relaxed">
-              Receive notifications when new belt batches, dip straps, or tactical colors land.
+              Receive notifications when new belt batches, dip straps, or
+              tactical colors land.
             </p>
 
             {subscribed ? (
-              <div className="flex items-center gap-2 rounded-xl bg-[#2A2A2A] border border-[#414141] p-3 text-xs text-text-primary">
+              <div className="flex items-center gap-2 rounded-xl bg-surface-raised border border-border-subtle p-3 text-xs text-text-primary">
                 <CheckCircle2 size={15} className="shrink-0 text-[#E10600]" />
                 <span>You&apos;re subscribed to drop alerts.</span>
               </div>
@@ -227,7 +266,7 @@ export default function Footer() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@example.com"
                     aria-label="Email address for drop alerts"
-                    className="w-full rounded-xl border border-[#414141] bg-[#1C1C1C] px-3 py-2 text-xs text-text-primary placeholder:text-text-muted outline-none focus:border-[#C0C0C0]"
+                    className="w-full rounded-xl border border-border-subtle bg-page px-3 py-2 text-xs text-text-primary placeholder:text-text-muted outline-none focus:border-[#C0C0C0]"
                   />
                   <button
                     type="submit"
@@ -246,8 +285,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-[#414141] pt-6 text-xs text-text-muted">
-          <p>© {currentYear} Crossthenics Fitness. Pokhara, Nepal. All rights reserved.</p>
+        <div className="mt-12 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-border-subtle pt-6 text-xs text-text-muted">
+          <p>
+            © {currentYear} Crossthenics Fitness. Pokhara, Nepal. All rights
+            reserved.
+          </p>
           <div className="flex items-center gap-4">
             <span className="inline-flex items-center gap-1.5 text-text-muted">
               <span className="h-1.5 w-1.5 rounded-full bg-[#E10600]" />

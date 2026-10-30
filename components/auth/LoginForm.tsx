@@ -1,12 +1,12 @@
 "use client";
 
+import { useAuth } from "@/lib/auth/AuthContext";
+import { cn } from "@/lib/utils";
+import { ArrowRight, Lock, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Lock, Mail, ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/lib/auth/AuthContext";
 
 type LoginFormValues = {
   email: string;
@@ -17,7 +17,7 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { login, isAdmin } = useAuth();
-  
+
   const redirectTo = searchParams.get("redirect") || "/";
 
   const {
@@ -32,12 +32,12 @@ export default function LoginForm() {
       toast.success("Welcome back!", {
         description: "Signed into your Crossthenics account.",
         style: {
-          background: "#2A2A2A",
-          border: "1px solid #414141",
-          color: "#F5F5F5",
+          background: "var(--surface-raised)",
+          border: "1px solid var(--border-subtle)",
+          color: "var(--text-primary)",
         },
       });
-      
+
       if (isAdmin) {
         router.push("/admin/dashboard");
         router.refresh();
@@ -47,11 +47,12 @@ export default function LoginForm() {
       }
     } catch (error) {
       toast.error("Login failed", {
-        description: error instanceof Error ? error.message : "Invalid credentials",
+        description:
+          error instanceof Error ? error.message : "Invalid credentials",
         style: {
-          background: "#2A2A2A",
-          border: "1px solid #414141",
-          color: "#F5F5F5",
+          background: "var(--surface-raised)",
+          border: "1px solid var(--border-subtle)",
+          color: "var(--text-primary)",
         },
       });
     }
@@ -61,7 +62,7 @@ export default function LoginForm() {
     <div className="w-full max-w-md">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full rounded-3xl border border-[#414141] bg-[#2A2A2A] p-8 sm:p-10 shadow-[0_30px_70px_rgba(0,0,0,0.6)] transition-all"
+        className="w-full rounded-3xl border border-border-subtle bg-surface-raised p-8 sm:p-10 shadow-[0_30px_70px_rgba(0,0,0,0.22)] transition-all"
       >
         {/* Header */}
         <div className="mb-8 text-center">
@@ -95,14 +96,19 @@ export default function LoginForm() {
                 })}
                 aria-invalid={!!errors.email}
                 className={cn(
-                  "w-full rounded-xl border border-[#414141] bg-[#1C1C1C] px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
-                  errors.email && "border-red-500"
+                  "w-full rounded-xl border border-border-subtle bg-page px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
+                  errors.email && "border-red-500",
                 )}
               />
-              <Mail size={16} className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-text-muted" />
+              <Mail
+                size={16}
+                className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-text-muted"
+              />
             </div>
             {errors.email && (
-              <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>
+              <p className="mt-1 text-xs text-red-400">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
@@ -124,21 +130,26 @@ export default function LoginForm() {
                 })}
                 aria-invalid={!!errors.password}
                 className={cn(
-                  "w-full rounded-xl border border-[#414141] bg-[#1C1C1C] px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
-                  errors.password && "border-red-500"
+                  "w-full rounded-xl border border-border-subtle bg-page px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
+                  errors.password && "border-red-500",
                 )}
               />
-              <Lock size={16} className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-text-muted" />
+              <Lock
+                size={16}
+                className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-text-muted"
+              />
             </div>
             {errors.password && (
-              <p className="mt-1 text-xs text-red-400">{errors.password.message}</p>
+              <p className="mt-1 text-xs text-red-400">
+                {errors.password.message}
+              </p>
             )}
 
             <div className="mt-3 flex items-center justify-between text-xs text-text-muted">
               <label className="flex items-center gap-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
-                  className="rounded border-[#414141] bg-[#1C1C1C] text-[#E10600] focus:ring-0"
+                  className="rounded border-border-subtle bg-page text-[#E10600] focus:ring-0"
                 />
                 <span>Remember me</span>
               </label>
@@ -159,12 +170,15 @@ export default function LoginForm() {
             className="group/btn mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#E10600] py-4 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-[#B80500]"
           >
             <span>{isSubmitting ? "Authenticating..." : "Sign In"}</span>
-            <ArrowRight size={15} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+            <ArrowRight
+              size={15}
+              className="transition-transform duration-300 group-hover/btn:translate-x-1"
+            />
           </button>
         </div>
 
         {/* Footer Link Navigation */}
-        <div className="mt-8 pt-6 border-t border-[#414141] flex items-center justify-between text-xs text-text-muted">
+        <div className="mt-8 pt-6 border-t border-border-subtle flex items-center justify-between text-xs text-text-muted">
           <p>
             New athlete?{" "}
             <Link
@@ -174,7 +188,10 @@ export default function LoginForm() {
               Create Account
             </Link>
           </p>
-          <Link href="/" className="text-text-muted hover:text-text-primary transition-colors">
+          <Link
+            href="/"
+            className="text-text-muted hover:text-text-primary transition-colors"
+          >
             Back to Home
           </Link>
         </div>

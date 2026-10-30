@@ -1,5 +1,4 @@
-import React from "react";
-import { Truck, ShieldCheck, Clock } from "lucide-react";
+import { Clock, ShieldCheck, Truck } from "lucide-react";
 
 export default function ShippingPage() {
   return (
@@ -21,10 +20,9 @@ export default function ShippingPage() {
         </div>
 
         {/* Policy Card Container */}
-        <div className="rounded-3xl border border-[#414141] bg-[#2A2A2A] p-8 sm:p-12 shadow-[0_25px_60px_rgba(0,0,0,0.6)] space-y-10">
-          
+        <div className="rounded-3xl border border-border-subtle bg-surface-raised p-8 sm:p-12 shadow-[0_25px_60px_rgba(0,0,0,0.18)] space-y-10">
           <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#414141] bg-[#353535] text-[#E10600]">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-border-subtle bg-surface-elevated text-[#E10600]">
               <Clock size={24} />
             </div>
             <div>
@@ -32,15 +30,17 @@ export default function ShippingPage() {
                 Order Processing &amp; Delivery Times
               </h2>
               <p className="text-sm text-text-muted leading-relaxed">
-                All orders are dispatched from our Pokhara facility within 24–48 hours via insured domestic courier.
-                Inside Pokhara &amp; Kathmandu Valley: 1–2 business days.
-                All other districts (Chitwan, Butwal, Biratnagar, Dharan, Nepalgunj, etc.): 2–4 business days.
+                All orders are dispatched from our Pokhara facility within 24–48
+                hours via insured domestic courier. Inside Pokhara &amp;
+                Kathmandu Valley: 1–2 business days. All other districts
+                (Chitwan, Butwal, Biratnagar, Dharan, Nepalgunj, etc.): 2–4
+                business days.
               </p>
             </div>
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#414141] bg-[#353535] text-[#E10600]">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-border-subtle bg-surface-elevated text-[#E10600]">
               <Truck size={24} />
             </div>
             <div>
@@ -48,13 +48,15 @@ export default function ShippingPage() {
                 Shipping Rates &amp; Free Delivery
               </h2>
               <p className="text-sm text-text-muted leading-relaxed">
-                Standard flat-rate delivery across Nepal is Rs. 150. Orders over Rs. 3,000 qualify for complimentary insured shipping nationwide. Cash on Delivery (COD) is available in all major hubs.
+                Standard flat-rate delivery across Nepal is Rs. 150. Orders over
+                Rs. 3,000 qualify for complimentary insured shipping nationwide.
+                Cash on Delivery (COD) is available in all major hubs.
               </p>
             </div>
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#414141] bg-[#353535] text-[#E10600]">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-border-subtle bg-surface-elevated text-[#E10600]">
               <ShieldCheck size={24} />
             </div>
             <div>
@@ -62,11 +64,13 @@ export default function ShippingPage() {
                 Damaged or Lost Shipments
               </h2>
               <p className="text-sm text-text-muted leading-relaxed">
-                Every item is rigorously packaged in high-grade tamper-resistant bags. In the rare event of transit damage or delays, our dispatch support team provides instantaneous tracking updates and free replacements.
+                Every item is rigorously packaged in high-grade tamper-resistant
+                bags. In the rare event of transit damage or delays, our
+                dispatch support team provides instantaneous tracking updates
+                and free replacements.
               </p>
             </div>
           </div>
-
         </div>
       </div>
     </div>

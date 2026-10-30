@@ -1,9 +1,9 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+import { Clock, Mail, MapPin, Phone, Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { MapPin, Phone, Mail, Send, Clock } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 type ContactFormValues = {
   name: string;
@@ -26,9 +26,9 @@ const ContactPage = () => {
     toast.success("Message sent successfully!", {
       description: "Our athlete support team will contact you within 24 hours.",
       style: {
-        background: "#2A2A2A",
-        border: "1px solid #414141",
-        color: "#F5F5F5",
+        background: "var(--surface-raised)",
+        border: "1px solid var(--border-subtle)",
+        color: "var(--text-primary)",
       },
     });
     reset();
@@ -36,9 +36,7 @@ const ContactPage = () => {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden pt-32 pb-24 px-4 sm:px-6 lg:px-8">
-
       <section className="relative z-10 max-w-6xl mx-auto w-full">
-        
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#E10600]/30 bg-[#E10600]/10 px-3.5 py-1 mb-3">
@@ -50,15 +48,15 @@ const ContactPage = () => {
             <span className="text-[#E10600]">GET</span> IN TOUCH
           </h1>
           <p className="text-sm sm:text-base text-text-muted leading-relaxed font-normal max-w-xl mx-auto">
-            Questions regarding sizing, bulk gym orders, or customized belts? Speak directly with our gear specialists in Pokhara.
+            Questions regarding sizing, bulk gym orders, or customized belts?
+            Speak directly with our gear specialists in Pokhara.
           </p>
         </div>
 
         {/* Split Surfaces */}
         <div className="grid lg:grid-cols-12 gap-8 items-stretch">
-
           {/* ─── LEFT: Contact Info Panel ─── */}
-          <div className="lg:col-span-5 rounded-3xl border border-[#414141] bg-[#2A2A2A] p-8 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.6)] flex flex-col justify-between">
+          <div className="lg:col-span-5 rounded-3xl border border-border-subtle bg-surface-raised p-8 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.18)] flex flex-col justify-between">
             <div>
               <h2 className="text-2xl font-black uppercase tracking-tight text-text-primary mb-2">
                 Headquarters & Dispatch
@@ -69,27 +67,35 @@ const ContactPage = () => {
 
               {/* Info Items */}
               <div className="space-y-6">
-                
                 {/* Location */}
                 <div className="flex items-start gap-4 group">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#414141] bg-[#353535] text-[#E10600] transition-all group-hover:border-[#C0C0C0]/50">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-surface-elevated text-[#E10600] transition-all group-hover:border-[#C0C0C0]/50">
                     <MapPin size={20} />
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary">Location</h3>
-                    <p className="text-xs text-text-muted mt-0.5 leading-relaxed">Pokhara, Gandaki, Nepal</p>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary">
+                      Location
+                    </h3>
+                    <p className="text-xs text-text-muted mt-0.5 leading-relaxed">
+                      Pokhara, Gandaki, Nepal
+                    </p>
                   </div>
                 </div>
 
                 {/* Phone */}
                 <div className="flex items-start gap-4 group">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#414141] bg-[#353535] text-[#E10600] transition-all group-hover:border-[#C0C0C0]/50">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-surface-elevated text-[#E10600] transition-all group-hover:border-[#C0C0C0]/50">
                     <Phone size={20} />
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary">Direct Line</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary">
+                      Direct Line
+                    </h3>
                     <p className="text-xs text-text-muted mt-0.5 leading-relaxed">
-                      <a href="tel:+9779804165664" className="hover:text-text-primary transition-colors">
+                      <a
+                        href="tel:+9779804165664"
+                        className="hover:text-text-primary transition-colors"
+                      >
                         +977 9804165664
                       </a>
                     </p>
@@ -98,13 +104,18 @@ const ContactPage = () => {
 
                 {/* Email */}
                 <div className="flex items-start gap-4 group">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#414141] bg-[#353535] text-[#E10600] transition-all group-hover:border-[#C0C0C0]/50">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-surface-elevated text-[#E10600] transition-all group-hover:border-[#C0C0C0]/50">
                     <Mail size={20} />
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary">Email Address</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary">
+                      Email Address
+                    </h3>
                     <p className="text-xs text-text-muted mt-0.5 leading-relaxed break-all">
-                      <a href="mailto:crossthenicfitness522@gmail.com" className="hover:text-text-primary transition-colors">
+                      <a
+                        href="mailto:crossthenicfitness522@gmail.com"
+                        className="hover:text-text-primary transition-colors"
+                      >
                         crossthenicfitness522@gmail.com
                       </a>
                     </p>
@@ -113,22 +124,23 @@ const ContactPage = () => {
 
                 {/* Hours */}
                 <div className="flex items-start gap-4 group">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#414141] bg-[#353535] text-text-muted">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-surface-elevated text-text-muted">
                     <Clock size={20} />
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary">Response Time</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary">
+                      Response Time
+                    </h3>
                     <p className="text-xs text-text-muted mt-0.5 leading-relaxed">
                       Same day response • Mon - Sat
                     </p>
                   </div>
                 </div>
-
               </div>
             </div>
 
             {/* Social Channels */}
-            <div className="mt-10 pt-6 border-t border-[#414141]">
+            <div className="mt-10 pt-6 border-t border-border-subtle">
               <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted block mb-3">
                 Official Channels
               </span>
@@ -137,7 +149,7 @@ const ContactPage = () => {
                   href="https://www.facebook.com/crossthenicsfitness"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#414141] bg-[#242424] text-text-primary/80 transition-all duration-200 hover:border-[#C0C0C0]/60 hover:text-text-primary"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-subtle bg-section-alt text-text-primary/80 transition-all duration-200 hover:border-[#C0C0C0]/60 hover:text-text-primary"
                   aria-label="Facebook"
                 >
                   <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
@@ -148,7 +160,7 @@ const ContactPage = () => {
                   href="https://www.instagram.com/crossthenicsfitness"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#414141] bg-[#242424] text-text-primary/80 transition-all duration-200 hover:border-[#C0C0C0]/60 hover:text-text-primary"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-subtle bg-section-alt text-text-primary/80 transition-all duration-200 hover:border-[#C0C0C0]/60 hover:text-text-primary"
                   aria-label="Instagram"
                 >
                   <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
@@ -159,7 +171,7 @@ const ContactPage = () => {
                   href="https://wa.me/9779804165664"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#414141] bg-[#242424] text-text-primary/80 transition-all duration-200 hover:border-[#C0C0C0]/60 hover:text-text-primary"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-subtle bg-section-alt text-text-primary/80 transition-all duration-200 hover:border-[#C0C0C0]/60 hover:text-text-primary"
                   aria-label="WhatsApp"
                 >
                   <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
@@ -171,20 +183,26 @@ const ContactPage = () => {
           </div>
 
           {/* ─── RIGHT: Contact Form Panel ─── */}
-          <div className="lg:col-span-7 rounded-3xl border border-[#414141] bg-[#2A2A2A] p-8 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.6)]">
+          <div className="lg:col-span-7 rounded-3xl border border-border-subtle bg-surface-raised p-8 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.18)]">
             <h2 className="text-2xl font-black uppercase tracking-tight text-text-primary mb-2">
               Send Transmission
             </h2>
             <p className="text-xs text-text-muted mb-8">
-              Fill out the form below and an equipment specialist will get back to you promptly.
+              Fill out the form below and an equipment specialist will get back
+              to you promptly.
             </p>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
-              
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-4 sm:space-y-5"
+            >
               {/* Name & Email Row */}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-text-muted">
+                  <label
+                    htmlFor="name"
+                    className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-text-muted"
+                  >
                     Your Name
                   </label>
                   <input
@@ -194,17 +212,22 @@ const ContactPage = () => {
                     {...register("name", { required: "Full name is required" })}
                     aria-invalid={!!errors.name}
                     className={cn(
-                      "w-full rounded-xl border border-[#414141] bg-[#1C1C1C] px-4 py-3 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
-                      errors.name && "border-red-500"
+                      "w-full rounded-xl border border-border-subtle bg-page px-4 py-3 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
+                      errors.name && "border-red-500",
                     )}
                   />
                   {errors.name && (
-                    <p className="mt-1 text-xs text-red-400">{errors.name.message}</p>
+                    <p className="mt-1 text-xs text-red-400">
+                      {errors.name.message}
+                    </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-text-muted">
+                  <label
+                    htmlFor="email"
+                    className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-text-muted"
+                  >
                     Email Address
                   </label>
                   <input
@@ -220,12 +243,14 @@ const ContactPage = () => {
                     })}
                     aria-invalid={!!errors.email}
                     className={cn(
-                      "w-full rounded-xl border border-[#414141] bg-[#1C1C1C] px-4 py-3 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
-                      errors.email && "border-red-500"
+                      "w-full rounded-xl border border-border-subtle bg-page px-4 py-3 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
+                      errors.email && "border-red-500",
                     )}
                   />
                   {errors.email && (
-                    <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>
+                    <p className="mt-1 text-xs text-red-400">
+                      {errors.email.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -233,49 +258,66 @@ const ContactPage = () => {
               {/* Phone & Subject Row */}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="phone" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-text-muted">
+                  <label
+                    htmlFor="phone"
+                    className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-text-muted"
+                  >
                     Phone Number
                   </label>
                   <input
                     type="tel"
                     id="phone"
                     placeholder="+977 98..."
-                    {...register("phone", { required: "Phone number is required" })}
+                    {...register("phone", {
+                      required: "Phone number is required",
+                    })}
                     aria-invalid={!!errors.phone}
                     className={cn(
-                      "w-full rounded-xl border border-[#414141] bg-[#1C1C1C] px-4 py-3 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
-                      errors.phone && "border-red-500"
+                      "w-full rounded-xl border border-border-subtle bg-page px-4 py-3 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
+                      errors.phone && "border-red-500",
                     )}
                   />
                   {errors.phone && (
-                    <p className="mt-1 text-xs text-red-400">{errors.phone.message}</p>
+                    <p className="mt-1 text-xs text-red-400">
+                      {errors.phone.message}
+                    </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-text-muted">
+                  <label
+                    htmlFor="subject"
+                    className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-text-muted"
+                  >
                     Subject
                   </label>
                   <input
                     type="text"
                     id="subject"
                     placeholder="Product Inquiry / Sizing"
-                    {...register("subject", { required: "Subject is required" })}
+                    {...register("subject", {
+                      required: "Subject is required",
+                    })}
                     aria-invalid={!!errors.subject}
                     className={cn(
-                      "w-full rounded-xl border border-[#414141] bg-[#1C1C1C] px-4 py-3 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
-                      errors.subject && "border-red-500"
+                      "w-full rounded-xl border border-border-subtle bg-page px-4 py-3 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0]",
+                      errors.subject && "border-red-500",
                     )}
                   />
                   {errors.subject && (
-                    <p className="mt-1 text-xs text-red-400">{errors.subject.message}</p>
+                    <p className="mt-1 text-xs text-red-400">
+                      {errors.subject.message}
+                    </p>
                   )}
                 </div>
               </div>
 
               {/* Message Box */}
               <div>
-                <label htmlFor="message" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-text-muted">
+                <label
+                  htmlFor="message"
+                  className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-text-muted"
+                >
                   Your Message
                 </label>
                 <textarea
@@ -285,12 +327,14 @@ const ContactPage = () => {
                   {...register("message", { required: "Message is required" })}
                   aria-invalid={!!errors.message}
                   className={cn(
-                    "w-full rounded-xl border border-[#414141] bg-[#1C1C1C] p-4 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0] resize-y min-h-32",
-                    errors.message && "border-red-500"
+                    "w-full rounded-xl border border-border-subtle bg-page p-4 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-[#C0C0C0] resize-y min-h-32",
+                    errors.message && "border-red-500",
                   )}
                 />
                 {errors.message && (
-                  <p className="mt-1 text-xs text-red-400">{errors.message.message}</p>
+                  <p className="mt-1 text-xs text-red-400">
+                    {errors.message.message}
+                  </p>
                 )}
               </div>
 
@@ -303,12 +347,9 @@ const ContactPage = () => {
                 <Send size={14} />
                 <span>{isSubmitting ? "Transmitting..." : "Send Message"}</span>
               </button>
-
             </form>
           </div>
-
         </div>
-
       </section>
     </div>
   );

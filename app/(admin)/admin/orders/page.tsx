@@ -1,34 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Search,
-  MoreVertical,
-  Eye,
-  Truck,
-  CheckCircle,
-  XCircle,
-  Clock,
-  Package,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -37,27 +25,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import {
+  CheckCircle,
+  Clock,
+  Eye,
+  Mail,
+  MapPin,
+  MoreVertical,
+  Package,
+  Phone,
+  Search,
+  Truck,
+  XCircle,
+} from "lucide-react";
+import { useState } from "react";
 
 const mockOrders = [
   {
@@ -86,9 +76,7 @@ const mockOrders = [
     email: "sarah@example.com",
     phone: "+1 (555) 234-5678",
     address: "456 Oak Ave, Los Angeles, CA 90001",
-    items: [
-      { name: "Knee Sleeves - 7mm", qty: 1, price: 54.99 },
-    ],
+    items: [{ name: "Knee Sleeves - 7mm", qty: 1, price: 54.99 }],
     subtotal: 54.99,
     shipping: 9.99,
     tax: 5.51,
@@ -125,12 +113,10 @@ const mockOrders = [
     email: "emily@example.com",
     phone: "+1 (555) 456-7890",
     address: "321 Elm St, Houston, TX 77001",
-    items: [
-      { name: "Pro Lifting Belt - Red", qty: 1, price: 89.99 },
-    ],
+    items: [{ name: "Pro Lifting Belt - Red", qty: 1, price: 89.99 }],
     subtotal: 89.99,
     shipping: 9.99,
-    tax: 8.90,
+    tax: 8.9,
     total: 108.88,
     status: "pending",
     paymentStatus: "pending",
@@ -144,9 +130,7 @@ const mockOrders = [
     email: "david@example.com",
     phone: "+1 (555) 567-8901",
     address: "654 Maple Dr, Phoenix, AZ 85001",
-    items: [
-      { name: "Grip Chalk - Block", qty: 3, price: 12.99 },
-    ],
+    items: [{ name: "Grip Chalk - Block", qty: 3, price: 12.99 }],
     subtotal: 38.97,
     shipping: 9.99,
     tax: 3.91,
@@ -175,17 +159,49 @@ const paymentStatusOptions = [
 ];
 
 function StatusBadge({ status }: { status: string }) {
-  const statusConfig: Record<string, { label: string; className: string; icon: React.ComponentType<{ className?: string }> }> = {
-    pending: { label: "Pending", className: "bg-gray-100 text-gray-800", icon: Clock },
-    processing: { label: "Processing", className: "bg-blue-100 text-blue-800", icon: Package },
-    shipped: { label: "Shipped", className: "bg-yellow-100 text-yellow-800", icon: Truck },
-    delivered: { label: "Delivered", className: "bg-green-100 text-green-800", icon: CheckCircle },
-    cancelled: { label: "Cancelled", className: "bg-red-100 text-red-800", icon: XCircle },
+  const statusConfig: Record<
+    string,
+    {
+      label: string;
+      className: string;
+      icon: React.ComponentType<{ className?: string }>;
+    }
+  > = {
+    pending: {
+      label: "Pending",
+      className: "bg-muted text-foreground",
+      icon: Clock,
+    },
+    processing: {
+      label: "Processing",
+      className: "bg-blue-100 text-blue-800",
+      icon: Package,
+    },
+    shipped: {
+      label: "Shipped",
+      className: "bg-yellow-100 text-yellow-800",
+      icon: Truck,
+    },
+    delivered: {
+      label: "Delivered",
+      className: "bg-green-100 text-green-800",
+      icon: CheckCircle,
+    },
+    cancelled: {
+      label: "Cancelled",
+      className: "bg-red-100 text-red-800",
+      icon: XCircle,
+    },
   };
   const config = statusConfig[status] || statusConfig.pending;
   const Icon = config.icon;
   return (
-    <span className={cn("inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium", config.className)}>
+    <span
+      className={cn(
+        "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium",
+        config.className,
+      )}
+    >
       <Icon className="h-3 w-3" />
       {config.label}
     </span>
@@ -200,7 +216,12 @@ function PaymentStatusBadge({ status }: { status: string }) {
     failed: "bg-red-100 text-red-800",
   };
   return (
-    <span className={cn("inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium", variants[status])}>
+    <span
+      className={cn(
+        "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
+        variants[status],
+      )}
+    >
       {status.charAt(0).toUpperCase() + status.slice(1)}
     </span>
   );
@@ -210,7 +231,9 @@ export default function AdminOrders() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [paymentStatusFilter, setPaymentStatusFilter] = useState("all");
-  const [selectedOrder, setSelectedOrder] = useState<typeof mockOrders[0] | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<
+    (typeof mockOrders)[0] | null
+  >(null);
   const [detailDialogOpen, setDetailDialogOpen] = useState(false);
 
   const filteredOrders = mockOrders.filter((order) => {
@@ -218,8 +241,11 @@ export default function AdminOrders() {
       order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.email.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === "all" || order.status === statusFilter;
-    const matchesPaymentStatus = paymentStatusFilter === "all" || order.paymentStatus === paymentStatusFilter;
+    const matchesStatus =
+      statusFilter === "all" || order.status === statusFilter;
+    const matchesPaymentStatus =
+      paymentStatusFilter === "all" ||
+      order.paymentStatus === paymentStatusFilter;
     return matchesSearch && matchesStatus && matchesPaymentStatus;
   });
 
@@ -233,8 +259,10 @@ export default function AdminOrders() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Orders</h1>
-          <p className="text-gray-500 mt-1">Manage and track customer orders</p>
+          <h1 className="text-3xl font-bold text-foreground">Orders</h1>
+          <p className="text-muted-foreground mt-1">
+            Manage and track customer orders
+          </p>
         </div>
       </div>
 
@@ -243,7 +271,7 @@ export default function AdminOrders() {
         <CardContent className="pt-6">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search orders, customers..."
                 value={searchQuery}
@@ -264,7 +292,10 @@ export default function AdminOrders() {
                 ))}
               </SelectContent>
             </Select>
-            <Select value={paymentStatusFilter} onValueChange={setPaymentStatusFilter}>
+            <Select
+              value={paymentStatusFilter}
+              onValueChange={setPaymentStatusFilter}
+            >
               <SelectTrigger className="w-full sm:w-[180px]">
                 <SelectValue placeholder="Payment Status" />
               </SelectTrigger>
@@ -303,31 +334,65 @@ export default function AdminOrders() {
               <TableBody>
                 {filteredOrders.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-12 text-gray-500">
+                    <TableCell
+                      colSpan={7}
+                      className="text-center py-12 text-muted-foreground"
+                    >
                       No orders found
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredOrders.map((order) => (
-                    <TableRow key={order.id} className="hover:bg-gray-50 cursor-pointer" onClick={() => { setSelectedOrder(order); setDetailDialogOpen(true); }}>
-                      <TableCell className="font-medium text-gray-900">{order.id}</TableCell>
-                      <TableCell>
-                        <div className="font-medium text-gray-900">{order.customer}</div>
-                        <div className="text-sm text-gray-500">{order.email}</div>
+                    <TableRow
+                      key={order.id}
+                      className="hover:bg-muted cursor-pointer"
+                      onClick={() => {
+                        setSelectedOrder(order);
+                        setDetailDialogOpen(true);
+                      }}
+                    >
+                      <TableCell className="font-medium text-foreground">
+                        {order.id}
                       </TableCell>
-                      <TableCell className="text-sm text-gray-500">{order.date}</TableCell>
-                      <TableCell className="text-right font-medium text-gray-900">${order.total.toFixed(2)}</TableCell>
-                      <TableCell><StatusBadge status={order.status} /></TableCell>
-                      <TableCell><PaymentStatusBadge status={order.paymentStatus} /></TableCell>
+                      <TableCell>
+                        <div className="font-medium text-foreground">
+                          {order.customer}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          {order.email}
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        {order.date}
+                      </TableCell>
+                      <TableCell className="text-right font-medium text-foreground">
+                        ${order.total.toFixed(2)}
+                      </TableCell>
+                      <TableCell>
+                        <StatusBadge status={order.status} />
+                      </TableCell>
+                      <TableCell>
+                        <PaymentStatusBadge status={order.paymentStatus} />
+                      </TableCell>
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                            >
                               <MoreVertical className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="w-56">
-                            <DropdownMenuItem onClick={(e) => { e.stopPropagation(); setSelectedOrder(order); setDetailDialogOpen(true); }}>
+                            <DropdownMenuItem
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedOrder(order);
+                                setDetailDialogOpen(true);
+                              }}
+                            >
                               <Eye className="h-4 w-4 mr-2" />
                               View Details
                             </DropdownMenuItem>
@@ -335,10 +400,17 @@ export default function AdminOrders() {
                             {statusOptions.map((opt) => (
                               <DropdownMenuItem
                                 key={opt.value}
-                                onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, opt.value); }}
-                                className={order.status === opt.value ? "bg-gray-50" : ""}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleStatusChange(order.id, opt.value);
+                                }}
+                                className={
+                                  order.status === opt.value ? "bg-muted" : ""
+                                }
                               >
-                                {order.status === opt.value && <CheckCircle className="h-4 w-4 mr-2 text-green-500" />}
+                                {order.status === opt.value && (
+                                  <CheckCircle className="h-4 w-4 mr-2 text-green-500" />
+                                )}
                                 <opt.icon className="h-4 w-4 mr-2" />
                                 {opt.label}
                               </DropdownMenuItem>
@@ -383,17 +455,24 @@ export default function AdminOrders() {
                     <h3 className="text-lg font-semibold mb-4">Order Items</h3>
                     <div className="space-y-3">
                       {selectedOrder.items.map((item, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div
+                          key={index}
+                          className="flex items-center justify-between p-3 bg-muted rounded-lg"
+                        >
                           <div className="flex items-center gap-3">
-                            <div className="h-12 w-12 rounded-lg bg-gray-200 flex items-center justify-center">
-                              <Package className="h-6 w-6 text-gray-400" />
+                            <div className="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center">
+                              <Package className="h-6 w-6 text-muted-foreground" />
                             </div>
                             <div>
                               <p className="font-medium">{item.name}</p>
-                              <p className="text-sm text-gray-500">Qty: {item.qty} × ${item.price.toFixed(2)}</p>
+                              <p className="text-sm text-muted-foreground">
+                                Qty: {item.qty} × ${item.price.toFixed(2)}
+                              </p>
                             </div>
                           </div>
-                          <span className="font-medium">${(item.qty * item.price).toFixed(2)}</span>
+                          <span className="font-medium">
+                            ${(item.qty * item.price).toFixed(2)}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -401,18 +480,20 @@ export default function AdminOrders() {
 
                   {/* Order Summary */}
                   <div className="border-t pt-6">
-                    <h3 className="text-lg font-semibold mb-4">Order Summary</h3>
+                    <h3 className="text-lg font-semibold mb-4">
+                      Order Summary
+                    </h3>
                     <div className="max-w-md space-y-2">
                       <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Subtotal</span>
+                        <span className="text-muted-foreground">Subtotal</span>
                         <span>${selectedOrder.subtotal.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Shipping</span>
+                        <span className="text-muted-foreground">Shipping</span>
                         <span>${selectedOrder.shipping.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Tax</span>
+                        <span className="text-muted-foreground">Tax</span>
                         <span>${selectedOrder.tax.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between text-lg font-semibold border-t pt-2">
@@ -424,20 +505,34 @@ export default function AdminOrders() {
 
                   {/* Payment Info */}
                   <div className="border-t pt-6">
-                    <h3 className="text-lg font-semibold mb-4">Payment Information</h3>
+                    <h3 className="text-lg font-semibold mb-4">
+                      Payment Information
+                    </h3>
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div>
-                        <p className="text-sm text-gray-500">Payment Method</p>
-                        <p className="font-medium">{selectedOrder.paymentMethod}</p>
+                        <p className="text-sm text-muted-foreground">
+                          Payment Method
+                        </p>
+                        <p className="font-medium">
+                          {selectedOrder.paymentMethod}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">Payment Status</p>
-                        <PaymentStatusBadge status={selectedOrder.paymentStatus} />
+                        <p className="text-sm text-muted-foreground">
+                          Payment Status
+                        </p>
+                        <PaymentStatusBadge
+                          status={selectedOrder.paymentStatus}
+                        />
                       </div>
                       {selectedOrder.trackingNumber && (
                         <div className="sm:col-span-2">
-                          <p className="text-sm text-gray-500">Tracking Number</p>
-                          <p className="font-medium font-mono text-sm">{selectedOrder.trackingNumber}</p>
+                          <p className="text-sm text-muted-foreground">
+                            Tracking Number
+                          </p>
+                          <p className="font-medium font-mono text-sm">
+                            {selectedOrder.trackingNumber}
+                          </p>
                         </div>
                       )}
                     </div>
@@ -447,28 +542,36 @@ export default function AdminOrders() {
                 <TabsContent value="customer" className="p-6 space-y-6">
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div>
-                      <h3 className="text-lg font-semibold mb-4">Contact Information</h3>
+                      <h3 className="text-lg font-semibold mb-4">
+                        Contact Information
+                      </h3>
                       <div className="space-y-3">
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                          <Mail className="h-5 w-5 text-gray-400" />
+                        <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
+                          <Mail className="h-5 w-5 text-muted-foreground" />
                           <div>
-                            <p className="text-sm text-gray-500">Email</p>
+                            <p className="text-sm text-muted-foreground">
+                              Email
+                            </p>
                             <p className="font-medium">{selectedOrder.email}</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                          <Phone className="h-5 w-5 text-gray-400" />
+                        <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
+                          <Phone className="h-5 w-5 text-muted-foreground" />
                           <div>
-                            <p className="text-sm text-gray-500">Phone</p>
+                            <p className="text-sm text-muted-foreground">
+                              Phone
+                            </p>
                             <p className="font-medium">{selectedOrder.phone}</p>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold mb-4">Shipping Address</h3>
-                      <div className="p-3 bg-gray-50 rounded-lg">
-                        <MapPin className="h-5 w-5 text-gray-400 mb-2" />
+                      <h3 className="text-lg font-semibold mb-4">
+                        Shipping Address
+                      </h3>
+                      <div className="p-3 bg-muted rounded-lg">
+                        <MapPin className="h-5 w-5 text-muted-foreground mb-2" />
                         <p className="font-medium">{selectedOrder.address}</p>
                       </div>
                     </div>
@@ -478,23 +581,73 @@ export default function AdminOrders() {
                 <TabsContent value="timeline" className="p-6">
                   <div className="space-y-6">
                     {[
-                      { status: "pending", label: "Order Placed", time: selectedOrder.date, completed: true },
-                      { status: "processing", label: "Processing", time: "Aug 27, 2026", completed: ["processing", "shipped", "delivered"].includes(selectedOrder.status) },
-                      { status: "shipped", label: "Shipped", time: "Aug 28, 2026", completed: ["shipped", "delivered"].includes(selectedOrder.status) },
-                      { status: "delivered", label: "Delivered", time: "Aug 29, 2026", completed: selectedOrder.status === "delivered" },
+                      {
+                        status: "pending",
+                        label: "Order Placed",
+                        time: selectedOrder.date,
+                        completed: true,
+                      },
+                      {
+                        status: "processing",
+                        label: "Processing",
+                        time: "Aug 27, 2026",
+                        completed: [
+                          "processing",
+                          "shipped",
+                          "delivered",
+                        ].includes(selectedOrder.status),
+                      },
+                      {
+                        status: "shipped",
+                        label: "Shipped",
+                        time: "Aug 28, 2026",
+                        completed: ["shipped", "delivered"].includes(
+                          selectedOrder.status,
+                        ),
+                      },
+                      {
+                        status: "delivered",
+                        label: "Delivered",
+                        time: "Aug 29, 2026",
+                        completed: selectedOrder.status === "delivered",
+                      },
                     ].map((step) => (
-                      <div key={step.status} className="flex items-start gap-4 relative">
-                        <div className="relative flex h-full w-0.5 bg-gray-200" />
-                        <div className={cn("relative flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-200 bg-white shrink-0 z-10", step.completed && "border-orange-500 bg-orange-500")}>
+                      <div
+                        key={step.status}
+                        className="flex items-start gap-4 relative"
+                      >
+                        <div className="relative flex h-full w-0.5 bg-border" />
+                        <div
+                          className={cn(
+                            "relative flex h-10 w-10 items-center justify-center rounded-full border-2 border-border bg-card shrink-0 z-10",
+                            step.completed && "border-primary bg-primary",
+                          )}
+                        >
                           {step.completed ? (
                             <CheckCircle className="h-5 w-5 text-white" />
                           ) : (
-                            <div className={cn("h-2.5 w-2.5 rounded-full", step.completed ? "bg-orange-500" : "bg-gray-300")} />
+                            <div
+                              className={cn(
+                                "h-2.5 w-2.5 rounded-full",
+                                step.completed ? "bg-primary" : "bg-border",
+                              )}
+                            />
                           )}
                         </div>
                         <div className="flex-1 pt-1">
-                          <p className={cn("font-medium", step.completed ? "text-gray-900" : "text-gray-500")}>{step.label}</p>
-                          <p className="text-sm text-gray-500">{step.time}</p>
+                          <p
+                            className={cn(
+                              "font-medium",
+                              step.completed
+                                ? "text-foreground"
+                                : "text-muted-foreground",
+                            )}
+                          >
+                            {step.label}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {step.time}
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -503,8 +656,19 @@ export default function AdminOrders() {
               </Tabs>
 
               <DialogFooter>
-                <Button variant="outline" onClick={() => setDetailDialogOpen(false)}>Close</Button>
-                <Button onClick={() => { /* Print order */ }}>Print Order</Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setDetailDialogOpen(false)}
+                >
+                  Close
+                </Button>
+                <Button
+                  onClick={() => {
+                    /* Print order */
+                  }}
+                >
+                  Print Order
+                </Button>
               </DialogFooter>
             </>
           )}

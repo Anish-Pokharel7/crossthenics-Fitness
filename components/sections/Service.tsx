@@ -1,27 +1,27 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import {
-  Dumbbell,
-  Zap,
-  Flame,
-  Truck,
-  ArrowRight,
-  ShieldCheck,
-  CheckCircle2,
-  Shield,
-  Layers,
-} from "lucide-react";
-import beltImage from "@/public/web images/belt1.jpg";
 import bagImage from "@/public/web images/bag.jpg";
+import beltImage from "@/public/web images/belt1.jpg";
 import chalkImage from "@/public/web images/chalk.jpg";
 import sideImage from "@/public/web images/side.jpg";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Dumbbell,
+  Flame,
+  Layers,
+  Shield,
+  ShieldCheck,
+  Truck,
+  Zap,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Service() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#242424] py-24 sm:py-32 border-t border-[#414141]">
+    <section className="relative w-full overflow-hidden bg-section-alt py-24 sm:py-32 border-t border-border-subtle">
       <div className="container-page relative z-10">
         {/* ── SECTION HEADER ────────────────────────────────────────── */}
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-14 sm:mb-16">
@@ -44,7 +44,8 @@ export default function Service() {
             transition={{ duration: 0.5, delay: 0.08 }}
             className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter text-text-primary leading-[0.95] mb-4"
           >
-            <span className="text-[#E10600]">EVERYTHING </span>YOU NEED TO DOMINATE.
+            <span className="text-[#E10600]">EVERYTHING </span>YOU NEED TO
+            DOMINATE.
           </motion.h2>
 
           <motion.p
@@ -54,7 +55,8 @@ export default function Service() {
             transition={{ duration: 0.5, delay: 0.16 }}
             className="text-sm sm:text-base text-text-muted leading-relaxed font-normal max-w-xl"
           >
-            Built for competition athletes and calisthenics purists. Zero compromises on fabric, hardware, or durability.
+            Built for competition athletes and calisthenics purists. Zero
+            compromises on fabric, hardware, or durability.
           </motion.p>
         </div>
 
@@ -66,7 +68,7 @@ export default function Service() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.08 }}
-            className="md:col-span-7 rounded-2xl border border-[#414141] bg-[#2A2A2A] p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between group shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:border-[#C0C0C0]/50"
+            className="md:col-span-7 rounded-2xl border border-border-subtle bg-surface-raised p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between group shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:border-[#C0C0C0]/50"
           >
             <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none overflow-hidden">
               <Image
@@ -81,10 +83,10 @@ export default function Service() {
 
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#353535] border border-[#414141] text-[#E10600]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-elevated border border-border-subtle text-[#E10600]">
                   <Dumbbell size={22} />
                 </div>
-                <span className="rounded-md border border-[#E10600]/40 bg-[#1C1C1C] px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-text-secondary">
+                <span className="rounded-md border border-[#E10600]/40 bg-page px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-text-secondary">
                   Competition Grade
                 </span>
               </div>
@@ -93,11 +95,12 @@ export default function Service() {
                 Premium Equipment
               </h3>
               <p className="text-xs sm:text-sm text-text-muted max-w-sm leading-relaxed font-normal">
-                Hybrid self-locking belts with stainless steel quick-release lever mechanisms and 1000D nylon outer wraps.
+                Hybrid self-locking belts with stainless steel quick-release
+                lever mechanisms and 1000D nylon outer wraps.
               </p>
             </div>
 
-            <div className="relative z-10 mt-6 pt-5 border-t border-[#414141] flex items-center justify-between">
+            <div className="relative z-10 mt-6 pt-5 border-t border-border-subtle flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
                 <CheckCircle2 size={13} className="text-[#E10600]" />
                 Steel Quick-Release
@@ -105,7 +108,10 @@ export default function Service() {
               <Link href="/allproducts">
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-text-primary group-hover:text-text-secondary transition-colors">
                   <span>Explore</span>
-                  <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+                  <ArrowRight
+                    size={13}
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  />
                 </span>
               </Link>
             </div>
@@ -117,7 +123,7 @@ export default function Service() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.16 }}
-            className="md:col-span-5 rounded-2xl border border-[#414141] bg-[#2A2A2A] p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between group shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:border-[#C0C0C0]/50"
+            className="md:col-span-5 rounded-2xl border border-border-subtle bg-surface-raised p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between group shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:border-[#C0C0C0]/50"
           >
             <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none overflow-hidden">
               <Image
@@ -132,10 +138,10 @@ export default function Service() {
 
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#353535] border border-[#414141] text-[#E10600]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-elevated border border-border-subtle text-[#E10600]">
                   <Zap size={22} />
                 </div>
-                <span className="rounded-md border border-[#414141] bg-[#1C1C1C] px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-text-secondary">
+                <span className="rounded-md border border-border-subtle bg-page px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-text-secondary">
                   Daily & Training
                 </span>
               </div>
@@ -144,11 +150,12 @@ export default function Service() {
                 Fitness Accessories
               </h3>
               <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-normal">
-                45L Ballistic 900D Oxford backpacks, ergonomic side bags, and heavy-duty straps for athletes.
+                45L Ballistic 900D Oxford backpacks, ergonomic side bags, and
+                heavy-duty straps for athletes.
               </p>
             </div>
 
-            <div className="relative z-10 mt-6 pt-5 border-t border-[#414141] flex items-center justify-between">
+            <div className="relative z-10 mt-6 pt-5 border-t border-border-subtle flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
                 <CheckCircle2 size={13} className="text-[#E10600]" />
                 900D Oxford
@@ -156,7 +163,10 @@ export default function Service() {
               <Link href="/backpacks">
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-text-primary group-hover:text-text-secondary transition-colors">
                   <span>Explore</span>
-                  <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+                  <ArrowRight
+                    size={13}
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  />
                 </span>
               </Link>
             </div>
@@ -168,7 +178,7 @@ export default function Service() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.24 }}
-            className="md:col-span-5 rounded-2xl border border-[#414141] bg-[#2A2A2A] p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between group shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:border-[#C0C0C0]/50"
+            className="md:col-span-5 rounded-2xl border border-border-subtle bg-surface-raised p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between group shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:border-[#C0C0C0]/50"
           >
             <div className="absolute right-0 top-0 bottom-0 w-2/3 opacity-20 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none overflow-hidden">
               <Image
@@ -183,10 +193,10 @@ export default function Service() {
 
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#353535] border border-[#414141] text-[#E10600]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-elevated border border-border-subtle text-[#E10600]">
                   <Flame size={22} />
                 </div>
-                <span className="rounded-md border border-[#414141] bg-[#1C1C1C] px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-text-secondary">
+                <span className="rounded-md border border-border-subtle bg-page px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-text-secondary">
                   Max Traction
                 </span>
               </div>
@@ -195,11 +205,12 @@ export default function Service() {
                 Grip & Performance
               </h3>
               <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-normal">
-                Magnesium carbonate chalk blocks for secure bar, ring, and competition grip.
+                Magnesium carbonate chalk blocks for secure bar, ring, and
+                competition grip.
               </p>
             </div>
 
-            <div className="relative z-10 mt-6 pt-5 border-t border-[#414141] flex items-center justify-between">
+            <div className="relative z-10 mt-6 pt-5 border-t border-border-subtle flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
                 <CheckCircle2 size={13} className="text-[#E10600]" />
                 Pure Magnesium
@@ -207,7 +218,10 @@ export default function Service() {
               <Link href="/allproducts">
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-text-primary group-hover:text-text-secondary transition-colors">
                   <span>Explore</span>
-                  <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+                  <ArrowRight
+                    size={13}
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  />
                 </span>
               </Link>
             </div>
@@ -219,7 +233,7 @@ export default function Service() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.32 }}
-            className="md:col-span-7 rounded-2xl border border-[#414141] bg-[#2A2A2A] p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between group shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:border-[#C0C0C0]/50"
+            className="md:col-span-7 rounded-2xl border border-border-subtle bg-surface-raised p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between group shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-all duration-200 hover:border-[#C0C0C0]/50"
           >
             <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none overflow-hidden">
               <Image
@@ -234,10 +248,10 @@ export default function Service() {
 
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#353535] border border-[#414141] text-[#E10600]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-elevated border border-border-subtle text-[#E10600]">
                   <Truck size={22} />
                 </div>
-                <span className="rounded-md border border-[#E10600]/40 bg-[#1C1C1C] px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-text-secondary flex items-center gap-1.5">
+                <span className="rounded-md border border-[#E10600]/40 bg-page px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-text-secondary flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#E10600]" />
                   All 7 Provinces
                 </span>
@@ -247,11 +261,12 @@ export default function Service() {
                 Nationwide Delivery
               </h3>
               <p className="text-xs sm:text-sm text-text-muted max-w-md leading-relaxed font-normal">
-                Dispatched from our Pokhara facility to your doorstep across Nepal with size exchange support.
+                Dispatched from our Pokhara facility to your doorstep across
+                Nepal with size exchange support.
               </p>
             </div>
 
-            <div className="relative z-10 mt-6 pt-5 border-t border-[#414141] flex items-center justify-between">
+            <div className="relative z-10 mt-6 pt-5 border-t border-border-subtle flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
                 <ShieldCheck size={13} className="text-[#E10600]" />
                 Tracked Transit
@@ -259,7 +274,10 @@ export default function Service() {
               <Link href="/shipping">
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-text-primary group-hover:text-text-secondary transition-colors">
                   <span>Policy</span>
-                  <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+                  <ArrowRight
+                    size={13}
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  />
                 </span>
               </Link>
             </div>
@@ -267,11 +285,11 @@ export default function Service() {
         </div>
 
         {/* ── EDITORIAL COLLAGE SHOWCASE ───────────── */}
-        <div className="rounded-2xl bg-[#1C1C1C] p-6 sm:p-10 lg:p-12 border border-[#414141] shadow-[0_16px_40px_rgba(0,0,0,0.40)] relative overflow-hidden">
+        <div className="rounded-2xl bg-page p-6 sm:p-10 lg:p-12 border border-border-subtle shadow-[0_16px_40px_rgba(0,0,0,0.18)] relative overflow-hidden">
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Narrative (5 Cols) */}
             <div className="lg:col-span-5 flex flex-col items-start">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#414141] bg-[#2A2A2A] px-3 py-1 text-[10px] font-black uppercase tracking-widest text-text-secondary mb-4">
+              <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-raised px-3 py-1 text-[10px] font-black uppercase tracking-widest text-text-secondary mb-4">
                 <Layers size={12} />
                 <span>Tactical Issue #01</span>
               </div>
@@ -281,7 +299,9 @@ export default function Service() {
               </h3>
 
               <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-normal mb-6">
-                Engineered for serious athletes, daily training, and multi-day competitions. Features water-resistant Oxford 900D fabric, separate vented shoe chambers, and heavy-duty MOLLE webbing.
+                Engineered for serious athletes, daily training, and multi-day
+                competitions. Features water-resistant Oxford 900D fabric,
+                separate vented shoe chambers, and heavy-duty MOLLE webbing.
               </p>
 
               {/* Spec Checklist */}
@@ -292,7 +312,10 @@ export default function Service() {
                   { label: "Velcro Patch Zones" },
                   { label: "Reinforced Carry Straps" },
                 ].map((spec, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-xs font-medium text-text-primary">
+                  <div
+                    key={idx}
+                    className="flex items-center gap-2 text-xs font-medium text-text-primary"
+                  >
                     <div className="flex h-4 w-4 items-center justify-center rounded-full bg-[#E10600]/20 text-[#E10600] shrink-0">
                       <CheckCircle2 size={11} />
                     </div>
@@ -310,7 +333,7 @@ export default function Service() {
                   </button>
                 </Link>
                 <Link href="/allproducts" className="w-full sm:w-auto">
-                  <button className="flex items-center justify-center gap-2 rounded-xl border border-[#414141] bg-[#2A2A2A] px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-text-primary transition-colors duration-200 hover:border-[#C0C0C0] hover:bg-[#353535] w-full sm:w-auto">
+                  <button className="flex items-center justify-center gap-2 rounded-xl border border-border-subtle bg-surface-raised px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-text-primary transition-colors duration-200 hover:border-[#C0C0C0] hover:bg-surface-elevated w-full sm:w-auto">
                     <span>Full Catalog</span>
                   </button>
                 </Link>
@@ -321,7 +344,7 @@ export default function Service() {
             <div className="lg:col-span-7 relative flex items-center justify-center py-4">
               <div className="relative w-full max-w-[500px]">
                 {/* 1. Primary Image Frame */}
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-[#414141] bg-[#2A2A2A] shadow-lg group">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border-subtle bg-surface-raised shadow-lg group">
                   <Image
                     src={bagImage}
                     alt="45L Tactical Military Backpack"
@@ -334,8 +357,9 @@ export default function Service() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1C1C1C]/90 via-transparent to-black/30" />
 
                   {/* Top-Right Badge */}
-                  <div className="absolute top-3.5 right-3.5 z-10 rounded-lg bg-[#1C1C1C]/85 px-3 py-1 border border-[#414141] text-[9px] font-black uppercase tracking-wider text-text-primary">
-                    <span className="text-[#E10600] mr-1">●</span> 45L Tactical Edition
+                  <div className="absolute top-3.5 right-3.5 z-10 rounded-lg bg-page/85 px-3 py-1 border border-border-subtle text-[9px] font-black uppercase tracking-wider text-text-primary">
+                    <span className="text-[#E10600] mr-1">●</span> 45L Tactical
+                    Edition
                   </div>
 
                   {/* Bottom Caption Tag */}
@@ -348,7 +372,7 @@ export default function Service() {
                         900D Ballistic Oxford
                       </h4>
                     </div>
-                    <span className="rounded-md border border-[#414141] bg-[#1C1C1C] px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-text-secondary">
+                    <span className="rounded-md border border-border-subtle bg-page px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-text-secondary">
                       Rs. 7,500
                     </span>
                   </div>
@@ -356,7 +380,7 @@ export default function Service() {
 
                 {/* 2. Smaller Overlapping Image */}
                 <Link href="/products/5">
-                  <div className="absolute -bottom-4 -left-3 sm:-bottom-6 sm:-left-6 z-20 w-36 sm:w-48 aspect-square overflow-hidden rounded-xl border border-[#414141] bg-[#2A2A2A] shadow-xl group cursor-pointer transition-transform duration-200 hover:scale-105">
+                  <div className="absolute -bottom-4 -left-3 sm:-bottom-6 sm:-left-6 z-20 w-36 sm:w-48 aspect-square overflow-hidden rounded-xl border border-border-subtle bg-surface-raised shadow-xl group cursor-pointer transition-transform duration-200 hover:scale-105">
                     <Image
                       src={sideImage}
                       alt="Ergonomic Side Bag"
@@ -383,9 +407,9 @@ export default function Service() {
                 </Link>
 
                 {/* 3. Floating Statistics Badge */}
-                <div className="absolute -top-4 -right-2 sm:-top-6 sm:-right-4 z-20 rounded-xl bg-[#2A2A2A] p-3 sm:p-4 border border-[#414141] shadow-xl max-w-[190px] sm:max-w-[210px]">
+                <div className="absolute -top-4 -right-2 sm:-top-6 sm:-right-4 z-20 rounded-xl bg-surface-raised p-3 sm:p-4 border border-border-subtle shadow-xl max-w-[190px] sm:max-w-[210px]">
                   <div className="flex items-center gap-1.5 mb-1.5">
-                    <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#353535] border border-[#414141] text-[#E10600]">
+                    <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-surface-elevated border border-border-subtle text-[#E10600]">
                       <Shield size={12} />
                     </div>
                     <span className="text-[8px] font-black uppercase tracking-widest text-text-secondary">
@@ -400,7 +424,7 @@ export default function Service() {
                     Dual compartment & footwear section.
                   </p>
 
-                  <div className="mt-2.5 pt-2 border-t border-[#414141] flex items-center justify-between text-[8px] font-bold uppercase tracking-wider text-text-muted">
+                  <div className="mt-2.5 pt-2 border-t border-border-subtle flex items-center justify-between text-[8px] font-bold uppercase tracking-wider text-text-muted">
                     <span>Durability</span>
                     <span className="text-text-primary font-black">Tested</span>
                   </div>

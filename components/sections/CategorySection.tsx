@@ -1,13 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, Shield, Dumbbell, Flame, ShoppingBag } from "lucide-react";
-import beltImage from "@/public/web images/belt1.jpg";
 import bagImage from "@/public/web images/bag.jpg";
+import beltImage from "@/public/web images/belt1.jpg";
 import chalkImage from "@/public/web images/chalk.jpg";
 import athleteImage from "@/public/web images/crossthenicsfitness-20260608-0001.jpg";
+import { motion } from "framer-motion";
+import { ArrowRight, Dumbbell, Flame, Shield, ShoppingBag } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 const categories = [
   {
@@ -54,7 +54,7 @@ const categories = [
 
 export default function CategorySection() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#242424] section-padding border-t border-[#414141]">
+    <section className="relative w-full overflow-hidden bg-section-alt section-padding border-t border-border-subtle">
       <div className="container-page relative z-10">
         {/* -- SECTION HEADER ------------------------------------------ */}
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-14 sm:mb-16">
@@ -100,7 +100,7 @@ export default function CategorySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
-              className="relative overflow-hidden rounded-2xl border border-[#414141] hover:border-[#C0C0C0]/60 shadow-[0_8px_24px_rgba(0,0,0,0.35)] transition-all duration-300 group aspect-[3/4] flex flex-col justify-between p-5 sm:p-6 bg-[#2A2A2A]"
+              className="relative overflow-hidden rounded-2xl border border-border-subtle hover:border-[#C0C0C0]/60 shadow-[0_8px_24px_rgba(0,0,0,0.35)] transition-all duration-300 group aspect-[3/4] flex flex-col justify-between p-5 sm:p-6 bg-surface-raised"
             >
               {/* Background Image with subtle zoom */}
               <div className="absolute inset-0 z-0">
@@ -119,36 +119,36 @@ export default function CategorySection() {
 
               {/* Top Header Badge Pill */}
               <div className="relative z-10 flex items-center justify-between">
-                <span className="rounded-lg px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-text-primary bg-[#1C1C1C]/85 border border-[#414141] backdrop-blur-md">
+                <span className="rounded-lg px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-white bg-[#1C1C1C]/85 border border-[#414141] backdrop-blur-md">
                   {cat.badge}
                 </span>
 
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1C1C1C]/85 text-text-secondary border border-[#414141] group-hover:text-white group-hover:border-[#E10600]/40 transition-colors">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1C1C1C]/85 text-[#C0C0C0] border border-[#414141] group-hover:text-white group-hover:border-[#E10600]/40 transition-colors">
                   {cat.icon}
                 </div>
               </div>
 
               {/* Bottom Content Panel */}
               <div className="relative z-10 pt-4">
-                <span className="text-[9px] font-black uppercase tracking-widest text-text-secondary block mb-1">
+                <span className="text-[9px] font-black uppercase tracking-widest text-[#C0C0C0] block mb-1">
                   {cat.count}
                 </span>
 
-                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-text-primary mb-1 group-hover:text-text-secondary transition-colors duration-200">
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white mb-1 group-hover:text-[#C0C0C0] transition-colors duration-200">
                   {cat.name}
                 </h3>
 
-                <p className="text-xs text-text-muted font-normal leading-relaxed mb-4 line-clamp-2">
+                <p className="text-xs text-[#D6D6D6] font-normal leading-relaxed mb-4 line-clamp-2">
                   {cat.tagline}
                 </p>
 
                 {/* Action Button */}
                 <Link href={cat.href} className="block w-full">
                   <div className="flex items-center justify-between rounded-xl bg-[#1C1C1C] px-3.5 py-2.5 border border-[#414141] group-hover:border-[#E10600] group-hover:bg-[#E10600] transition-all duration-200">
-                    <span className="text-xs font-bold uppercase tracking-wider text-text-primary group-hover:text-white">
+                    <span className="text-xs font-bold uppercase tracking-wider text-white group-hover:text-white">
                       Explore
                     </span>
-                    <ArrowRight size={14} className="text-text-muted group-hover:text-white transition-transform duration-200 group-hover:translate-x-0.5" />
+                    <ArrowRight size={14} className="text-[#C0C0C0] group-hover:text-white transition-transform duration-200 group-hover:translate-x-0.5" />
                   </div>
                 </Link>
               </div>

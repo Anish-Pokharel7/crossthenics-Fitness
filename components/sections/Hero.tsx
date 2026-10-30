@@ -1,13 +1,13 @@
 "use client";
 
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { ArrowRight, Award, Shield, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef, useCallback } from "react";
-import { ArrowRight, Shield, Award, Truck } from "lucide-react";
+import { useCallback, useRef } from "react";
 
-import landimage from "@/public/web images/crossthenicsfitness-20260608-0001.jpg";
 import beltimage from "@/public/web images/belt1.jpg";
+import landimage from "@/public/web images/crossthenicsfitness-20260608-0001.jpg";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -53,19 +53,18 @@ export default function Hero() {
   }, [rawX, rawY]);
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#1C1C1C] pt-32 pb-12 sm:pt-36 sm:pb-16 lg:pt-40 lg:pb-20">
+    <section className="relative w-full overflow-hidden bg-page pt-32 pb-12 sm:pt-36 sm:pb-16 lg:pt-40 lg:pb-20">
       <div className="container-page relative z-10">
         <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
           {/* LEFT SIDE — HERO COPY */}
           <div className="relative z-20 flex flex-col items-start lg:pr-8 xl:pr-12">
             {/* Badges */}
             <motion.div {...fadeIn(0.05)} className="mb-6 flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E10600]/40 bg-[#E10600]/10 px-3.5 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-text-primary">
+              <span className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-text-primary">
                 Premium Fitness Equipment
               </span>
 
-              <span className="hidden items-center gap-1.5 rounded-full border border-[#414141] bg-[#2A2A2A] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-text-muted sm:inline-flex">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#E10600]" />
+              <span className="hidden items-center gap-1.5 text-primary rounded-full border border-border-subtle bg-surface-raised px-3 py-1 text-[10px] font-bold uppercase tracking-wider sm:inline-flex">
                 Dispatched from Pokhara
               </span>
             </motion.div>
@@ -108,7 +107,7 @@ export default function Hero() {
 
               {/* Secondary CTA */}
               <Link href="/backpacks" className="w-full sm:w-auto">
-                <button className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#414141] bg-[#2A2A2A] px-7 py-4 text-xs font-bold uppercase tracking-wider text-text-primary transition-all duration-200 hover:border-[#C0C0C0] hover:bg-[#353535] sm:w-auto">
+                <button className="flex w-full items-center justify-center gap-2 rounded-xl border border-border-subtle bg-surface-raised px-7 py-4 text-xs font-bold uppercase tracking-wider text-text-primary transition-all duration-200 hover:border-[#C0C0C0] hover:bg-surface-elevated sm:w-auto">
                   <span>Discover Crossthenics</span>
                 </button>
               </Link>
@@ -120,7 +119,7 @@ export default function Hero() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.35 }}
-              className="grid w-full max-w-xl grid-cols-3 gap-3 border-t border-[#414141] pt-6 sm:gap-6"
+              className="grid w-full max-w-xl grid-cols-3 gap-3 border-t border-border-subtle pt-6 sm:gap-6"
             >
               {[
                 {
@@ -171,7 +170,7 @@ export default function Hero() {
             >
               {/* Clean Editorial Card */}
               <div
-                className="relative overflow-hidden rounded-[24px] border border-[#414141] bg-[#2A2A2A] shadow-[0_20px_50px_rgba(0,0,0,0.50)]"
+                className="relative overflow-hidden rounded-[24px] border border-border-subtle bg-surface-raised shadow-[0_20px_50px_rgba(0,0,0,0.50)]"
                 style={{ aspectRatio: "4/5" }}
               >
                 {/* Parallax image */}
@@ -196,8 +195,8 @@ export default function Hero() {
                 />
 
                 {/* Clean Editorial Caption Tag */}
-                <div className="absolute bottom-4 left-4 right-4 z-20">
-                  <div className="flex items-center justify-between rounded-xl border border-[#414141] bg-[#1C1C1C]/90 px-4 py-3 backdrop-blur-md">
+                <div className="absolute top-4 left-4 right-4 z-20">
+                  <div className="flex items-center justify-between rounded-xl border border-border-subtle bg-page/90 px-4 py-3 backdrop-blur-md">
                     <div>
                       <span className="block text-[8px] font-black uppercase tracking-[0.2em] text-text-secondary">
                         Athlete Division
@@ -222,8 +221,8 @@ export default function Hero() {
                 className="absolute -bottom-4 -right-3 z-30 w-28 sm:w-32"
               >
                 <Link href="/allproducts" className="group block">
-                  <div className="rounded-2xl border border-[#414141] bg-[#2A2A2A] p-2 shadow-xl transition-all duration-200 hover:border-[#C0C0C0] hover:scale-105">
-                    <div className="relative aspect-square overflow-hidden rounded-xl bg-[#1C1C1C]">
+                  <div className="rounded-2xl border border-border-subtle bg-surface-raised p-2 shadow-xl transition-all duration-200 hover:border-[#C0C0C0] hover:scale-105">
+                    <div className="relative aspect-square overflow-hidden rounded-xl bg-page">
                       <Image
                         src={beltimage}
                         alt="Hybrid Self-Locking Belt"

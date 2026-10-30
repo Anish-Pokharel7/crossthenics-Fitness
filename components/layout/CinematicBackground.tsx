@@ -1,10 +1,8 @@
-import React from "react";
-
 /**
  * CinematicBackground
  *
  * Fixed full-screen atmospheric layer rendered once at AppShell level.
- * Charcoal architectural foundation (#1C1C1C) with subtle depth texture.
+ * The active theme supplies its page color and subtle texture.
  */
 export default function CinematicBackground() {
   return (
@@ -28,7 +26,12 @@ export default function CinematicBackground() {
           />
           <feColorMatrix type="saturate" values="0" />
         </filter>
-        <rect width="100%" height="100%" filter="url(#cine-grain)" opacity="0.015" />
+        <rect
+          width="100%"
+          height="100%"
+          filter="url(#cine-grain)"
+          opacity="0.015"
+        />
       </svg>
     </div>
   );

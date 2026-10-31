@@ -3,7 +3,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
-  LayoutDashboard,
   Menu,
   Moon,
   Search,
@@ -16,13 +15,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 import { useAuth } from "@/lib/auth/AuthContext";
 import { useCart } from "@/lib/cartContext";
 import { useSearch } from "@/lib/searchContext";
 import { cn } from "@/lib/utils";
 import Logo from "@/public/logo/ct-logo01.png";
-import { useTheme } from "next-themes";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -46,22 +45,23 @@ export function Navbar() {
   const { isAdmin } = useAuth();
   const { totalCount } = useCart();
 
-  // Prevent theme-dependent hydration mismatches.
-  useEffect(() => {
-    const frameId = requestAnimationFrame(() => {
-      setMounted(true);
-    });
-
-    return () => cancelAnimationFrame(frameId);
-  }, []);
+  // --------------------------------------------------
+  // THEME INITIALIZATION
+  // --------------------------------------------------
 
   useEffect(() => {
+    setMounted(true);
+
     const syncTheme = () => {
-      setIsDark(document.documentElement.classList.contains("dark"));
+      setIsDark(
+        document.documentElement.classList.contains("dark")
+      );
     };
 
     syncTheme();
+
     const observer = new MutationObserver(syncTheme);
+
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["class"],
@@ -70,7 +70,17 @@ export function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Navbar scroll behavior.
+  const toggleTheme = () => {
+    const nextTheme = isDark ? "light" : "dark";
+
+    setTheme(nextTheme);
+    setIsDark(nextTheme === "dark");
+  };
+
+  // --------------------------------------------------
+  // NAVBAR SCROLL EFFECT
+  // --------------------------------------------------
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 25);
@@ -87,7 +97,10 @@ export function Navbar() {
     };
   }, []);
 
-  // Close mobile menu using Escape.
+  // --------------------------------------------------
+  // MOBILE DRAWER: ESCAPE KEY
+  // --------------------------------------------------
+
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -102,366 +115,529 @@ export function Navbar() {
     };
   }, []);
 
-  // Close mobile menu when navigating.
+  // --------------------------------------------------
+  // MOBILE DRAWER: BODY SCROLL LOCK
+  // --------------------------------------------------
+
   useEffect(() => {
-    const timeoutId = window.setTimeout(() => setIsOpen(false), 0);
-    return () => window.clearTimeout(timeoutId);
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
+  // --------------------------------------------------
+  // CLOSE DRAWER WHEN ROUTE CHANGES
+  // --------------------------------------------------
+
+  useEffect(() => {
+    setIsOpen(false);
   }, [pathname]);
+
+  // --------------------------------------------------
+  // NAVIGATION HELPERS
+  // --------------------------------------------------
 
   const isActive = (href: string) =>
     href === "/"
       ? pathname === "/"
       : pathname === href || pathname.startsWith(`${href}/`);
 
-  const toggleTheme = () => {
-    const nextTheme = document.documentElement.classList.contains("dark")
-      ? "light"
-      : "dark";
-    setTheme(nextTheme);
-    setIsDark(nextTheme === "dark");
-  };
+  const closeMenu = () => setIsOpen(false);
 
-  // Shared navigation typography.
+  const accountHref = isAdmin
+    ? "/admin/dashboard"
+    : "/auth/login";
+
+  // --------------------------------------------------
+  // SHARED NAVIGATION STYLES
+  // --------------------------------------------------
+
   const getNavLinkClass = (active: boolean) =>
     cn(
       "relative whitespace-nowrap rounded-lg px-3 py-2",
       "text-[10px] xl:text-[11px] uppercase tracking-[0.10em]",
-      "transition-colors duration-200",
+      "transition-all duration-200",
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]",
       active
         ? "font-black text-[#E10600]"
-        : "font-bold text-text-muted hover:text-[#E10600]",
+        : "font-bold text-text-muted hover:bg-surface hover:text-text-primary"
     );
 
+  // --------------------------------------------------
+  // THEME BUTTON
+  // --------------------------------------------------
+
+  const ThemeButton = ({ mobile = false }: { mobile?: boolean }) => (
+    <button
+      type="button"
+      onClick={toggleTheme}
+      aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+      title={`Switch to ${isDark ? "light" : "dark"} theme`}
+      className={cn(
+        "flex shrink-0 items-center justify-center rounded-xl",
+        "border border-border-subtle bg-surface text-text-primary",
+        "transition-all duration-200 hover:bg-surface-elevated",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]",
+        mobile ? "h-10 w-10" : "h-9 w-9"
+      )}
+    >
+      {mounted && isDark ? (
+        <Sun size={16} aria-hidden="true" />
+      ) : (
+        <Moon size={16} aria-hidden="true" />
+      )}
+    </button>
+  );
+
+  // --------------------------------------------------
+  // COMPONENT
+  // --------------------------------------------------
+
   return (
-    <div className="container-page pointer-events-none fixed inset-x-0 top-0 z-50 pt-3 sm:pt-4">
-      <motion.header
-        initial={{ y: -25, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{
-          duration: 0.45,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className="pointer-events-auto relative w-full"
-      >
-        {/* NAVBAR CONTAINER */}
-        <div
-          className={cn(
-            "relative mx-auto min-h-[66px] overflow-visible rounded-2xl border transition-all duration-300",
-            "border-border-subtle bg-surface-raised/95 backdrop-blur-md",
-            "shadow-[0_8px_24px_rgba(0,0,0,0.40)]",
-            scrolled &&
-              "bg-surface-raised/98 border-border-subtle shadow-[0_12px_32px_rgba(0,0,0,0.25)]",
-          )}
+    <>
+      {/* ==============================================
+          MAIN NAVBAR
+      ============================================== */}
+
+      <div className="container-page pointer-events-none fixed inset-x-0 top-0 z-50 pt-3 sm:pt-4">
+        <motion.header
+          initial={{ y: -25, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            duration: 0.45,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="pointer-events-auto relative w-full"
         >
-          {/* Subtle top highlight */}
-          <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div
+            className={cn(
+              "relative mx-auto w-full rounded-2xl border",
+              "border-border-subtle bg-surface-raised/95 backdrop-blur-xl",
+              "shadow-[0_8px_30px_rgba(0,0,0,0.25)]",
+              "transition-all duration-300",
+              scrolled &&
+                "bg-surface-raised/98 shadow-[0_12px_35px_rgba(0,0,0,0.30)]"
+            )}
+          >
+            {/* TOP HIGHLIGHT */}
 
-          {/* NAVBAR CONTENT */}
-          <div className="flex h-[66px] items-center gap-2 px-3 sm:px-5 lg:px-6">
-            {/* LOGO */}
-            <Link
-              href="/"
-              aria-label="Crossthenics Fitness"
-              className="group relative z-20 flex shrink-0 items-center"
-            >
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.2 }}
+            <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+            {/* NAVBAR CONTENT */}
+
+            <div className="flex h-[66px] items-center gap-3 px-3 sm:px-5 lg:px-6">
+
+              {/* LOGO */}
+
+              <Link
+                href="/"
+                aria-label="Crossthenics Fitness"
+                className="group relative z-20 flex shrink-0 items-center"
               >
-                <Image
-                  src={Logo}
-                  alt="Crossthenics Fitness"
-                  width={140}
-                  height={48}
-                  priority
-                  className="h-[30px] w-auto object-contain sm:h-[33px]"
-                />
-              </motion.div>
-            </Link>
+                <motion.div
+                  whileHover={{ scale: 1.035 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Image
+                    src={Logo}
+                    alt="Crossthenics Fitness"
+                    width={140}
+                    height={48}
+                    priority
+                    className="h-[30px] w-auto object-contain sm:h-[33px]"
+                  />
+                </motion.div>
+              </Link>
 
-            {/* DESKTOP NAVIGATION */}
-            <nav
-              aria-label="Main navigation"
-              className="hidden min-w-0 flex-1 items-center justify-center lg:flex"
-            >
-              <div className="flex min-w-0 max-w-full items-center gap-1 rounded-xl p-1">
-                {navLinks.map((link) => {
-                  const active = isActive(link.href);
+              {/* DESKTOP NAVIGATION */}
 
-                  return (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      aria-current={active ? "page" : undefined}
-                      className={getNavLinkClass(active)}
-                    >
-                      <span className="relative z-10">{link.name}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </nav>
-
-            {/* DESKTOP ACTIONS */}
-            <div className="relative z-20 hidden shrink-0 items-center gap-1.5 md:flex xl:gap-2">
-              {/* THEME TOGGLE */}
-              <button
-                type="button"
-                onClick={toggleTheme}
-                aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
-                title={`Switch to ${isDark ? "light" : "dark"} theme`}
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border-subtle bg-surface text-text-primary transition-colors hover:bg-surface-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]"
+              <nav
+                aria-label="Main navigation"
+                className="hidden min-w-0 flex-1 items-center justify-center lg:flex"
               >
-                {mounted && isDark ? (
-                  <Sun size={16} aria-hidden="true" />
-                ) : (
-                  <Moon size={16} aria-hidden="true" />
-                )}
-              </button>
+                <div className="flex min-w-0 items-center gap-0.5 rounded-xl p-1">
+                  {navLinks.map((link) => {
+                    const active = isActive(link.href);
 
-              {/* SEARCH */}
-              <div className="flex h-9 w-9 shrink-0 items-center overflow-hidden rounded-xl border border-border-subtle bg-page transition-all duration-200 hover:border-[#929292]/60 focus-within:border-[#929292] focus-within:ring-0 focus-within:outline-none xl:w-[145px] 2xl:w-[165px]">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center">
-                  <Search
-                    size={14}
-                    strokeWidth={2}
-                    className="text-text-muted"
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        aria-current={active ? "page" : undefined}
+                        className={getNavLinkClass(active)}
+                      >
+                        {link.name}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </nav>
+
+              {/* DESKTOP ACTIONS */}
+
+              <div className="relative z-20 ml-auto hidden shrink-0 items-center gap-2 lg:flex">
+
+                <ThemeButton />
+
+                {/* SEARCH */}
+
+                <div className="flex h-9 w-[145px] items-center overflow-hidden rounded-xl border border-border-subtle bg-page transition-colors hover:border-[#929292]/60 focus-within:border-[#929292] xl:w-[165px]">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center">
+                    <Search
+                      size={14}
+                      className="text-text-muted"
+                    />
+                  </div>
+
+                  <input
+                    type="text"
+                    placeholder="Search gear..."
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                    className="h-full min-w-0 flex-1 border-0 bg-transparent pr-3 text-[11px] font-medium text-text-primary outline-none placeholder:text-text-muted focus:ring-0"
                   />
                 </div>
 
-                <input
-                  type="text"
-                  placeholder="Search gear..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="hidden min-w-0 flex-1 border-0 bg-transparent pr-3 text-[11px] font-medium text-text-primary outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 focus-visible:outline-none placeholder:text-text-muted xl:block"
-                />
+                {/* ACCOUNT */}
+
+                <Link
+                  href={accountHref}
+                  aria-label="Account"
+                  className="group flex h-9 shrink-0 items-center justify-center gap-2 rounded-xl border border-border-subtle bg-page px-3 text-text-primary transition-all hover:border-[#929292]/60 hover:bg-surface-elevated"
+                >
+                  <UserRound
+                    size={14}
+                    className="transition-transform group-hover:scale-105"
+                  />
+
+                  <span className="text-[10px] font-bold uppercase tracking-[0.10em]">
+                    Account
+                  </span>
+                </Link>
+
+                {/* CART */}
+
+                <Link
+                  href="/cart"
+                  aria-label="Shopping cart"
+                  className="group relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-page text-text-primary transition-all hover:border-[#929292]/60 hover:bg-surface-elevated"
+                >
+                  <ShoppingBag
+                    size={15}
+                    className="transition-transform group-hover:-translate-y-0.5"
+                  />
+
+                  {mounted && totalCount > 0 && (
+                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#E10600] px-1 text-[9px] font-black text-white">
+                      {totalCount}
+                    </span>
+                  )}
+                </Link>
+
+                {/* CONTACT CTA */}
+
+                <Link
+                  href="/contact"
+                  className="group flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-xl bg-[#E10600] px-4 text-[10px] font-black uppercase tracking-[0.10em] text-white transition-all hover:-translate-y-0.5 hover:bg-[#B80500]"
+                >
+                  Contact
+
+                  <ArrowRight
+                    size={13}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
+                </Link>
               </div>
 
-              {/* ACCOUNT */}
-              <Link
-                href="/auth/login"
-                aria-label="Account"
-                className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-page text-text-primary transition-all duration-200 hover:border-[#929292]/60 hover:bg-surface-elevated xl:h-9 xl:w-auto xl:px-3.5"
-              >
-                <UserRound
-                  size={14}
-                  strokeWidth={2}
-                  className="transition-transform duration-200 group-hover:scale-105"
-                />
+              {/* MOBILE / TABLET ACTIONS */}
 
-                <span className="ml-2 hidden text-[10px] font-bold uppercase tracking-[0.10em] xl:inline">
-                  Account
-                </span>
-              </Link>
+              <div className="relative z-20 ml-auto flex shrink-0 items-center gap-2 lg:hidden">
 
-              {/* CART */}
-              <Link
-                href="/cart"
-                aria-label="Shopping cart"
-                className="group relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-page text-text-primary transition-all duration-200 hover:border-[#929292]/60 hover:bg-surface-elevated"
-              >
-                <ShoppingBag
-                  size={15}
-                  strokeWidth={2}
-                  className="transition-transform duration-200 group-hover:-translate-y-0.5"
-                />
+                <ThemeButton mobile />
 
-                {mounted && totalCount > 0 && (
-                  <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#E10600] px-1 text-[9px] font-black text-white">
-                    {totalCount}
-                  </span>
-                )}
-              </Link>
+                {/* MOBILE CART */}
 
-              {/* CONTACT CTA */}
-              <Link
-                href="/contact"
-                aria-label="Contact"
-                className="group flex h-9 shrink-0 items-center justify-center rounded-xl bg-[#E10600] px-3.5 text-[10px] font-black uppercase tracking-[0.10em] text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#B80500] xl:gap-1.5 xl:px-4"
-              >
-                <span>Contact</span>
+                <Link
+                  href="/cart"
+                  aria-label="Shopping cart"
+                  className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-border-subtle bg-page text-text-primary transition-colors hover:bg-surface-elevated"
+                >
+                  <ShoppingBag size={15} />
 
-                <ArrowRight
-                  size={13}
-                  strokeWidth={2.2}
-                  className="hidden transition-transform duration-200 group-hover:translate-x-0.5 sm:inline"
-                />
-              </Link>
-            </div>
-
-            {/* MOBILE ACTIONS */}
-            <div className="relative z-30 ml-auto flex items-center gap-2 md:hidden">
-              {/* MOBILE THEME TOGGLE */}
-              <button
-                type="button"
-                onClick={toggleTheme}
-                aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
-                title={`Switch to ${isDark ? "light" : "dark"} theme`}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-border-subtle bg-surface text-text-primary transition-colors hover:bg-surface-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]"
-              >
-                {mounted && isDark ? (
-                  <Sun size={16} aria-hidden="true" />
-                ) : (
-                  <Moon size={16} aria-hidden="true" />
-                )}
-              </button>
-
-              {/* MOBILE CART */}
-              <Link
-                href="/cart"
-                aria-label="Shopping cart"
-                className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-border-subtle bg-page text-text-primary transition-colors hover:bg-surface-elevated"
-              >
-                <ShoppingBag size={15} strokeWidth={2} />
-
-                {mounted && totalCount > 0 && (
-                  <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#E10600] px-1 text-[9px] font-black text-white">
-                    {totalCount}
-                  </span>
-                )}
-              </Link>
-
-              {/* MOBILE MENU BUTTON */}
-              <button
-                type="button"
-                onClick={() => setIsOpen((prev) => !prev)}
-                aria-label={isOpen ? "Close navigation" : "Open navigation"}
-                aria-expanded={isOpen}
-                className={cn(
-                  "flex h-9 w-9 items-center justify-center rounded-xl border",
-                  "border-border-subtle bg-page text-text-primary",
-                  "transition-all duration-200 hover:bg-surface-elevated",
-                  isOpen && "bg-surface-elevated border-[#929292]/50",
-                )}
-              >
-                <AnimatePresence mode="wait" initial={false}>
-                  {isOpen ? (
-                    <motion.span
-                      key="close"
-                      initial={{ opacity: 0, rotate: -90 }}
-                      animate={{ opacity: 1, rotate: 0 }}
-                      exit={{ opacity: 0, rotate: 90 }}
-                    >
-                      <X size={17} />
-                    </motion.span>
-                  ) : (
-                    <motion.span
-                      key="menu"
-                      initial={{ opacity: 0, rotate: 90 }}
-                      animate={{ opacity: 1, rotate: 0 }}
-                      exit={{ opacity: 0, rotate: -90 }}
-                    >
-                      <Menu size={17} />
-                    </motion.span>
+                  {mounted && totalCount > 0 && (
+                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#E10600] px-1 text-[9px] font-black text-white">
+                      {totalCount}
+                    </span>
                   )}
-                </AnimatePresence>
-              </button>
+                </Link>
+
+                {/* MENU BUTTON */}
+
+                <button
+                  type="button"
+                  onClick={() => setIsOpen((previous) => !previous)}
+                  aria-label={isOpen ? "Close navigation" : "Open navigation"}
+                  aria-expanded={isOpen}
+                  aria-controls="mobile-navigation-drawer"
+                  className={cn(
+                    "flex h-10 w-10 items-center justify-center rounded-xl border",
+                    "border-border-subtle bg-page text-text-primary",
+                    "transition-all duration-200 hover:bg-surface-elevated",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]",
+                    isOpen && "border-[#E10600]/50 bg-surface-elevated"
+                  )}
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    {isOpen ? (
+                      <motion.span
+                        key="close"
+                        initial={{ opacity: 0, rotate: -90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: 90 }}
+                      >
+                        <X size={18} />
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="menu"
+                        initial={{ opacity: 0, rotate: 90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: -90 }}
+                      >
+                        <Menu size={18} />
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </button>
+              </div>
             </div>
           </div>
+        </motion.header>
+      </div>
 
-          {/* MOBILE DROPDOWN */}
-          <AnimatePresence>
-            {isOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -8, scale: 0.99 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.99 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="relative z-40 mx-2 mb-2 overflow-hidden rounded-xl border border-border-subtle bg-surface-raised p-3 shadow-[0_20px_50px_rgba(0,0,0,0.25)] md:hidden"
-              >
-                {/* MOBILE SEARCH */}
-                <div className="mb-3 flex items-center rounded-xl border border-border-subtle bg-page px-3">
+      {/* ==============================================
+          MOBILE RIGHT-SIDE DRAWER
+      ============================================== */}
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="fixed inset-0 z-[60] lg:hidden"
+            initial="closed"
+            animate="open"
+            exit="closed"
+          >
+            {/* BACKDROP */}
+
+            <motion.button
+              type="button"
+              aria-label="Close navigation menu"
+              onClick={closeMenu}
+              variants={{
+                closed: { opacity: 0 },
+                open: { opacity: 1 },
+              }}
+              transition={{ duration: 0.25 }}
+              className="absolute inset-0 h-full w-full cursor-default bg-black/65 backdrop-blur-sm"
+            />
+
+            {/* RIGHT SIDE PANEL */}
+
+            <motion.aside
+              id="mobile-navigation-drawer"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation menu"
+              variants={{
+                closed: { x: "100%" },
+                open: { x: 0 },
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 320,
+                damping: 32,
+                mass: 0.85,
+              }}
+              className={cn(
+                "absolute right-0 top-0 flex h-[100dvh] w-[88%] max-w-[420px] flex-col",
+                "border-l border-border-subtle bg-surface-raised",
+                "shadow-[-20px_0_60px_rgba(0,0,0,0.30)]"
+              )}
+            >
+              {/* DRAWER HEADER */}
+
+              <div className="flex h-[76px] shrink-0 items-center justify-between border-b border-border-subtle px-5">
+                <Link
+                  href="/"
+                  onClick={closeMenu}
+                  aria-label="Crossthenics Fitness home"
+                >
+                  <Image
+                    src={Logo}
+                    alt="Crossthenics Fitness"
+                    width={140}
+                    height={48}
+                    priority
+                    className="h-[31px] w-auto object-contain"
+                  />
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={closeMenu}
+                  aria-label="Close navigation"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-subtle bg-page text-text-primary transition-colors hover:border-[#E10600] hover:text-[#E10600]"
+                >
+                  <X size={19} />
+                </button>
+              </div>
+
+              {/* DRAWER CONTENT */}
+
+              <div className="flex-1 overflow-y-auto px-5 py-6">
+
+                {/* MENU LABEL */}
+
+                <div className="mb-4 flex items-center justify-between">
+                  <p className="text-[10px] font-black uppercase tracking-[0.18em] text-text-muted">
+                    Navigation
+                  </p>
+
+                  <span className="h-px w-12 bg-border-subtle" />
+                </div>
+
+                {/* SEARCH */}
+
+                <div className="mb-7 flex h-12 items-center rounded-xl border border-border-subtle bg-page px-3 transition-colors focus-within:border-[#E10600]/60">
                   <Search
-                    size={14}
-                    strokeWidth={2}
-                    className="mr-2.5 shrink-0 text-text-muted"
+                    size={16}
+                    className="mr-3 shrink-0 text-text-muted"
                   />
 
                   <input
                     type="text"
                     placeholder="Search gear, backpacks..."
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="h-10 w-full min-w-0 bg-transparent text-xs font-medium text-text-primary outline-none placeholder:text-text-muted"
+                    onChange={(event) => setSearch(event.target.value)}
+                    className="h-full w-full min-w-0 bg-transparent text-sm text-text-primary outline-none placeholder:text-text-muted"
                   />
                 </div>
 
-                {/* MOBILE LINKS */}
+                {/* NAVIGATION LINKS */}
+
                 <nav aria-label="Mobile navigation">
-                  <div className="space-y-1">
-                    {navLinks.map((link) => {
+                  <div className="space-y-1.5">
+                    {navLinks.map((link, index) => {
                       const active = isActive(link.href);
 
                       return (
-                        <Link
+                        <motion.div
                           key={link.href}
-                          href={link.href}
-                          onClick={() => setIsOpen(false)}
-                          aria-current={active ? "page" : undefined}
-                          className={cn(
-                            "group flex items-center justify-between rounded-xl border border-transparent px-3.5 py-3 transition-colors duration-200",
-                            active
-                              ? "font-black text-[#E10600]"
-                              : "font-bold text-text-muted hover:text-[#E10600]",
-                          )}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{
+                            delay: 0.04 + index * 0.045,
+                            duration: 0.25,
+                          }}
                         >
-                          <div className="flex items-center gap-3">
-                            <span
-                              className={cn(
-                                "h-1.5 w-1.5 rounded-full transition-colors",
-                                active
-                                  ? "bg-[#E10600]"
-                                  : "bg-[#777777] group-hover:bg-[#E10600]",
-                              )}
-                            />
-
-                            <span className="text-xs uppercase tracking-[0.10em]">
-                              {link.name}
-                            </span>
-                          </div>
-
-                          <ArrowRight
-                            size={13}
+                          <Link
+                            href={link.href}
+                            onClick={closeMenu}
+                            aria-current={active ? "page" : undefined}
                             className={cn(
+                              "group flex items-center justify-between rounded-xl border px-4 py-4",
                               "transition-all duration-200",
                               active
-                                ? "text-[#E10600]"
-                                : "text-text-muted/50 group-hover:translate-x-0.5 group-hover:text-[#E10600]",
+                                ? "border-[#E10600]/20 bg-[#E10600]/[0.07] text-[#E10600]"
+                                : "border-transparent text-text-primary hover:border-border-subtle hover:bg-surface"
                             )}
-                          />
-                        </Link>
+                          >
+                            <div className="flex items-center gap-3.5">
+                              <span
+                                className={cn(
+                                  "h-1.5 w-1.5 rounded-full transition-colors",
+                                  active
+                                    ? "bg-[#E10600]"
+                                    : "bg-text-muted/40 group-hover:bg-[#E10600]"
+                                )}
+                              />
+
+                              <span className="text-xs font-bold uppercase tracking-[0.12em]">
+                                {link.name}
+                              </span>
+                            </div>
+
+                            <ArrowRight
+                              size={15}
+                              className={cn(
+                                "transition-all duration-200",
+                                active
+                                  ? "text-[#E10600]"
+                                  : "text-text-muted/50 group-hover:translate-x-1 group-hover:text-[#E10600]"
+                              )}
+                            />
+                          </Link>
+                        </motion.div>
                       );
                     })}
                   </div>
                 </nav>
 
-                {/* MOBILE BUTTONS */}
-                <div className="mt-3 grid grid-cols-2 gap-2 border-t border-border-subtle pt-3">
+                {/* ACCOUNT AND CONTACT */}
+
+                <div className="mt-8 border-t border-border-subtle pt-6">
+                  <p className="mb-4 text-[10px] font-black uppercase tracking-[0.18em] text-text-muted">
+                    Your account
+                  </p>
+
                   <Link
-                    href="/auth/login"
-                    onClick={() => setIsOpen(false)}
-                    className="flex h-10 items-center justify-center gap-2 rounded-xl border border-border-subtle bg-page text-[10px] font-bold uppercase tracking-[0.10em] text-text-primary transition-colors hover:bg-surface-elevated"
+                    href={accountHref}
+                    onClick={closeMenu}
+                    className="flex h-12 items-center justify-center gap-2 rounded-xl border border-border-subtle bg-page text-xs font-bold uppercase tracking-[0.10em] text-text-primary transition-colors hover:bg-surface-elevated"
                   >
-                    <UserRound size={13} />
+                    <UserRound size={15} />
                     Account
                   </Link>
 
                   <Link
                     href="/contact"
-                    onClick={() => setIsOpen(false)}
-                    className="flex h-10 items-center justify-center gap-2 rounded-xl bg-[#E10600] text-[10px] font-black uppercase tracking-[0.10em] text-white transition-colors hover:bg-[#B80500]"
+                    onClick={closeMenu}
+                    className="mt-3 flex h-12 items-center justify-center gap-2 rounded-xl bg-[#E10600] text-xs font-black uppercase tracking-[0.12em] text-white transition-all hover:bg-[#B80500]"
                   >
-                    Contact
+                    Contact Crossthenics
+                    <ArrowRight size={15} />
                   </Link>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </motion.header>
-    </div>
+              </div>
+
+              {/* DRAWER FOOTER */}
+
+              <div className="shrink-0 border-t border-border-subtle px-5 py-5">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-[0.12em] text-text-primary">
+                      CROSTHENICS FITNESS
+                    </p>
+
+                    <p className="mt-1 text-[10px] text-text-muted">
+                      Built for strength. Designed for athletes.
+                    </p>
+                  </div>
+
+                  <span className="h-2 w-2 rounded-full bg-[#E10600]" />
+                </div>
+              </div>
+            </motion.aside>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  BarChart3,
+  Database,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
@@ -61,7 +61,7 @@ const navigationGroups = [
   {
     label: "Store management",
     items: [
-      { label: "Products", href: "/admin/products", icon: Package },
+      { label: "Catalog", href: "/admin/products", icon: Package },
       { label: "Orders", href: "/admin/orders", icon: ShoppingCart },
       { label: "Customers", href: "/admin/users", icon: Users },
     ],
@@ -74,7 +74,7 @@ const navigationGroups = [
 
 const pageTitles: Record<string, string> = {
   "/admin/dashboard": "Store overview",
-  "/admin/products": "Products",
+  "/admin/products": "Store catalog",
   "/admin/orders": "Orders",
   "/admin/users": "Customers",
   "/admin/settings": "Settings",
@@ -235,6 +235,7 @@ export default function AdminLayout({
       )}
 
       <aside
+        id="admin-sidebar"
         ref={sidebarRef}
         role={mobileMenuOpen ? "dialog" : undefined}
         aria-modal={mobileMenuOpen ? true : undefined}
@@ -270,7 +271,7 @@ export default function AdminLayout({
           <button
             type="button"
             onClick={() => setMobileMenuOpen(false)}
-            className="grid h-10 w-10 place-items-center rounded-lg text-white/70 hover:bg-white/10 hover:text-white lg:hidden"
+            className="grid h-10 w-10 place-items-center rounded-lg text-white/70 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C0C0C0] lg:hidden"
             aria-label="Close admin menu"
           >
             <X size={18} />
@@ -345,7 +346,7 @@ export default function AdminLayout({
             rel="noopener noreferrer"
             aria-label={!sidebarExpanded ? "View storefront" : undefined}
             title={!sidebarExpanded ? "View storefront" : undefined}
-            className={`flex min-h-11 items-center gap-3 rounded-lg px-3 text-xs font-semibold text-white/70 transition-colors hover:bg-white/5 hover:text-white ${
+            className={`flex min-h-11 items-center gap-3 rounded-lg px-3 text-xs font-semibold text-white/70 transition-colors hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C0C0C0] ${
               !sidebarExpanded ? "lg:justify-center lg:px-0" : ""
             }`}
           >
@@ -357,8 +358,9 @@ export default function AdminLayout({
           <button
             type="button"
             onClick={() => setSidebarExpanded((expanded) => !expanded)}
-            className="hidden min-h-10 w-full items-center gap-3 rounded-lg px-3 text-xs font-semibold text-white/65 transition-colors hover:bg-white/5 hover:text-white lg:flex"
+            className="hidden min-h-10 w-full items-center gap-3 rounded-lg px-3 text-xs font-semibold text-white/65 transition-colors hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C0C0C0] lg:flex"
             aria-label={sidebarExpanded ? "Collapse sidebar" : "Expand sidebar"}
+            aria-expanded={sidebarExpanded}
           >
             {sidebarExpanded ? (
               <ChevronLeft size={17} />
@@ -375,7 +377,7 @@ export default function AdminLayout({
             onClick={handleSignOut}
             aria-label={!sidebarExpanded ? "Sign out" : undefined}
             title={!sidebarExpanded ? "Sign out" : undefined}
-            className={`flex min-h-11 w-full items-center gap-3 rounded-lg px-3 text-xs font-bold text-white/75 transition-colors hover:bg-white/5 hover:text-white disabled:opacity-50 ${
+            className={`flex min-h-11 w-full items-center gap-3 rounded-lg px-3 text-xs font-bold text-white/75 transition-colors hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C0C0C0] disabled:opacity-50 ${
               !sidebarExpanded ? "lg:justify-center lg:px-0" : ""
             }`}
           >
@@ -399,9 +401,10 @@ export default function AdminLayout({
             ref={mobileMenuTriggerRef}
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-white/20 text-white hover:bg-white/10 lg:hidden"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-white/20 text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C0C0C0] lg:hidden"
             aria-label="Open admin navigation"
             aria-expanded={mobileMenuOpen}
+            aria-controls="admin-sidebar"
           >
             <Menu size={18} />
           </button>
@@ -495,6 +498,7 @@ export default function AdminLayout({
                 ? "Switch to Moonlit Silver theme"
                 : "Switch to Charcoal Black theme"
             }
+            aria-pressed={adminTheme === "silver"}
           >
             {adminTheme === "charcoal" ? (
               <Moon size={17} aria-hidden="true" />
@@ -518,14 +522,17 @@ export default function AdminLayout({
         </header>
 
         <main className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 lg:p-8">
-          <div className="mb-6 flex items-start gap-3 rounded-lg border border-[#414141] bg-[#2A2A2A] px-4 py-3 text-xs leading-relaxed text-[#C0C0C0]">
-            <BarChart3 size={16} className="mt-0.5 shrink-0" />
+          <div
+            role="status"
+            className="mb-6 flex items-start gap-3 rounded-lg border border-[#414141] bg-[#2A2A2A] px-4 py-3 text-xs leading-relaxed text-[#C0C0C0]"
+          >
+            <Database size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
             <p>
-              <strong className="text-white">Data connection unavailable.</strong>{" "}
-              Products, Orders, Customers, and Settings use local/demo data;
-              edits do not update the public store. Any amounts shown in NPR
-              are display examples only: the demo values have not been converted
-              or verified as business records.
+              <strong className="text-white">Admin data is not connected.</strong>{" "}
+              The catalog is read-only and comes from the storefront&apos;s
+              static catalog. Orders, customer records, settings, inventory
+              quantities, and analytics have no persistent data source here;
+              changes to those systems cannot be made from this workspace.
             </p>
           </div>
           {children}

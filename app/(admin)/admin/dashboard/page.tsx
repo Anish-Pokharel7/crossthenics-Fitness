@@ -75,7 +75,7 @@ export default function AdminDashboard() {
           href="/admin/products"
           className="inline-flex min-h-10 items-center justify-center gap-2 self-start rounded-md bg-primary px-4 text-xs font-bold text-primary-foreground transition-colors hover:bg-[#B80500] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:self-auto"
         >
-          Manage catalog <ArrowUpRight size={15} aria-hidden="true" />
+          Browse catalog <ArrowUpRight size={15} aria-hidden="true" />
         </Link>
       </header>
 
@@ -167,7 +167,7 @@ export default function AdminDashboard() {
               <Link
                 key={product.id}
                 href="/admin/products"
-                aria-label={`Open product management for ${product.name}`}
+                aria-label={`Browse catalog entry for ${product.name}`}
                 className="flex min-h-[68px] items-center gap-3 py-2.5 hover:bg-muted/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-primary"
               >
                 <Image
@@ -211,7 +211,7 @@ export default function AdminDashboard() {
             href="/admin/products"
             className="mt-3 inline-flex min-h-9 items-center gap-1 text-xs font-semibold text-card-foreground underline decoration-border underline-offset-4 hover:text-primary"
           >
-            Open product management <ArrowUpRight size={13} aria-hidden="true" />
+            Browse catalog <ArrowUpRight size={13} aria-hidden="true" />
           </Link>
         </section>
 
@@ -220,7 +220,7 @@ export default function AdminDashboard() {
             <div className="mb-4">
               <h3 className="text-base font-bold">Recent orders</h3>
               <p className="mt-1 text-xs text-muted-foreground">
-                Latest customer purchases
+                Persistent order records
               </p>
             </div>
             <UnavailablePanel message="No persisted order records are available." />
@@ -236,7 +236,7 @@ export default function AdminDashboard() {
             <div className="mb-4">
               <h3 className="text-base font-bold">Customer insights</h3>
               <p className="mt-1 text-xs text-muted-foreground">
-                Customer growth and lifetime value
+                Customer database connection
               </p>
             </div>
             <UnavailablePanel message="Customer totals, repeat purchases, and spending require a connected customer database." />

@@ -16,7 +16,8 @@ The deployment returns an unavailable response for admin sign-in until all
 three variables are configured. Never expose them through `NEXT_PUBLIC_*`
 variables or commit their values.
 
-The existing Products, Orders, Customers, and Settings screens still use
-client-side demo data; they are not connected to a production database. The
-dashboard reports unavailable sales and inventory metrics rather than using
-sample numbers. Persistent store operations require a database and order API.
+The admin workspace does not currently have a database or store-management
+API. The catalog screen is read-only and shows the static product catalog used
+by the storefront. Orders, customer records, and store settings are marked
+unavailable; dashboard sales and inventory metrics are not fabricated.
+Persistent store operations require a database and corresponding APIs.

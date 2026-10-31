@@ -53,9 +53,7 @@ export function Navbar() {
     setMounted(true);
 
     const syncTheme = () => {
-      setIsDark(
-        document.documentElement.classList.contains("dark")
-      );
+      setIsDark(document.documentElement.classList.contains("dark"));
     };
 
     syncTheme();
@@ -150,9 +148,7 @@ export function Navbar() {
 
   const closeMenu = () => setIsOpen(false);
 
-  const accountHref = isAdmin
-    ? "/admin/dashboard"
-    : "/auth/login";
+  const accountHref = isAdmin ? "/admin/dashboard" : "/auth/login";
 
   // --------------------------------------------------
   // SHARED NAVIGATION STYLES
@@ -166,7 +162,7 @@ export function Navbar() {
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]",
       active
         ? "font-black text-[#E10600]"
-        : "font-bold text-text-muted hover:bg-surface hover:text-text-primary"
+        : "font-bold text-text-muted hover:bg-surface hover:text-text-primary",
     );
 
   // --------------------------------------------------
@@ -184,7 +180,7 @@ export function Navbar() {
         "border border-border-subtle bg-surface text-text-primary",
         "transition-all duration-200 hover:bg-surface-elevated",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]",
-        mobile ? "h-10 w-10" : "h-9 w-9"
+        mobile ? "h-10 w-10" : "h-9 w-9",
       )}
     >
       {mounted && isDark ? (
@@ -222,7 +218,7 @@ export function Navbar() {
               "shadow-[0_8px_30px_rgba(0,0,0,0.25)]",
               "transition-all duration-300",
               scrolled &&
-                "bg-surface-raised/98 shadow-[0_12px_35px_rgba(0,0,0,0.30)]"
+                "bg-surface-raised/98 shadow-[0_12px_35px_rgba(0,0,0,0.30)]",
             )}
           >
             {/* TOP HIGHLIGHT */}
@@ -232,7 +228,6 @@ export function Navbar() {
             {/* NAVBAR CONTENT */}
 
             <div className="flex h-[66px] items-center gap-3 px-3 sm:px-5 lg:px-6">
-
               {/* LOGO */}
 
               <Link
@@ -282,17 +277,13 @@ export function Navbar() {
               {/* DESKTOP ACTIONS */}
 
               <div className="relative z-20 ml-auto hidden shrink-0 items-center gap-2 lg:flex">
-
                 <ThemeButton />
 
                 {/* SEARCH */}
 
                 <div className="flex h-9 w-[145px] items-center overflow-hidden rounded-xl border border-border-subtle bg-page transition-colors hover:border-[#929292]/60 focus-within:border-[#929292] xl:w-[165px]">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center">
-                    <Search
-                      size={14}
-                      className="text-text-muted"
-                    />
+                    <Search size={14} className="text-text-muted" />
                   </div>
 
                   <input
@@ -347,7 +338,6 @@ export function Navbar() {
                   className="group flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-xl bg-[#E10600] px-4 text-[10px] font-black uppercase tracking-[0.10em] text-white transition-all hover:-translate-y-0.5 hover:bg-[#B80500]"
                 >
                   Contact
-
                   <ArrowRight
                     size={13}
                     className="transition-transform group-hover:translate-x-0.5"
@@ -358,7 +348,6 @@ export function Navbar() {
               {/* MOBILE / TABLET ACTIONS */}
 
               <div className="relative z-20 ml-auto flex shrink-0 items-center gap-2 lg:hidden">
-
                 <ThemeButton mobile />
 
                 {/* MOBILE CART */}
@@ -390,7 +379,7 @@ export function Navbar() {
                     "border-border-subtle bg-page text-text-primary",
                     "transition-all duration-200 hover:bg-surface-elevated",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]",
-                    isOpen && "border-[#E10600]/50 bg-surface-elevated"
+                    isOpen && "border-[#E10600]/50 bg-surface-elevated",
                   )}
                 >
                   <AnimatePresence mode="wait" initial={false}>
@@ -467,7 +456,7 @@ export function Navbar() {
               className={cn(
                 "absolute right-0 top-0 flex h-[100dvh] w-[88%] max-w-[420px] flex-col",
                 "border-l border-border-subtle bg-surface-raised",
-                "shadow-[-20px_0_60px_rgba(0,0,0,0.30)]"
+                "shadow-[-20px_0_60px_rgba(0,0,0,0.30)]",
               )}
             >
               {/* DRAWER HEADER */}
@@ -501,7 +490,6 @@ export function Navbar() {
               {/* DRAWER CONTENT */}
 
               <div className="flex-1 overflow-y-auto px-5 py-6">
-
                 {/* MENU LABEL */}
 
                 <div className="mb-4 flex items-center justify-between">
@@ -515,10 +503,7 @@ export function Navbar() {
                 {/* SEARCH */}
 
                 <div className="mb-7 flex h-12 items-center rounded-xl border border-border-subtle bg-page px-3 transition-colors focus-within:border-[#E10600]/60">
-                  <Search
-                    size={16}
-                    className="mr-3 shrink-0 text-text-muted"
-                  />
+                  <Search size={16} className="mr-3 shrink-0 text-text-muted" />
 
                   <input
                     type="text"
@@ -551,11 +536,11 @@ export function Navbar() {
                             onClick={closeMenu}
                             aria-current={active ? "page" : undefined}
                             className={cn(
-                              "group flex items-center justify-between rounded-xl border px-4 py-4",
+                              "group flex items-center justify-between rounded-xl px-4 py-4",
                               "transition-all duration-200",
                               active
-                                ? "border-[#E10600]/20 bg-[#E10600]/[0.07] text-[#E10600]"
-                                : "border-transparent text-text-primary hover:border-border-subtle hover:bg-surface"
+                                ? "bg-transparent font-black text-[#E10600]"
+                                : "text-text-primary hover:bg-surface",
                             )}
                           >
                             <div className="flex items-center gap-3.5">
@@ -564,11 +549,18 @@ export function Navbar() {
                                   "h-1.5 w-1.5 rounded-full transition-colors",
                                   active
                                     ? "bg-[#E10600]"
-                                    : "bg-text-muted/40 group-hover:bg-[#E10600]"
+                                    : "bg-text-muted/40 group-hover:bg-[#E10600]",
                                 )}
                               />
 
-                              <span className="text-xs font-bold uppercase tracking-[0.12em]">
+                              <span
+                                className={cn(
+                                  "text-xs uppercase tracking-[0.12em]",
+                                  active
+                                    ? "font-black text-[#E10600]"
+                                    : "font-bold",
+                                )}
+                              >
                                 {link.name}
                               </span>
                             </div>
@@ -579,7 +571,7 @@ export function Navbar() {
                                 "transition-all duration-200",
                                 active
                                   ? "text-[#E10600]"
-                                  : "text-text-muted/50 group-hover:translate-x-1 group-hover:text-[#E10600]"
+                                  : "text-text-muted/50 group-hover:translate-x-1 group-hover:text-[#E10600]",
                               )}
                             />
                           </Link>

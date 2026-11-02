@@ -32,47 +32,48 @@ const navLinks = [
   { name: "Latest Drops", href: "/latestproducts" },
 ];
 
+function ThemeButton({
+  isDark,
+  onToggle,
+  mobile = false,
+}: {
+  isDark: boolean;
+  onToggle: () => void;
+  mobile?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+      title={`Switch to ${isDark ? "light" : "dark"} theme`}
+      className={cn(
+        "flex shrink-0 items-center justify-center rounded-xl",
+        "border border-border-subtle bg-surface text-text-primary",
+        "transition-all duration-200 hover:bg-surface-elevated",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]",
+        mobile ? "h-10 w-10" : "h-9 w-9",
+      )}
+    >
+      {isDark ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
+    </button>
+  );
+}
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const [isDark, setIsDark] = useState(false);
 
-  const { setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const pathname = usePathname();
 
   const { search, setSearch } = useSearch();
   const { isAdmin } = useAuth();
   const { totalCount } = useCart();
-
-  // --------------------------------------------------
-  // THEME INITIALIZATION
-  // --------------------------------------------------
-
-  useEffect(() => {
-    setMounted(true);
-
-    const syncTheme = () => {
-      setIsDark(document.documentElement.classList.contains("dark"));
-    };
-
-    syncTheme();
-
-    const observer = new MutationObserver(syncTheme);
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const isDark = resolvedTheme === "dark";
 
   const toggleTheme = () => {
-    const nextTheme = isDark ? "light" : "dark";
-
-    setTheme(nextTheme);
-    setIsDark(nextTheme === "dark");
+    setTheme(isDark ? "light" : "dark");
   };
 
   // --------------------------------------------------
@@ -130,14 +131,6 @@ export function Navbar() {
   }, [isOpen]);
 
   // --------------------------------------------------
-  // CLOSE DRAWER WHEN ROUTE CHANGES
-  // --------------------------------------------------
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
-  // --------------------------------------------------
   // NAVIGATION HELPERS
   // --------------------------------------------------
 
@@ -164,32 +157,6 @@ export function Navbar() {
         ? "font-black text-[#E10600]"
         : "font-bold text-text-muted hover:bg-surface hover:text-text-primary",
     );
-
-  // --------------------------------------------------
-  // THEME BUTTON
-  // --------------------------------------------------
-
-  const ThemeButton = ({ mobile = false }: { mobile?: boolean }) => (
-    <button
-      type="button"
-      onClick={toggleTheme}
-      aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
-      title={`Switch to ${isDark ? "light" : "dark"} theme`}
-      className={cn(
-        "flex shrink-0 items-center justify-center rounded-xl",
-        "border border-border-subtle bg-surface text-text-primary",
-        "transition-all duration-200 hover:bg-surface-elevated",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]",
-        mobile ? "h-10 w-10" : "h-9 w-9",
-      )}
-    >
-      {mounted && isDark ? (
-        <Sun size={16} aria-hidden="true" />
-      ) : (
-        <Moon size={16} aria-hidden="true" />
-      )}
-    </button>
-  );
 
   // --------------------------------------------------
   // COMPONENT
@@ -277,7 +244,7 @@ export function Navbar() {
               {/* DESKTOP ACTIONS */}
 
               <div className="relative z-20 ml-auto hidden shrink-0 items-center gap-2 lg:flex">
-                <ThemeButton />
+                <ThemeButton isDark={isDark} onToggle={toggleTheme} />
 
                 {/* SEARCH */}
 
@@ -324,7 +291,7 @@ export function Navbar() {
                     className="transition-transform group-hover:-translate-y-0.5"
                   />
 
-                  {mounted && totalCount > 0 && (
+                  {totalCount > 0 && (
                     <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#E10600] px-1 text-[9px] font-black text-white">
                       {totalCount}
                     </span>
@@ -348,7 +315,7 @@ export function Navbar() {
               {/* MOBILE / TABLET ACTIONS */}
 
               <div className="relative z-20 ml-auto flex shrink-0 items-center gap-2 lg:hidden">
-                <ThemeButton mobile />
+                <ThemeButton isDark={isDark} onToggle={toggleTheme} mobile />
 
                 {/* MOBILE CART */}
 
@@ -359,7 +326,7 @@ export function Navbar() {
                 >
                   <ShoppingBag size={15} />
 
-                  {mounted && totalCount > 0 && (
+                  {totalCount > 0 && (
                     <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#E10600] px-1 text-[9px] font-black text-white">
                       {totalCount}
                     </span>

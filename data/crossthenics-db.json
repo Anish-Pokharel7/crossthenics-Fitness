@@ -1,0 +1,824 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Velcro Patch Hybrid Belt",
+      "slug": "velcro-patch-hybrid-belt",
+      "category": "Lifting Belts",
+      "price": 3800,
+      "compareAtPrice": 4500,
+      "stock": 42,
+      "sku": "CT-BLT-001",
+      "published": true,
+      "isBestseller": true,
+      "description": "Crossthenics self-locking hybrid lifting belt with steel roller buckle and velcro lock.",
+      "images": [
+        "/p-image/liftingbelts.webp"
+      ],
+      "badge": "Bestseller",
+      "features": [
+        "Instant one-hand tension release between sets",
+        "Ergonomic contour supports lumbar without rib impingement",
+        "Heavy-duty industrial velcro rated for 5,000+ open-close cycles"
+      ],
+      "specs": {
+        "Hardware": "Quick-Lock Steel Roller Buckle",
+        "Material": "High-Tensile Reinforced Nylon",
+        "Width": "4-Inch Uniform Contour"
+      },
+      "variants": [
+        {
+          "name": "Size",
+          "options": [
+            "S (28-32\")",
+            "M (32-36\")",
+            "L (36-40\")",
+            "XL (40-44\")"
+          ]
+        }
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "2",
+      "name": "45L Tactical Backpack (Lake Blue)",
+      "slug": "45l-tactical-backpack-lake-blue",
+      "category": "Tactical Carry",
+      "price": 7500,
+      "compareAtPrice": 8500,
+      "stock": 18,
+      "sku": "CT-BP-002",
+      "published": true,
+      "isBestseller": true,
+      "description": "Rugged 45-liter athlete pack with isolated shoe compartment and water-resistant Oxford 900D build.",
+      "images": [
+        "/p-image/backpack.webp"
+      ],
+      "badge": "Bestseller",
+      "features": [
+        "Separate ventilated compartment fits up to size 46 shoes",
+        "MOLLE webbing grid on front and sides for gear attachment",
+        "Reinforced load-bearing harness distributes weight evenly"
+      ],
+      "specs": {
+        "Capacity": "45 Liters",
+        "Material": "Oxford 900D High-Density Nylon",
+        "Zippers": "Heavy-Duty Dual SBS Waterproof Zippers"
+      },
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "3",
+      "name": "Precision Speed Rope",
+      "slug": "precision-speed-rope",
+      "category": "Calisthenics",
+      "price": 1800,
+      "compareAtPrice": 2200,
+      "stock": 65,
+      "sku": "CT-ROP-003",
+      "published": true,
+      "description": "High-velocity dual-bearing wire jump rope for double-unders and calisthenics conditioning.",
+      "images": [
+        "/p-image/prorope.webp"
+      ],
+      "features": [
+        "Smooth 360-degree ball bearings",
+        "Kink-resistant coated steel wire"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "4",
+      "name": "Liquid Grip Chalk (250ml)",
+      "slug": "liquid-grip-chalk-250ml",
+      "category": "Grip & Accessories",
+      "price": 1200,
+      "stock": 84,
+      "sku": "CT-CHK-004",
+      "published": true,
+      "description": "Fast-drying, dust-free liquid magnesium carbonate formula for maximum friction on pull-up bars and barbells.",
+      "images": [
+        "/p-image/gripchalk.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "5",
+      "name": "Tactical Everyday Side Bag",
+      "slug": "tactical-everyday-side-bag",
+      "category": "Tactical Carry",
+      "price": 2800,
+      "compareAtPrice": 3200,
+      "stock": 22,
+      "sku": "CT-SB-005",
+      "published": true,
+      "description": "Compact cross-body sling with laser-cut MOLLE front and quick-access concealed gear pocket.",
+      "images": [
+        "/p-image/sidebag.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "6",
+      "name": "Powder Grip Chalk (400g)",
+      "slug": "powder-grip-chalk-400g",
+      "category": "Grip & Accessories",
+      "price": 1000,
+      "stock": 45,
+      "sku": "CT-CHK-006",
+      "published": true,
+      "description": "Ultra-fine gym-grade magnesium carbonate powder in resealable moisture-lock pouch.",
+      "images": [
+        "/p-image/powdergp.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "7",
+      "name": "Competition Lever Belt (10mm)",
+      "slug": "competition-lever-belt-10mm",
+      "category": "Lifting Belts",
+      "price": 8500,
+      "compareAtPrice": 9500,
+      "stock": 12,
+      "sku": "CT-BLT-007",
+      "published": true,
+      "isNew": true,
+      "description": "10mm genuine steerhide powerlifting belt with aircraft-grade cast alloy lever buckle.",
+      "images": [
+        "/p-image/belt2.webp"
+      ],
+      "badge": "New",
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "8",
+      "name": "Olympic Dip Belt with Steel Chain",
+      "slug": "olympic-dip-belt-with-steel-chain",
+      "category": "Calisthenics",
+      "price": 4200,
+      "stock": 19,
+      "sku": "CT-DIP-008",
+      "published": true,
+      "description": "Contoured neoprene dipping belt with 36-inch zinc-coated steel chain and dual carabiners.",
+      "images": [
+        "/p-image/Rchain.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "9",
+      "name": "45L Tactical Backpack (Black Camo)",
+      "slug": "45l-tactical-backpack-black-camo",
+      "category": "Tactical Carry",
+      "price": 7500,
+      "stock": 14,
+      "sku": "CT-BP-009",
+      "published": true,
+      "description": "Stealth black camo edition of our flagship 45L athlete backpack.",
+      "images": [
+        "/p-image/bkpk2.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "10",
+      "name": "Reinforced Locking Carabiner (2-Pack)",
+      "slug": "reinforced-locking-carabiner-2-pack",
+      "category": "Grip & Accessories",
+      "price": 950,
+      "stock": 50,
+      "sku": "CT-CRB-010",
+      "published": true,
+      "description": "Heavy-duty screwgate alloy carabiners tested to 25kN rating for gym rings and dip chains.",
+      "images": [
+        "/p-image/carabiner.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "11",
+      "name": "45L Tactical Backpack (Desert Sand)",
+      "slug": "45l-tactical-backpack-desert-sand",
+      "category": "Tactical Carry",
+      "price": 7500,
+      "stock": 8,
+      "sku": "CT-BP-011",
+      "published": true,
+      "description": "Desert tan tactical backpack with 180-degree flat opening for quick gym packing.",
+      "images": [
+        "/p-image/bkpk3.webp"
+      ],
+      "badge": "Low Stock",
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "12",
+      "name": "Heavy-Duty Quick-Lock Belt (Blackout)",
+      "slug": "heavy-duty-quick-lock-belt-blackout",
+      "category": "Lifting Belts",
+      "price": 4200,
+      "stock": 24,
+      "sku": "CT-BLT-012",
+      "published": true,
+      "description": "All-black reinforced nylon lifting belt with knurled quick-release buckle.",
+      "images": [
+        "/p-image/belt3.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "13",
+      "name": "45L Tactical Backpack (Ranger Green)",
+      "slug": "45l-tactical-backpack-ranger-green",
+      "category": "Tactical Carry",
+      "price": 7500,
+      "stock": 16,
+      "sku": "CT-BP-013",
+      "published": true,
+      "description": "Military ranger green finish with velcro patches and padded laptop compartment.",
+      "images": [
+        "/p-image/bkpk4.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "14",
+      "name": "Pro Calisthenics Gymnastic Rings",
+      "slug": "pro-calisthenics-gymnastic-rings",
+      "category": "Calisthenics",
+      "price": 3600,
+      "stock": 28,
+      "sku": "CT-RNG-014",
+      "published": true,
+      "description": "Solid birch wood rings with 1.5-inch numbered straps and quick-lock cam buckles.",
+      "images": [
+        "/p-image/prorope.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "15",
+      "name": "45L Tactical Backpack (Urban Grey)",
+      "slug": "45l-tactical-backpack-urban-grey",
+      "category": "Tactical Carry",
+      "price": 7500,
+      "stock": 2,
+      "sku": "CT-BP-015",
+      "published": true,
+      "description": "Modern matte grey backpack with waterproof base and tactical morale patches.",
+      "images": [
+        "/p-image/bkpk5.webp"
+      ],
+      "badge": "Almost Gone",
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "16",
+      "name": "Premium Suede 13mm Lever Belt",
+      "slug": "premium-suede-13mm-lever-belt",
+      "category": "Lifting Belts",
+      "price": 9800,
+      "stock": 5,
+      "sku": "CT-BLT-016",
+      "published": true,
+      "description": "Maximum rigidity 13mm powerlifting belt wrapped in non-slip charcoal suede.",
+      "images": [
+        "/p-image/belt4.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "17",
+      "name": "45L Tactical Backpack (Stealth Black)",
+      "slug": "45l-tactical-backpack-stealth-black",
+      "category": "Tactical Carry",
+      "price": 7500,
+      "stock": 31,
+      "sku": "CT-BP-017",
+      "published": true,
+      "isBestseller": true,
+      "description": "The core athlete standard. Water-repellent 900D nylon, dedicated shoe compartment.",
+      "images": [
+        "/p-image/bkpk6.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "18",
+      "name": "45L Tactical Backpack (Multicam Alpine)",
+      "slug": "45l-tactical-backpack-multicam-alpine",
+      "category": "Tactical Carry",
+      "price": 7800,
+      "stock": 7,
+      "sku": "CT-BP-018",
+      "published": true,
+      "description": "Limited alpine winter camo pattern with waterproof dual zip seams.",
+      "images": [
+        "/p-image/bkpk7.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    },
+    {
+      "id": "19",
+      "name": "Contoured Calisthenics Dip Belt",
+      "slug": "contoured-calisthenics-dip-belt",
+      "category": "Calisthenics",
+      "price": 4500,
+      "stock": 20,
+      "sku": "CT-BLT-019",
+      "published": true,
+      "description": "Ergonomic wide back support for heavy weighted pull-ups and dips.",
+      "images": [
+        "/p-image/belt5.webp"
+      ],
+      "createdAt": "2026-11-07T18:28:57.373Z",
+      "updatedAt": "2026-11-07T18:28:57.373Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-1",
+      "name": "Lifting Belts",
+      "slug": "lifting-belts",
+      "description": "Heavy-duty lever and quick-locking hybrid belts built for powerlifting, bodybuilding, and strongman.",
+      "image": "/p-image/liftingbelts.webp",
+      "productCount": 5,
+      "visible": true
+    },
+    {
+      "id": "cat-2",
+      "name": "Tactical Carry",
+      "slug": "tactical-carry",
+      "description": "Modular 45L backpacks and compact slings engineered for athletic daily carry and gym travel.",
+      "image": "/p-image/backpack.webp",
+      "productCount": 7,
+      "visible": true
+    },
+    {
+      "id": "cat-3",
+      "name": "Calisthenics",
+      "slug": "calisthenics",
+      "description": "High-speed jump ropes, heavy-duty weighted dip belts, and gymnastic rings for street workout athletes.",
+      "image": "/p-image/prorope.webp",
+      "productCount": 4,
+      "visible": true
+    },
+    {
+      "id": "cat-4",
+      "name": "Grip & Accessories",
+      "slug": "grip-accessories",
+      "description": "Gym-grade liquid chalk, chalk powder, high-load carabiners, and training gear accessories.",
+      "image": "/p-image/gripchalk.webp",
+      "productCount": 3,
+      "visible": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-10487",
+      "orderNumber": "CT-10487",
+      "customerId": "cust-1",
+      "customerName": "Aayush Sharma",
+      "customerEmail": "aayush.sharma@gmail.com",
+      "customerPhone": "9841234567",
+      "shippingAddress": {
+        "fullName": "Aayush Sharma",
+        "phone": "9841234567",
+        "address": "Baneshwor, Ward 10",
+        "city": "Kathmandu",
+        "state": "Bagmati",
+        "landmark": "Near Civil Bank"
+      },
+      "items": [
+        {
+          "productId": "1",
+          "productName": "Velcro Patch Hybrid Belt",
+          "name": "Velcro Patch Hybrid Belt",
+          "productImage": "/p-image/liftingbelts.webp",
+          "variant": "Medium (32-36\")",
+          "size": "Medium",
+          "quantity": 1,
+          "price": 3800,
+          "total": 3800
+        },
+        {
+          "productId": "4",
+          "productName": "Liquid Grip Chalk (250ml)",
+          "name": "Liquid Grip Chalk (250ml)",
+          "productImage": "/p-image/gripchalk.webp",
+          "quantity": 1,
+          "price": 1200,
+          "total": 1200
+        }
+      ],
+      "subtotal": 5000,
+      "shippingCharge": 150,
+      "discount": 0,
+      "total": 5150,
+      "grandTotal": 5150,
+      "fulfillmentStatus": "delivered",
+      "paymentStatus": "paid",
+      "paymentMethod": "esewa",
+      "trackingNumber": "KTM-89412-EXP",
+      "courierPartner": "Pathao Express",
+      "createdAt": "2026-11-05T10:15:00.000Z",
+      "updatedAt": "2026-11-06T15:00:00.000Z"
+    },
+    {
+      "id": "ORD-10486",
+      "orderNumber": "CT-10486",
+      "customerId": "cust-2",
+      "customerName": "Bikash Gurung",
+      "customerEmail": "bikash.gurung@outlook.com",
+      "customerPhone": "9856012345",
+      "shippingAddress": {
+        "fullName": "Bikash Gurung",
+        "phone": "9856012345",
+        "address": "Lakeside, Street 14",
+        "street": "Lakeside, Street 14",
+        "city": "Pokhara",
+        "state": "Gandaki",
+        "landmark": "Opposite Dunga Restro"
+      },
+      "items": [
+        {
+          "productId": "2",
+          "productName": "45L Tactical Backpack (Lake Blue)",
+          "name": "45L Tactical Backpack (Lake Blue)",
+          "productImage": "/p-image/backpack.webp",
+          "quantity": 1,
+          "price": 7500,
+          "total": 7500
+        }
+      ],
+      "subtotal": 7500,
+      "shippingCharge": 0,
+      "discount": 0,
+      "total": 7500,
+      "grandTotal": 7500,
+      "fulfillmentStatus": "shipped",
+      "paymentStatus": "paid",
+      "paymentMethod": "khalti",
+      "trackingNumber": "PKR-33219-SND",
+      "courierPartner": "Sundar Courier",
+      "createdAt": "2026-11-04T14:30:00.000Z",
+      "updatedAt": "2026-11-05T09:00:00.000Z"
+    },
+    {
+      "id": "ORD-10485",
+      "orderNumber": "CT-10485",
+      "customerId": "cust-3",
+      "customerName": "Pooja Shrestha",
+      "customerEmail": "pooja.shrestha@gmail.com",
+      "customerPhone": "9812345678",
+      "shippingAddress": {
+        "fullName": "Pooja Shrestha",
+        "phone": "9812345678",
+        "address": "Jhamsikhel, Ward 3",
+        "street": "Jhamsikhel, Ward 3",
+        "city": "Lalitpur",
+        "state": "Bagmati"
+      },
+      "items": [
+        {
+          "productId": "3",
+          "productName": "Precision Speed Rope",
+          "name": "Precision Speed Rope",
+          "productImage": "/p-image/prorope.webp",
+          "quantity": 2,
+          "price": 1800,
+          "total": 3600
+        }
+      ],
+      "subtotal": 3600,
+      "shippingCharge": 150,
+      "discount": 0,
+      "total": 3750,
+      "grandTotal": 3750,
+      "fulfillmentStatus": "processing",
+      "paymentStatus": "paid",
+      "paymentMethod": "esewa",
+      "createdAt": "2026-11-03T18:45:00.000Z",
+      "updatedAt": "2026-11-04T08:30:00.000Z"
+    },
+    {
+      "id": "ORD-10484",
+      "orderNumber": "CT-10484",
+      "customerId": "cust-4",
+      "customerName": "Rohan Karki",
+      "customerEmail": "rohan.karki@gmail.com",
+      "customerPhone": "9801987654",
+      "shippingAddress": {
+        "fullName": "Rohan Karki",
+        "phone": "9801987654",
+        "address": "Suryabinayak, Ward 5",
+        "street": "Suryabinayak, Ward 5",
+        "city": "Bhaktapur",
+        "state": "Bagmati"
+      },
+      "items": [
+        {
+          "productId": "9",
+          "productName": "45L Tactical Backpack (Black Camo)",
+          "name": "45L Tactical Backpack (Black Camo)",
+          "productImage": "/p-image/bkpk2.webp",
+          "quantity": 1,
+          "price": 7500,
+          "total": 7500
+        }
+      ],
+      "subtotal": 7500,
+      "shippingCharge": 150,
+      "discount": 0,
+      "total": 7650,
+      "grandTotal": 7650,
+      "fulfillmentStatus": "delivered",
+      "paymentStatus": "paid",
+      "paymentMethod": "cod",
+      "createdAt": "2026-11-02T12:00:00.000Z",
+      "updatedAt": "2026-11-04T16:20:00.000Z"
+    },
+    {
+      "id": "ORD-10483",
+      "orderNumber": "CT-10483",
+      "customerId": "cust-5",
+      "customerName": "Suman Thapa",
+      "customerEmail": "suman.thapa@yahoo.com",
+      "customerPhone": "9847123987",
+      "shippingAddress": {
+        "fullName": "Suman Thapa",
+        "phone": "9847123987",
+        "address": "Traffic Chowk",
+        "street": "Traffic Chowk",
+        "city": "Butwal",
+        "state": "Lumbini"
+      },
+      "items": [
+        {
+          "productId": "7",
+          "productName": "Competition Lever Belt (10mm)",
+          "name": "Competition Lever Belt (10mm)",
+          "productImage": "/p-image/belt2.webp",
+          "variant": "Large",
+          "size": "Large",
+          "quantity": 1,
+          "price": 8500,
+          "total": 8500
+        }
+      ],
+      "subtotal": 8500,
+      "shippingCharge": 200,
+      "discount": 0,
+      "total": 8700,
+      "grandTotal": 8700,
+      "fulfillmentStatus": "cancelled",
+      "paymentStatus": "refunded",
+      "paymentMethod": "esewa",
+      "notes": "Customer requested cancellation before shipment due to size change.",
+      "createdAt": "2026-11-01T09:20:00.000Z",
+      "updatedAt": "2026-11-01T14:00:00.000Z"
+    }
+  ],
+  "customers": [
+    {
+      "id": "cust-1",
+      "name": "Aayush Sharma",
+      "email": "aayush.sharma@gmail.com",
+      "phone": "9841234567",
+      "city": "Kathmandu",
+      "ordersCount": 4,
+      "totalSpent": 23600,
+      "lastOrderDate": "2026-11-05T10:15:00.000Z",
+      "joinedDate": "2026-03-12T08:00:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": "cust-2",
+      "name": "Bikash Gurung",
+      "email": "bikash.gurung@outlook.com",
+      "phone": "9856012345",
+      "city": "Pokhara",
+      "ordersCount": 3,
+      "totalSpent": 16500,
+      "lastOrderDate": "2026-11-04T14:30:00.000Z",
+      "joinedDate": "2026-04-18T09:30:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": "cust-3",
+      "name": "Pooja Shrestha",
+      "email": "pooja.shrestha@gmail.com",
+      "phone": "9812345678",
+      "city": "Lalitpur",
+      "ordersCount": 2,
+      "totalSpent": 9300,
+      "lastOrderDate": "2026-11-03T18:45:00.000Z",
+      "joinedDate": "2026-06-20T11:20:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": "cust-4",
+      "name": "Rohan Karki",
+      "email": "rohan.karki@gmail.com",
+      "phone": "9801987654",
+      "city": "Bhaktapur",
+      "ordersCount": 1,
+      "totalSpent": 7500,
+      "lastOrderDate": "2026-11-02T12:00:00.000Z",
+      "joinedDate": "2026-11-02T12:00:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": "cust-5",
+      "name": "Suman Thapa",
+      "email": "suman.thapa@yahoo.com",
+      "phone": "9847123987",
+      "city": "Butwal",
+      "ordersCount": 2,
+      "totalSpent": 11700,
+      "lastOrderDate": "2026-11-01T09:20:00.000Z",
+      "joinedDate": "2026-07-14T15:10:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": "cust-6",
+      "name": "Nabin Poudel",
+      "email": "nabin.p@gmail.com",
+      "phone": "9861009988",
+      "city": "Chitwan",
+      "ordersCount": 1,
+      "totalSpent": 3800,
+      "lastOrderDate": "2026-10-29T16:40:00.000Z",
+      "joinedDate": "2026-10-29T16:40:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": "cust-7",
+      "name": "Pratik Adhikari",
+      "email": "pratik.adhikari@gmail.com",
+      "phone": "9842098765",
+      "city": "Biratnagar",
+      "ordersCount": 1,
+      "totalSpent": 4200,
+      "lastOrderDate": "2026-10-27T11:05:00.000Z",
+      "joinedDate": "2026-10-27T11:05:00.000Z",
+      "status": "active"
+    }
+  ],
+  "promotions": [
+    {
+      "id": "promo-1",
+      "code": "CROSS10",
+      "type": "percentage",
+      "value": 10,
+      "minOrderAmount": 3000,
+      "usedCount": 48,
+      "usageLimit": 200,
+      "expiresAt": "2026-12-31T23:59:59.000Z",
+      "active": true
+    },
+    {
+      "id": "promo-2",
+      "code": "ATHLETE500",
+      "type": "fixed",
+      "value": 500,
+      "minOrderAmount": 5000,
+      "usedCount": 29,
+      "usageLimit": 100,
+      "expiresAt": "2026-11-30T23:59:59.000Z",
+      "active": true
+    },
+    {
+      "id": "promo-3",
+      "code": "POWERLIFT15",
+      "type": "percentage",
+      "value": 15,
+      "minOrderAmount": 7000,
+      "usedCount": 14,
+      "usageLimit": 50,
+      "expiresAt": "2026-12-15T23:59:59.000Z",
+      "active": true
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-1",
+      "productId": "1",
+      "productName": "Velcro Patch Hybrid Belt",
+      "customerName": "Aayush Sharma",
+      "rating": 5,
+      "comment": "Rock solid support during heavy squat triples. The quick release buckle saves huge energy between sets.",
+      "status": "approved",
+      "verified": true,
+      "createdAt": "2026-11-06T12:00:00.000Z"
+    },
+    {
+      "id": "rev-2",
+      "productId": "2",
+      "productName": "45L Tactical Backpack (Lake Blue)",
+      "customerName": "Bikash Gurung",
+      "rating": 5,
+      "comment": "Best gym bag in Nepal. Separate shoe compartment keeps everything clean and Oxford fabric is ultra tough.",
+      "status": "approved",
+      "verified": true,
+      "createdAt": "2026-11-05T18:30:00.000Z"
+    },
+    {
+      "id": "rev-3",
+      "productId": "4",
+      "productName": "Liquid Grip Chalk (250ml)",
+      "customerName": "Rohan Karki",
+      "rating": 4,
+      "comment": "Dries in under 15 seconds. Incredible grip on cold pull-up bars without creating dust clouds.",
+      "status": "approved",
+      "verified": true,
+      "createdAt": "2026-11-03T10:15:00.000Z"
+    }
+  ],
+  "returns": [
+    {
+      "id": "ret-1",
+      "orderId": "ORD-10483",
+      "customerName": "Suman Thapa",
+      "customerPhone": "9847123987",
+      "reason": "Ordered Large size but needed Medium after measuring waist contour.",
+      "action": "exchange",
+      "status": "completed",
+      "resolutionNote": "Customer refunded after pre-dispatch cancellation. Re-ordered size Medium.",
+      "createdAt": "2026-11-01T11:00:00.000Z"
+    }
+  ],
+  "inventoryLogs": [
+    {
+      "id": "inv-log-1",
+      "productId": "1",
+      "productName": "Velcro Patch Hybrid Belt",
+      "change": -1,
+      "newStock": 42,
+      "reason": "sale",
+      "note": "Order #ORD-10487",
+      "timestamp": "2026-11-07T18:28:57.376Z"
+    },
+    {
+      "id": "inv-log-2",
+      "productId": "2",
+      "productName": "45L Tactical Backpack (Lake Blue)",
+      "change": -1,
+      "newStock": 18,
+      "reason": "sale",
+      "note": "Order #ORD-10486",
+      "timestamp": "2026-11-07T18:28:57.376Z"
+    },
+    {
+      "id": "inv-log-3",
+      "productId": "15",
+      "productName": "45L Tactical Backpack (Urban Grey)",
+      "change": 0,
+      "newStock": 2,
+      "reason": "manual_adjustment",
+      "note": "Stock audit verified",
+      "timestamp": "2026-11-07T18:28:57.376Z"
+    }
+  ],
+  "settings": {
+    "storeName": "Crossthenics Fitness",
+    "tagline": "Premium Athletic & Strength Equipment Nepal",
+    "supportEmail": "contact@crossthenics.com",
+    "supportPhone": "+977-9800000000",
+    "address": "Lakeside, Ward 6, Pokhara, Nepal",
+    "currency": "NPR",
+    "currencySymbol": "Rs.",
+    "timezone": "Asia/Kathmandu",
+    "shipping": {
+      "insideValley": 150,
+      "outsideValley": 250,
+      "freeShippingThreshold": 6000
+    },
+    "paymentMethods": {
+      "cod": true,
+      "esewa": true,
+      "khalti": true,
+      "bank_transfer": true
+    },
+    "lowStockThreshold": 10
+  }
+}

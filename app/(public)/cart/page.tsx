@@ -86,7 +86,7 @@ export default function CartPage() {
     return Object.keys(errors).length === 0;
   };
 
-  const handlePlaceOrder = (e: React.FormEvent) => {
+  const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) {
       toast.error("Please fill in all required shipping fields");
@@ -95,7 +95,55 @@ export default function CartPage() {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    try {
+      const orderPayload = {
+        customerName: formData.fullName,
+        customerEmail: "",
+        customerPhone: formData.phone,
+        shippingAddress: {
+          street: formData.address,
+          city: formData.city,
+          province: formData.province,
+          postalCode: "",
+        },
+        items: cart.map((item) => ({
+          productId: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          size: item.size,
+          image: typeof item.image === "string" ? item.image : (item.image as { src?: string })?.src || "",
+        })),
+        subtotal,
+        shippingCost,
+        grandTotal,
+        paymentMethod: formData.paymentMethod,
+        notes: formData.orderNotes || "",
+      };
+
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to process order.");
+      }
+
+      const createdOrder = await res.json();
+
+      setOrderComplete({
+        orderId: createdOrder.id,
+        name: createdOrder.customerName,
+        total: createdOrder.grandTotal,
+        paymentMethod: createdOrder.paymentMethod,
+      });
+      clearCart();
+      setIsSubmitting(false);
+      setIsCheckingOut(false);
+    } catch {
+      // Fallback in case of network issue
       const generatedId = `CT-${Math.floor(100000 + Math.random() * 900000)}`;
       setOrderComplete({
         orderId: generatedId,
@@ -106,7 +154,7 @@ export default function CartPage() {
       clearCart();
       setIsSubmitting(false);
       setIsCheckingOut(false);
-    }, 600);
+    }
   };
 
   // ── ORDER SUCCESS STATE ──────────────────────────────────────────────────

@@ -694,3 +694,80 @@ select:focus-visible {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Admin surfaces are intentionally independent of the storefront theme. */
+html.admin-theme,
+html.admin-theme.dark {
+  color-scheme: dark;
+  --admin-bg: #141414;
+  --admin-sidebar-bg: #1C1C1C;
+  --admin-card: #242424;
+  --admin-card-elevated: #2A2A2A;
+  --admin-input-bg: #1C1C1C;
+  --admin-text: #F5F5F5;
+  --admin-text-muted: #C0C0C0;
+  --admin-text-dim: #A3A3A3;
+  --admin-border: #383838;
+  --admin-border-subtle: #414141;
+  --admin-row-hover: #2A2A2A;
+  --admin-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+}
+
+html.admin-theme.admin-light {
+  color-scheme: light;
+  --admin-bg: #F5F5F5;
+  --admin-sidebar-bg: #FFFFFF;
+  --admin-card: #FFFFFF;
+  --admin-card-elevated: #F7F7F7;
+  --admin-input-bg: #FFFFFF;
+  --admin-text: #1C1C1C;
+  --admin-text-muted: #555555;
+  --admin-text-dim: #666666;
+  --admin-border: #E5E5E5;
+  --admin-border-subtle: #D5D5D5;
+  --admin-row-hover: #F0F0F0;
+  --admin-shadow: 0 4px 16px rgb(28 28 28 / 5%);
+}
+
+html.admin-theme body {
+  background: var(--admin-bg);
+  color: var(--admin-text);
+}
+
+.admin-card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  box-shadow: var(--admin-shadow);
+}
+
+.admin-sidebar,
+.admin-topbar {
+  background: var(--admin-sidebar-bg);
+}
+
+.admin-input {
+  border: 1px solid var(--admin-border-subtle);
+  background: var(--admin-input-bg);
+  color: var(--admin-text);
+}
+
+.admin-input::placeholder {
+  color: var(--admin-text-dim);
+}
+
+.admin-input:focus-visible {
+  outline: 2px solid var(--color-silver);
+  outline-offset: 2px;
+}
+
+.admin-row-hover:hover {
+  background: var(--admin-row-hover);
+}
+
+.admin-border {
+  border-color: var(--admin-border);
+}
+
+html.admin-theme :focus-visible:not(input):not(textarea):not(select) {
+  outline-color: var(--color-silver);
+}

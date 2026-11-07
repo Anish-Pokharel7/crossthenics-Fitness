@@ -17,7 +17,7 @@ export default async function AdminApplicationLayout({
     <>
       <script
         dangerouslySetInnerHTML={{
-          __html: `(()=>{if(!location.pathname.startsWith("/admin/"))return;const root=document.documentElement;root.classList.add("admin-theme");try{root.classList.toggle("admin-light",localStorage.getItem("crossthenics-admin-theme")==="silver")}catch{root.classList.remove("admin-light")}})();`,
+          __html: `(()=>{if(!location.pathname.startsWith("/admin/"))return;const root=document.documentElement;root.classList.add("admin-theme");let theme;try{theme=localStorage.getItem("crossthenics-admin-theme")}catch{}if(theme!=="silver"&&theme!=="charcoal"){theme=window.matchMedia("(prefers-color-scheme: light)").matches?"silver":"charcoal"}root.classList.toggle("admin-light",theme==="silver")})();`,
         }}
       />
       {children}
